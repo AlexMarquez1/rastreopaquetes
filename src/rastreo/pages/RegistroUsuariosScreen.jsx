@@ -78,6 +78,7 @@ export const RegistroUsuariosScreen = () => {
                         </div>
                     </div>
                 </section>
+                <h1>HOla</h1>
             </div>
         </>
     )
