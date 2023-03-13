@@ -25,3 +25,28 @@ export const getValidation = async (api, user) =>{
     
     return data;
 }
+export const nuevoUsuario = async (api, user) =>{
+
+    const url =`${api}/nuevo/usuarios`;
+    const options = {
+        method: "POST",
+        cache: "no-cache",
+        headers: {
+            "content-type": "application/json; charset=UTF-8"
+        },
+        body: JSON.stringify(user)
+    };
+
+    const data = await fetch(url,options).then((resp)=>{
+        return resp.json();
+    }
+    ).catch((resp)=>{
+        console.log('Error al ejecutar la consulta', resp);
+        return undefined;
+    });
+    // const resp = await fetch(url,options);
+    
+    // const data = await resp.json();
+    
+    return data;
+}
