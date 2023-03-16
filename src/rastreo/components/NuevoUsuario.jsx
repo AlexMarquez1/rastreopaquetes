@@ -1,7 +1,9 @@
 import { Button } from 'primereact/button';
 import { InputText } from 'primereact/inputtext';
 import { Password } from 'primereact/password';
-import React, { useState } from 'react'
+import React, {useState } from 'react'
+import { registrarNuevoUsuario } from '../../helpers/getUsers';
+import { api } from "../../helpers/VariablesGlobales";
 import { Mensaje } from './Mensaje';
 
 const styleRegistro = {
@@ -9,25 +11,23 @@ const styleRegistro = {
     background: 'rgba(143, 216, 227, 0.316)',
 }
 
-export const NuevoUsuario = () => {
+export const NuevoUsuario = ({usuarioActual, setUsuarioActual}) => {
 
-    const [nuevoUsuario, setNuevoUsuario] = useState({
-        idUsuario: 0,
-        usuario: '',
-        password: '',
-        confirPass: '',
-        nombre: '',
-        telefonoContacto: '',
-        perfil: { idPerfil: 0, perfil: '', }
-    });
+    const [nuevoUsuario, setNuevoUsuario] = useState(usuarioActual);
     const [mensaje, setMensaje] = useState({
         header: '',
         contenido: '',
         visible: false,
     });
+    const handleInputChange = (event) => {
+        setNuevoUsuario({
+            ...nuevoUsuario,
+            [event.target.name] : event.target.value
+        })
+    };
 
     const [loading, setLoading] = useState(false);
-    const registrarUsuario = (e) => {
+    const registrarUsuario = async (e) => {
         e.preventDefault();
         setLoading(true);
         // setMensaje({
@@ -43,12 +43,37 @@ export const NuevoUsuario = () => {
             });
             return;
         }
-        setMensaje({
-            header: 'Correcto',
-            contenido: 'Se registro el usuario',
-            visible: true,
+        registrarNuevoUsuario(api,nuevoUsuario).then(respuesta=>{
+            console.log('obtenido: ', respuesta);
+            setLoading(false);
+            if(respuesta === 'Usuario existente'){
+                setMensaje({
+                    header: 'Usuario existente',
+                    contenido: 'El usuario que estas intentando guardar ya se encuentra registrado',
+                    visible: true,
+                });        
+            }
+            if(respuesta === 'Nombre de usuario existente'){
+                setMensaje({
+                    header: 'Nombre existente',
+                    contenido: 'El nombre que estas intentando guardar ya se encuentra registrado',
+                    visible: true,
+                });   
+            }
+            if(respuesta === 'usuario guardado'){
+                e.target.reset();
+                setNuevoUsuario({
+                    idUsuario: 0,
+                    usuario: '',
+                    password: '',
+                    confirPass: '',
+                    nombre: '',
+                    telefonocontacto: '',
+                    perfil: { idPerfil: 0, perfil: '', }
+                });
+                setUsuarioActual(nuevoUsuario);
+            }
         });
-        console.log('Fuera del if');
     };
 
     return (
@@ -66,7 +91,7 @@ export const NuevoUsuario = () => {
                                 <div className="col">
                                     <div className="p-inputgroup flex-1">
                                         <span className='p-float-label'>
-                                            <InputText required={true} inputid='nombre' value={nuevoUsuario.nombre} name='nombre' onChange={(e) => { setNuevoUsuario(old => ({ ...old, nombre: e.target.value })) }} />
+                                            <InputText required={true} inputid='nombre' value={nuevoUsuario.nombre} name='nombre' onChange={handleInputChange} />
                                             <label htmlFor="nombre">Nombre</label>
                                         </span>
                                     </div>
@@ -74,7 +99,7 @@ export const NuevoUsuario = () => {
                                 <div className="col">
                                     <div className="p-inputgroup flex-1">
                                         <span className='p-float-label'>
-                                            <InputText required={true} inputid='telefono' value={nuevoUsuario.telefonoContacto} name='telefonoContacto' onChange={(e) => { setNuevoUsuario(old => ({ ...old, telefonoContacto: e.target.value })) }} />
+                                            <InputText required={true} inputid='telefono' value={nuevoUsuario.telefonoContacto} name='telefonocontacto' onChange={handleInputChange} />
                                             <label htmlFor="telefono">Telefono</label>
                                         </span>
                                     </div>
@@ -82,7 +107,7 @@ export const NuevoUsuario = () => {
                                 <div className="col">
                                     <div className="p-inputgroup flex-1">
                                         <span className='p-float-label'>
-                                            <InputText required={true} inputid='usuario' value={nuevoUsuario.usuario} name='usuario' onChange={(e) => { setNuevoUsuario(old => ({ ...old, usuario: e.target.value })) }} />
+                                            <InputText required={true} inputid='usuario' value={nuevoUsuario.usuario} name='usuario' onChange={handleInputChange} />
                                             <label htmlFor="usuario">Usuario</label>
                                         </span>
                                     </div>
@@ -92,7 +117,7 @@ export const NuevoUsuario = () => {
                                 <div className="col">
                                     <div className="p-inputgroup flex-1">
                                         <span className='p-float-label'>
-                                            <Password required={true} toggleMask inputid='passwor' value={nuevoUsuario.password} name='password' onChange={(e) => { setNuevoUsuario(old => ({ ...old, password: e.target.value })) }} />
+                                            <Password required={true} toggleMask inputid='passwor' value={nuevoUsuario.password} name='password' onChange={handleInputChange} />
                                             <label htmlFor="passwor">Contraseña</label>
                                         </span>
                                     </div>
@@ -100,8 +125,8 @@ export const NuevoUsuario = () => {
                                 <div className="col">
                                     <div className="p-inputgroup flex-1">
                                         <span className='p-float-label'>
-                                            <Password required={true} toggleMask inputid='confirpass' value={nuevoUsuario.confirPass} name='confirmpass' onChange={(e) => { setNuevoUsuario(old => ({ ...old, confirPass: e.target.value })) }} />
-                                            <label htmlFor="confirpass">Confirmar Contraseña</label>
+                                            <Password required={true} toggleMask inputid='confirPass' value={nuevoUsuario.confirPass} name='confirPass' onChange={handleInputChange} />
+                                            <label htmlFor="confirPass">Confirmar Contraseña</label>
                                         </span>
                                     </div>
                                 </div>
@@ -120,3 +145,7 @@ export const NuevoUsuario = () => {
 
     )
 }
+
+
+
+

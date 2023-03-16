@@ -12,7 +12,7 @@ const acomodarDatos = (lista) => {
   return nuevaLista;
 }
 
-export const useFetchUsers = ()=>{
+export const useFetchUsers = (usuario)=>{
 
     const [state, setState] = useState({
         data: [],
@@ -22,6 +22,7 @@ export const useFetchUsers = ()=>{
     useEffect(() => {
       getUsers(api).then(
         usuarios => {
+          console.log('Cargando usuarios...');
             setState({
                 data: usuarios,
                 loading: false,
@@ -29,7 +30,7 @@ export const useFetchUsers = ()=>{
         }
       );
     
-    }, []);
+    }, [usuario]);
 
     return state;
     

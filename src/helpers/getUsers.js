@@ -25,9 +25,9 @@ export const getValidation = async (api, user) =>{
     
     return data;
 }
-export const nuevoUsuario = async (api, user) =>{
+export const registrarNuevoUsuario = async (api, user) =>{
 
-    const url =`${api}/nuevo/usuarios`;
+    const url =`${api}/nuevo/usuario`;
     const options = {
         method: "POST",
         cache: "no-cache",
@@ -37,10 +37,12 @@ export const nuevoUsuario = async (api, user) =>{
         body: JSON.stringify(user)
     };
 
-    const data = await fetch(url,options).then((resp)=>{
-        return resp.json();
-    }
-    ).catch((resp)=>{
+    const data = await fetch(url,options)
+    .then((resp)=> resp.text())
+    .then((data) =>{
+        return data
+    })
+    .catch((resp)=>{
         console.log('Error al ejecutar la consulta', resp);
         return undefined;
     });

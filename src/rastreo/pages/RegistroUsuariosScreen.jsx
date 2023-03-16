@@ -18,7 +18,16 @@ const styleRegistro = {
 
 export const RegistroUsuariosScreen = () => {
 
-    const { data: usuarios, loading } = useFetchUsers();
+    const [usuarioActual, setusuarioActual] = useState({
+            idUsuario: 0,
+            usuario: '',
+            password: '',
+            confirPass: '',
+            nombre: '',
+            telefonocontacto: '',
+            perfil: { idPerfil: 1, perfil: 'admin', }
+        });
+    const { data: usuarios, loading } = useFetchUsers(usuarioActual);
     
     const columns = [
         { field: 'idusuario', head: 'id' },
@@ -31,7 +40,7 @@ export const RegistroUsuariosScreen = () => {
         <>
             <NavBarPrincipal />
             <div className='fondo2'>
-                <NuevoUsuario/>
+                <NuevoUsuario usuarioActual={usuarioActual} setUsuarioActual={setusuarioActual}/>
                 <section className="section_item flex-container" style={{ paddingTop: '5%' }}>
                     <div className="card form" style={styleRegistro}>
                         {loading ? <SkeletonTable items={columns} /> : <Tabla data={usuarios} encabezados={columns} id={'idusuario'} tipoDatos={'Usuarios'} editar={false} eliminar={false} />}
