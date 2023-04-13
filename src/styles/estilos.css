@@ -1,3 +1,16 @@
+
+body {
+  background-image: url('/src/assets/Fondo.jpg');
+  background-size: cover; 
+  background-position: center center;
+  background-repeat: no-repeat;
+ 
+}
+html,
+body {
+  min-height: 100%;
+}
+
 .section_item {
     height: auto;
     max-width: calc(100vw - 30px);
@@ -79,14 +92,6 @@
   left: 25%;
   transform: translate(-20%, -20%);
 }
-html, body {
-	height: 100%;
-}
-body {
-	margin: 0;
-	background: linear-gradient(#f2f2f6, #d3d3e7);
-}
-
 
 .animated-word {
 	font-family: Helvetica;

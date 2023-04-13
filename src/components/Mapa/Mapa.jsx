@@ -45,12 +45,12 @@ export const Mapa = () => {
         id: 'google-map-script',
         googleMapsApiKey: "AIzaSyAwXqH5JgdnOqOJy8F8_PrkvOqLtHhy60I"
     });
-
+    
     const onLoad = useCallback((map) => {
         const bounds = new window.google.maps.LatLngBounds(center);
         setMap(map)
     }, []);
-
+    
     const onUnmount = useCallback((map) => {
         setMap(null)
     }, []);

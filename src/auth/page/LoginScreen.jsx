@@ -58,7 +58,7 @@ export const LoginScreen = () => {
                 <section className="section_item flex-container ">
                     <div className="card form" style={{ width: '30rem', background: 'rgba(244, 145, 53, 0.045)', marginTop: '10%' }}>
 
-                        <h1 className="card-title">Inicia Sesión </h1>
+                        <h1 className="card-title">Inicia Sesión</h1>
                         <div className="card-body w-75 p-3" style={{ marginLeft: '12%' }}>
                             <div className="mb-3">
                                 <div className="p-inputgroup flex-1">

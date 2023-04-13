@@ -107,7 +107,7 @@ export const Conductores = ({ socket, conductorSeleccionado, setConductorSelecci
                             </div>
                             <div className="row">
                                 <div className="col">
-                                    {conductorSeleccionado.ubicacion.Foto === '' ? <img src={driver} className="img-thumbnail" alt="Conductor" width="150" /> : <img src={conductorSeleccionado.ubicacion.Foto} className="img-thumbnail" alt="Conductor" width="150" />}
+                                    {conductorSeleccionado.ubicacion.Foto === '' ? <img src={driver} className="img-thumbnail" alt="Conductor"  style={{width: '150px'}} /> : <img src={conductorSeleccionado.ubicacion.Foto} className="img-thumbnail" alt="Conductor" width="150" />}
                                 </div>
                             </div>
                             <div className="row">
