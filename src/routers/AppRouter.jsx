@@ -4,6 +4,7 @@ import { Mapa } from "../components/Mapa/Mapa"
 import { MenuScreen } from "../rastreo/pages/MenuScreen"
 import { RegistroUsuariosScreen } from "../rastreo/pages/RegistroUsuariosScreen"
 import { RegistroViajesScreen } from "../rastreo/pages/RegistroViajesScreen"
+import HistorialViajesScreen from "../rastreo/pages/HistorialViajesScreen"
 
 export const AppRouter = () => {
   return (
@@ -14,6 +15,7 @@ export const AppRouter = () => {
             <Route path="menu" element={<MenuScreen/>}/>
             <Route path="viajes" element={<RegistroViajesScreen/>}/>
             <Route path="usuarios" element={<RegistroUsuariosScreen/>}/>
+            <Route path="historial" element={<HistorialViajesScreen/>}/>
             <Route path="mapa" element={<Mapa/>}/>
         </Routes>
     </>
