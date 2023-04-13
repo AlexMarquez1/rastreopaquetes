@@ -11,6 +11,7 @@ export const AppRouter = () => {
             <Route path="/" element={<Navigate to='login'/>}/>
             <Route path="login" element={<LoginScreen/>}/>
             <Route path="menu" element={<MenuScreen/>}/>
+            <Route path="viajes" element={<RegistroUsuariosScreen/>}/>
             <Route path="usuarios" element={<RegistroUsuariosScreen/>}/>
             <Route path="mapa" element={<Mapa/>}/>
         </Routes>
