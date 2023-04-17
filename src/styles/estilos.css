@@ -120,3 +120,30 @@ body {
   margin:auto;
   position: absolute;
   }
+
+
+
+
+  .autocomplete-dropdown-container {
+    max-height: 250px; /* Establece la altura máxima de la lista desplegable */
+    overflow-y: auto; /* Agrega una barra de desplazamiento vertical si la lista es demasiado larga */
+    background-color: #fff; /* Cambia el color de fondo de la lista */
+    border: 1px solid #ccc; /* Agrega un borde a la lista */
+    padding: 10px; /* Agrega espacio interno a la lista */
+    position: absolute;
+    z-index: 100;
+    width: 100%;
+  }
+  
+  .autocomplete-dropdown-container div {
+    padding: 5px; /* Agrega espacio interno a cada elemento de la lista */
+    cursor: pointer; /* Cambia el cursor al pasar por encima de los elementos de la lista */
+  }
+  
+  .autocomplete-dropdown-container div:hover {
+    background-color: #639cff; /* Cambia el color de fondo del elemento de la lista al pasar por encima */
+  }
+  
+  .suggestion-item--active {
+    background-color: #e0e0e0; /* Cambia el color de fondo del elemento activo de la lista */
+  }

@@ -6,7 +6,7 @@ import PlacesAutocomplete, {
 } from 'react-places-autocomplete';
 import { InputText } from 'primereact/inputtext';
 
-const lib = [["places"]];
+const lib = [["places", "geocoding"]];
 const colorTexto = {
     color: 'black',
 }
@@ -15,6 +15,14 @@ export const SeleccionarUbicacion = () => {
     const [selectedLocation, setSelectedLocation] = useState(null);
     const [direccionLlegada, setDireccionLlegada] = useState('');
     const [direccionPartida, setDireccionPartida] = useState('');
+    const [marcadores, setMarcadores] = useState([
+        {
+            lat: 0,
+            lng: 0,
+        }, {
+            lat: 0,
+            lng: 0,
+        }]);
 
     // Función para manejar el cambio en el input de búsqueda de dirección
     const handleLlegadaChange = (value) => {
@@ -22,7 +30,7 @@ export const SeleccionarUbicacion = () => {
     };
 
     const handlePartidaChange = (value) => {
-        setDireccionLlegada(value);
+        setDireccionPartida(value);
     };
 
     // Función para manejar la selección de una dirección de búsqueda
@@ -31,7 +39,8 @@ export const SeleccionarUbicacion = () => {
         try {
             const results = await geocodeByAddress(value);
             const latLng = await getLatLng(results[0]);
-            setSelectedLocation(latLng);
+            setMarcadores([ latLng, marcadores[1]]);
+
         } catch (error) {
             console.error('Error al obtener la ubicación:', error);
         }
@@ -41,7 +50,7 @@ export const SeleccionarUbicacion = () => {
         try {
             const results = await geocodeByAddress(value);
             const latLng = await getLatLng(results[0]);
-            setSelectedLocation(latLng);
+            setMarcadores([marcadores[0], latLng]);
         } catch (error) {
             console.error('Error al obtener la ubicación:', error);
         }
@@ -66,34 +75,39 @@ export const SeleccionarUbicacion = () => {
                     <div className="row align-items-center">
                         <div className="col">
                             <PlacesAutocomplete
-                                value={direccionLlegada}
-                                onChange={handleLlegadaChange}
+                                value={direccionPartida}
+                                onChange={handlePartidaChange}
                                 onSelect={handlePartidaSelect}
                             >
-                                {({ getInputProps, suggestions, getSuggestionItemProps }) => (
-                                    <div>
+                                {({ getInputProps, suggestions, getSuggestionItemProps, loading }) => (
+                                    <div style={{ position: 'relative' }}>
                                         <div className="p-inputgroup flex-1">
                                             <span className='p-float-label'>
                                                 <InputText {...getInputProps({
                                                     inputid: 'partida', name: 'partida',
+                                                    'aria-expanded': false
                                                 })} />
                                                 <label htmlFor="partida">Direccion de Partida</label>
                                             </span>
                                         </div>
-                                        <div className="autocomplete-dropdown-container">
-                                            {suggestions.map((suggestion) => {
-                                                const className = suggestion.active
-                                                    ? 'suggestion-item--active'
-                                                    : 'suggestion-item';
-                                                return (
-                                                    <div
-                                                        {...getSuggestionItemProps(suggestion, { className })}
-                                                    >
-                                                        <span>{suggestion.description}</span>
-                                                    </div>
-                                                );
-                                            })}
-                                        </div>
+                                        {
+                                            direccionPartida !== '' ? <div className="autocomplete-dropdown-container">
+                                                {
+                                                    !loading ?
+                                                        suggestions.map((suggestion, index) => {
+                                                            const className = suggestion.active
+                                                                ? 'suggestion-item--active'
+                                                                : 'suggestion-item';
+                                                            return (
+                                                                <div key={index}
+                                                                    {...getSuggestionItemProps(suggestion, { className })}
+                                                                >
+                                                                    <span>{suggestion.description}</span>
+                                                                </div>
+                                                            );
+                                                        }) : 'Cargando...'}
+                                            </div> : <div />
+                                        }
                                     </div>
                                 )}
                             </PlacesAutocomplete>
@@ -104,10 +118,10 @@ export const SeleccionarUbicacion = () => {
                             <PlacesAutocomplete
                                 value={direccionLlegada}
                                 onChange={handleLlegadaChange}
-                                onSelect={handlePartidaSelect}
+                                onSelect={handleLlegadaSelect}
                             >
-                                {({ getInputProps, suggestions, getSuggestionItemProps }) => (
-                                    <div>
+                                {({ getInputProps, suggestions, getSuggestionItemProps, loading }) => (
+                                    <div style={{ position: 'relative' }}>
                                         <div className="p-inputgroup flex-1">
                                             <span className='p-float-label'>
                                                 <InputText {...getInputProps({
@@ -117,20 +131,24 @@ export const SeleccionarUbicacion = () => {
                                                 <label htmlFor="llegada">Direccion de llegada</label>
                                             </span>
                                         </div>
-                                        <div className="autocomplete-dropdown-container">
-                                            {suggestions.map((suggestion) => {
-                                                const className = suggestion.active
-                                                    ? 'suggestion-item--active'
-                                                    : 'suggestion-item';
-                                                return (
-                                                    <div
-                                                        {...getSuggestionItemProps(suggestion, { className })}
-                                                    >
-                                                        <span>{suggestion.description}</span>
-                                                    </div>
-                                                );
-                                            })}
-                                        </div>
+                                        {
+                                            direccionLlegada !== '' ? <div className="autocomplete-dropdown-container">
+                                                {!loading ?
+                                                    suggestions.map((suggestion, index) => {
+                                                        const className = suggestion.active
+                                                            ? 'suggestion-item--active'
+                                                            : 'suggestion-item';
+                                                        return (
+                                                            <div key={index}
+                                                                {...getSuggestionItemProps(suggestion, { className })}
+                                                            >
+                                                                <span>{suggestion.description}</span>
+                                                            </div>
+                                                        );
+                                                    }) : 'Cargando...'
+                                                }
+                                            </div> : <div />
+                                        }
                                     </div>
                                 )}
                             </PlacesAutocomplete>
@@ -143,20 +161,36 @@ export const SeleccionarUbicacion = () => {
                         width: '100%',
                     }}
                     center={{
-                        lat: -34.6083, // Latitud inicial del mapa
-                        lng: -58.3712, // Longitud inicial del mapa
+                        lat: 19.435078316766443, // Latitud inicial del mapa
+                        lng: -99.14111102877096 // Longitud inicial del mapa
                     }}
                     zoom={10} // Nivel de zoom inicial del mapa
                     onClick={handleMapClick} // Asignamos la función de manejo de clic en el mapa
                 >
-                    {selectedLocation && ( // Si hay una ubicación seleccionada, mostramos un marcador en el mapa
-                        <Marker
-                            position={{
-                                lat: selectedLocation.lat,
-                                lng: selectedLocation.lng,
-                            }}
-                        />
-                    )}
+
+                    {
+                        marcadores[0].lat != 0 && marcadores[0].lng != 0 ?
+                            <Marker
+                                position={{
+                                    lat: marcadores[0].lat,
+                                    lng: marcadores[0].lng,
+                                }}
+                                animation={4}
+                            />
+                            : ''
+                    }
+                    {
+                        marcadores[1].lat != 0 && marcadores[1].lng != 0 ?
+                            <Marker
+                                position={{
+                                    lat: marcadores[1].lat,
+                                    lng: marcadores[1].lng,
+                                }}
+                                animation={4}
+                            />
+                            : ''
+                    }
+
                 </GoogleMap>
             </LoadScript>
         </>
