@@ -6,7 +6,7 @@ import PlacesAutocomplete, {
 } from 'react-places-autocomplete';
 import { InputText } from 'primereact/inputtext';
 
-const lib = [["places", "geocoding"]];
+const lib = [["places"]];
 const colorTexto = {
     color: 'black',
 }

@@ -64,7 +64,7 @@ body {
 
   img{
     width: 90rem;
-    position: fixed;
+    position: relative;
   }
   
   .div1 .div2 {
