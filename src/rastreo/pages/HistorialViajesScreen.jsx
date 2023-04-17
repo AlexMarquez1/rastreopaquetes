@@ -1,13 +1,30 @@
 import React, { useEffect, useState } from 'react'
 import TarjetaRutas from '../components/TarjetaRutas'
 import BarraBusqueda from '../components/BarraBusqueda';
+import { Dialog } from 'primereact/dialog';
 
 const styleRegistro = {
     width: '85%',
     background: 'rgba(143, 216, 227, 0.316)',
 }
 
+const styleRegistroModal = {
+    width: '95%',
+    background: 'rgb(194,103,72)',
+}
+
 const HistorialViajesScreen = () => {
+
+    const [show, setShow] = useState(null);
+    const [show2, setShow2] = useState(null);
+
+    const toggleAccordionViaje = () => {
+      setShow(!show); 
+    };
+
+    const toggleAccordionConductor = () => {
+        setShow2(!show2); 
+      };
 
 //     const [data, setData] = useState([]);
 
@@ -19,7 +36,7 @@ const HistorialViajesScreen = () => {
 
 //   console.log(data)
 
-
+const [mensaje, setMensaje] = useState(false);
 const [cardsData, setCardsData] = useState([
     { idViaje: '00001', estatus: 'activa', descripcion: 'Descripción de la Card 1', chofer: 'Andres Uribe Martinez', idVehiculo: '0001', vehiculoTipo: 'Motocicleta', partida: 'CDMX', destino: 'Durango'},
     { idViaje: '00002', estatus: 'activa', descripcion: 'Descripción de la Card 2', chofer: 'Jorge Ramirez Santana', idVehiculo: '0008', vehiculoTipo: 'torton', partida: 'CDMX', destino: 'Monterrey'},
@@ -64,6 +81,7 @@ const [cardsData, setCardsData] = useState([
                                 idVehiculo={data.idVehiculo}
                                 partida={data.partida}
                                 destinio={data.destino}
+                                setMensaje={setMensaje}
                             />
                         ))
                     }
@@ -123,6 +141,104 @@ const [cardsData, setCardsData] = useState([
             </div>
         </div>
     </section> 
+    {/* MODAL */}
+    <Dialog header="Detalles de viaje" visible={mensaje} style={{ width: '90vw' }} onHide={() => setMensaje(false)}>
+        <section className="section_item flex-container" style={{ paddingTop: '5%' }}>
+            <div className="card" style={styleRegistroModal} onClick={toggleAccordionViaje}>
+            <br />
+            <h1 className="card-title">
+                <div style={{float: 'right'}} className='px-4'>
+                    <i className="pi pi-angle-down"></i>
+                </div>
+                <p className="fs-4">Detalles del viaje</p>
+            </h1>   
+            </div>
+            {
+                show &&
+                <div className='container'>
+                <div className='row'>
+                    <div className='col-sm-6 col-md-6 col-xl-4 p-4'>
+                      <ul className="list-group list-group-flush">
+                        <p className="list-group-item-dark btn mr-auto" aria-current="true">Id viaje: {'00001'}</p>
+                        <li className="list-group-item btn mr-auto">Estatus: {''}</li>
+                        <li className="list-group-item btn mr-auto">Direccion de partida: {''}</li>
+                        <li className="list-group-item btn mr-auto">Direccion de destino: {''}</li>
+                        <li className="list-group-item btn mr-auto">Hora de partida: {''}</li>
+                        <li className="list-group-item btn mr-auto">Hora de destino: {''}</li>
+                      </ul>
+                    </div>
+                    <div className='col-sm-6 col-md-6 col-xl-4 p-4'>
+                      <ul className="list-group list-group-flush">
+                        <p className="list-group-item-dark btn mr-auto" aria-current="true">Empresa Relacionada: {''}</p>
+                        <li className="list-group-item mr-auto">Direccion de la empresa: {''}</li>
+                        <li className="list-group-item mr-auto">RFC de la empresa: {''}</li>
+                      </ul>
+                    </div>
+                    <div className='col-sm-6 col-md-6 col-xl-4 p-4'>
+                      <ul className="list-group list-group-flush">
+                        <p className="list-group-item-dark btn mr-auto" aria-current="true">descripcion del viaje: {''}</p>
+                        <p className="list-group-item mr-auto">Nuestro viaje de carga comenzó en el puerto de origen, donde cargamos un contenedor de 40 pies lleno de mercancías diversas, incluyendo maquinarias pesadas y piezas de repuesto. Una vez que el contenedor fue asegurado correctamente, partimos hacia nuestro destino final, que estaba ubicado en una ciudad a 500 km de distancia.</p>
+                      </ul>
+                    </div>
+                </div>
+            </div>
+            } 
+        </section> 
+        <section className="section_item flex-container" style={{ paddingTop: '5%' }}>
+            <div className="card" style={styleRegistroModal} onClick={toggleAccordionConductor}>
+            <br />
+            <h1 className="card-title">
+                <div style={{float: 'right'}} className='px-4'>
+                    <i className="pi pi-angle-down"></i>
+                </div>
+                <p className="fs-4">Detalles del Conductor</p>
+            </h1>   
+            </div>
+            {
+                show2 &&
+                <div className='container'>
+                <div className='row'>
+                    <div className='col-sm-6 col-md-6 col-xl-4 p-4'>
+                      <ul className="list-group list-group-flush">
+                        <p className="list-group-item-dark btn mr-auto" aria-current="true">Id Conductor: {'00001'}</p>
+                        <img className="list-group-item btn mr-auto h-7 w-7 rounded-full" src='https://randomuser.me/api/portraits/men/1.jpg' alt=""/>
+                        <li className="list-group-item btn mr-auto">Nombre completo: {''}</li>
+                        <li className="list-group-item btn mr-auto">Edad: {''}</li>
+                        <li className="list-group-item btn mr-auto">Numero de contacto: {''}</li>
+                        <li className="list-group-item btn mr-auto">Tipo de sangre: {''}</li>
+                      </ul>
+                    </div>
+                    <div className='col-sm-6 col-md-6 col-xl-4 p-4'>
+                      <ul className="list-group list-group-flush">
+                        <p className="list-group-item-dark btn mr-auto" aria-current="true">Numero de licencia: {''}</p>
+                        <li className="list-group-item mr-auto">Tipo de licencia: {''}</li>
+                        <button type="button" className="btn btn-outline-secondary">
+                            <i className="pi pi-download p-2"></i>
+                                Descargar licencia
+                        </button>
+                      </ul>
+                    </div>
+                    
+                </div>
+            </div>
+            }
+            
+        </section>
+        <section className="section_item flex-container" style={{ paddingTop: '5%' }}>
+            <div className="card" style={styleRegistroModal}>
+            <br />
+            <h1 className="card-title">
+                <div style={{float: 'right'}} className='px-4'>
+                    <i className="pi pi-angle-down"></i>
+                </div>
+                <p className="fs-4">Detalles del vehiculo</p>
+            </h1>   
+            </div>
+            <div>
+
+            </div>
+        </section>   
+    </Dialog>
     </>
   )
 }
