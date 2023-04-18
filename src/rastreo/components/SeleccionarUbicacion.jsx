@@ -1,10 +1,11 @@
 import React, { useState } from 'react';
-import { GoogleMap, LoadScript, Marker } from '@react-google-maps/api';
+import { GoogleMap, InfoWindow, LoadScript, Marker } from '@react-google-maps/api';
 import PlacesAutocomplete, {
     geocodeByAddress,
     getLatLng
 } from 'react-places-autocomplete';
 import { InputText } from 'primereact/inputtext';
+import { Text } from '@chakra-ui/react';
 
 const lib = [["places"]];
 const colorTexto = {
@@ -15,6 +16,8 @@ export const SeleccionarUbicacion = () => {
     const [selectedLocation, setSelectedLocation] = useState(null);
     const [direccionLlegada, setDireccionLlegada] = useState('');
     const [direccionPartida, setDireccionPartida] = useState('');
+    const [markerActivo, setMarkerActivo] = useState({});
+    const [mostrarInfo, setMostrarInfo] = useState(false);
     const [marcadores, setMarcadores] = useState([
         {
             lat: 0,
@@ -39,7 +42,7 @@ export const SeleccionarUbicacion = () => {
         try {
             const results = await geocodeByAddress(value);
             const latLng = await getLatLng(results[0]);
-            setMarcadores([ latLng, marcadores[1]]);
+            setMarcadores([latLng, marcadores[1]]);
 
         } catch (error) {
             console.error('Error al obtener la ubicación:', error);
@@ -169,28 +172,32 @@ export const SeleccionarUbicacion = () => {
                 >
 
                     {
-                        marcadores[0].lat != 0 && marcadores[0].lng != 0 ?
-                            <Marker
-                                position={{
-                                    lat: marcadores[0].lat,
-                                    lng: marcadores[0].lng,
-                                }}
-                                animation={4}
-                            />
-                            : ''
-                    }
-                    {
-                        marcadores[1].lat != 0 && marcadores[1].lng != 0 ?
-                            <Marker
-                                position={{
-                                    lat: marcadores[1].lat,
-                                    lng: marcadores[1].lng,
-                                }}
-                                animation={4}
-                            />
-                            : ''
-                    }
+                        marcadores.map((marcador, index) => {
+                            return marcador.lat !== 0 && marcador.lng !== 0 ?
+                                <Marker
+                                    key={index}
+                                    position={{
+                                        lat: marcador.lat,
+                                        lng: marcador.lng,
+                                    }}
+                                    animation={4}
+                                    onClick={(props,marker, e)=>{setMarkerActivo(marker); setMostrarInfo(true)}}
+                                >
 
+                                    <InfoWindow
+                                        marker={markerActivo}
+                                        onClose={()=>{setMostrarInfo(false)}}
+                                        visible={mostrarInfo}
+                                    >
+                                        <div>
+                                            <h4>Texto</h4>
+                                        </div>
+                                    </InfoWindow>
+
+                                </Marker>
+                                : <div key={index} />
+                        })
+                    }
                 </GoogleMap>
             </LoadScript>
         </>
