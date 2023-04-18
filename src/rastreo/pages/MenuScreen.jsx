@@ -15,7 +15,7 @@ export const MenuScreen = () => {
           <img src={fondo2} />
         </div>
       </div> */}
-      <NavBarPrincipal/>
+      
       
     </>
   )

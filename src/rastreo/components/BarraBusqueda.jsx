@@ -1,12 +1,24 @@
 import React, { useState } from 'react'
 
-const BarraBusqueda = ({handleSearch}) => {
+const BarraBusqueda = ({handleSearch, cardsData}) => {
 
 const [searchTerm, setSearchTerm] = useState('');
 
+  // const handleChange = (event) => {
+  //   setSearchTerm(event.target.value);
+  //   handleSearch(event.target.value);
+  // };
+
   const handleChange = (event) => {
-    setSearchTerm(event.target.value);
-    handleSearch(event.target.value);
+    const value = event.target.value;
+    console.log(value)
+    setSearchTerm(value);
+
+    if (value === '') {
+      handleSearch('');
+    } else {
+      handleSearch(value);
+    }
   };
 
   return (
@@ -14,7 +26,7 @@ const [searchTerm, setSearchTerm] = useState('');
       <input
         type="text"
         className="form-control"
-        placeholder="Buscar..."
+        placeholder="Busca el id del viaje..."
         value={searchTerm}
         onChange={handleChange}
       />

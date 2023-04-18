@@ -17,6 +17,7 @@ const HistorialViajesScreen = () => {
 
     const [show, setShow] = useState(null);
     const [show2, setShow2] = useState(null);
+    const [show3, setShow3] = useState(null);
 
     const toggleAccordionViaje = () => {
       setShow(!show); 
@@ -24,7 +25,11 @@ const HistorialViajesScreen = () => {
 
     const toggleAccordionConductor = () => {
         setShow2(!show2); 
-      };
+    };
+
+    const toggleAccordionVehiculo = () => {
+        setShow3(!show3); 
+    };
 
 //     const [data, setData] = useState([]);
 
@@ -58,9 +63,9 @@ const [cardsData, setCardsData] = useState([
 
   return (
     <>
-    <h1>Historial de rutas</h1>
+    <h1 className='pt-4'>Historial de rutas</h1>
     <div className='container'>
-        <BarraBusqueda handleSearch={handleSearch}/>
+        <BarraBusqueda handleSearch={handleSearch} cardsData={cardsData}/>
     </div>
     <section className="section_item flex-container" style={{ paddingTop: '5%' }}>
         <div className="card form" style={styleRegistro}>
@@ -197,35 +202,36 @@ const [cardsData, setCardsData] = useState([
             {
                 show2 &&
                 <div className='container'>
-                <div className='row'>
-                    <div className='col-sm-6 col-md-6 col-xl-4 p-4'>
-                      <ul className="list-group list-group-flush">
-                        <p className="list-group-item-dark btn mr-auto" aria-current="true">Id Conductor: {'00001'}</p>
-                        <img className="list-group-item btn mr-auto h-7 w-7 rounded-full" src='https://randomuser.me/api/portraits/men/1.jpg' alt=""/>
-                        <li className="list-group-item btn mr-auto">Nombre completo: {''}</li>
-                        <li className="list-group-item btn mr-auto">Edad: {''}</li>
-                        <li className="list-group-item btn mr-auto">Numero de contacto: {''}</li>
-                        <li className="list-group-item btn mr-auto">Tipo de sangre: {''}</li>
-                      </ul>
+                    <div className='row'>
+                        <div className='col-sm-6 col-md-6 col-xl-4 p-4'>
+                          <ul className="list-group list-group-flush">
+                            <p className="list-group-item-dark btn mr-auto" aria-current="true">Id Conductor: {'00001'}</p>
+                            <img className="list-group-item btn mr-auto h-7 w-7 rounded-full" src='https://randomuser.me/api/portraits/men/1.jpg' alt=""/>
+                            <li className="list-group-item btn mr-auto">Nombre completo: {''}</li>
+                            <li className="list-group-item btn mr-auto">Edad: {''}</li>
+                            <li className="list-group-item btn mr-auto">Numero de contacto: {''}</li>
+                            <li className="list-group-item btn mr-auto">Tipo de sangre: {''}</li>
+                          </ul>
+                        </div>
+                        <div className='col-sm-6 col-md-6 col-xl-4 p-4'>
+                          <ul className="list-group list-group-flush">
+                            <p className="list-group-item-dark btn mr-auto" aria-current="true">Numero de licencia: {''}</p>
+                            <li className="list-group-item mr-auto">Tipo de licencia: {''}</li>
+                            <li className="list-group-item mr-auto">Vigencia: {''}</li>
+                            <button type="button" className="btn btn-outline-secondary">
+                                <i className="pi pi-download p-2"></i>
+                                    Descargar licencia
+                            </button>
+                          </ul>
+                        </div>
+
                     </div>
-                    <div className='col-sm-6 col-md-6 col-xl-4 p-4'>
-                      <ul className="list-group list-group-flush">
-                        <p className="list-group-item-dark btn mr-auto" aria-current="true">Numero de licencia: {''}</p>
-                        <li className="list-group-item mr-auto">Tipo de licencia: {''}</li>
-                        <button type="button" className="btn btn-outline-secondary">
-                            <i className="pi pi-download p-2"></i>
-                                Descargar licencia
-                        </button>
-                      </ul>
-                    </div>
-                    
                 </div>
-            </div>
             }
             
         </section>
         <section className="section_item flex-container" style={{ paddingTop: '5%' }}>
-            <div className="card" style={styleRegistroModal}>
+            <div className="card" style={styleRegistroModal} onClick={toggleAccordionVehiculo}>
             <br />
             <h1 className="card-title">
                 <div style={{float: 'right'}} className='px-4'>
@@ -234,9 +240,36 @@ const [cardsData, setCardsData] = useState([
                 <p className="fs-4">Detalles del vehiculo</p>
             </h1>   
             </div>
-            <div>
-
-            </div>
+            {
+                show3 &&
+                <div className='container'>
+                    <div className='row'>
+                        <div className='col-sm-6 col-md-6 col-xl-4 p-4'>
+                          <ul className="list-group list-group-flush">
+                            <p className="list-group-item-dark btn mr-auto" aria-current="true">Id vehículo: {'00001'}</p>
+                            <li className="list-group-item btn mr-auto">Tipo de vehículo: {''}</li>
+                            <li className="list-group-item btn mr-auto">Placas: {''}</li>
+                            <li className="list-group-item btn mr-auto">Marca: {''}</li>
+                            <li className="list-group-item btn mr-auto">Modelo: {''}</li>
+                          </ul>
+                        </div>
+                        <div className='col-sm-6 col-md-6 col-xl-4 p-4'>
+                          <ul className="list-group list-group-flush">
+                            <p className="list-group-item-dark btn mr-auto" aria-current="true">Numero de circulacion: {''}</p>
+                            <li className="list-group-item mr-auto">QR: {''}</li>
+                          </ul>
+                        </div>
+                        <div className='col-sm-6 col-md-6 col-xl-4 p-4'>
+                          <ul className="list-group list-group-flush">
+                            <p className="list-group-item-dark btn mr-auto" aria-current="true">Seguro vehicular: {''}</p>
+                            <li className="list-group-item mr-auto">QR: {''}</li>
+                          </ul>
+                        </div>
+                        
+                    </div>
+                </div>
+            }
+                
         </section>   
     </Dialog>
     </>
