@@ -13,7 +13,7 @@ export const NavBarPrincipal = () => {
 
                 <button className="navbar-toggler" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasNavbar"
                     aria-controls="offcanvasNavbar">
-                    <span className="navbar-toggler-icon"></span>
+                    <i className="pi pi-bars text-light" style={{ fontSize: '2rem' }}></i>
                 </button>
                 <div className="offcanvas offcanvas-end" tabIndex="-1" id="offcanvasNavbar"
                     aria-labelledby="offcanvasNavbarLabel">
@@ -41,6 +41,12 @@ export const NavBarPrincipal = () => {
                                 <a className="nav-link" href="#">
                                     <i className="bi bi-pc-display-horizontal px-2"></i>
                                     Empresas</a>
+                                <hr size='3' />
+                            </li>
+                            <li className="nav-item">
+                                <Link className="nav-link" to='/vehiculos'>
+                                <i className="pi pi-car px-2"></i>
+                                    Vehículos</Link>
                                 <hr size='3' />
                             </li>
                             <li className="nav-item">

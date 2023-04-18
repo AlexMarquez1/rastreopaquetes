@@ -6,6 +6,8 @@ import { RegistroUsuariosScreen } from "../rastreo/pages/RegistroUsuariosScreen"
 import { RegistroViajesScreen } from "../rastreo/pages/RegistroViajesScreen"
 import HistorialViajesScreen from "../rastreo/pages/HistorialViajesScreen"
 import { NavBarPrincipal } from "../rastreo/components/NavBarPrincipal"
+import ConductoresScreen from "../rastreo/pages/ConductoresScreen"
+import VehiculosScreen from "../rastreo/pages/VehiculosScreen"
 
 export const AppRouter = () => {
   return (
@@ -19,6 +21,8 @@ export const AppRouter = () => {
             <Route path="viajes" element={<RegistroViajesScreen/>}/>
             <Route path="usuarios" element={<RegistroUsuariosScreen/>}/>
             <Route path="historial" element={<HistorialViajesScreen/>}/>
+            <Route path="conductores" element={<ConductoresScreen/>}/>
+            <Route path="vehiculos" element={<VehiculosScreen/>}/>
             <Route path="mapa" element={<Mapa/>}/>
         </Routes>
     </div>    
