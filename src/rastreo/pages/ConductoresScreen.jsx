@@ -1,4 +1,5 @@
 import React from 'react'
+import NuevoConductorForm from '../components/NuevoConductorForm'
 
 const styleRegistro = {
     width: '85%',
@@ -14,6 +15,7 @@ function ConductoresScreen() {
             <br />
             <h1 className="card-title">
                 <p className="fs-4"></p>
+                <NuevoConductorForm/>
             </h1>
         </div>
     </section>

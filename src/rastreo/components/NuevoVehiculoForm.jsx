@@ -1,11 +1,8 @@
 import { Field, Form, Formik } from 'formik';
 import { Button } from 'primereact/button';
 import { InputText } from 'primereact/inputtext';
-import { InputNumber } from 'primereact/inputnumber';
 import { FileUpload } from 'primereact/fileupload';
 import { Dropdown } from 'primereact/dropdown';
-import { Password } from 'primereact/password';
-import React, { useState } from 'react'
 import { Calendar } from 'primereact/calendar';
 
 const NuevoVehiculoForm = () => {

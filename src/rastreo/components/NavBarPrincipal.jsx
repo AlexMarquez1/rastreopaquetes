@@ -38,6 +38,12 @@ export const NavBarPrincipal = () => {
                                 <hr size='3' />
                             </li>
                             <li className="nav-item">
+                                <Link  className="nav-link" to='/conductores'>
+                                <i className="pi pi-users px-2"></i>
+                                    Conductores</Link>
+                                <hr size='3' />
+                            </li>
+                            <li className="nav-item">
                                 <a className="nav-link" href="#">
                                     <i className="bi bi-pc-display-horizontal px-2"></i>
                                     Empresas</a>
