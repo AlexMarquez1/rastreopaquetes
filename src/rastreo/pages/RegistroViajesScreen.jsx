@@ -9,6 +9,7 @@ import { Calendar } from 'primereact/calendar';
 import { SeleccionarUbicacion } from '../components/SeleccionarUbicacion';
 import { Dialog } from 'primereact/dialog';
 import { InformacionConductor } from '../components/InformacionConductor';
+import { addScaleCorrector } from 'framer-motion';
 
 const styleRegistro = {
   width: '85%',
@@ -20,16 +21,35 @@ const colorTexto = {
 }
 
 const empresas = [
-  { nombre: 'Empresa 1', codigo: 'E1' },
-  { nombre: 'Empresa 2', codigo: 'E2' },
-  { nombre: 'Empresa 3', codigo: 'E3' },
-  { nombre: 'Empresa 4', codigo: 'E4' },
-  { nombre: 'Empresa 5', codigo: 'E5' }
+  {
+    rasonSocial: 'Empresa 1',
+    direccion: '',
+    rfc: 'EPLDH213',
+    telefono: '',
+    correo: '',
+    giroEmpresa: '',
+  },
+  {
+    rasonSocial: 'Empresa 2',
+    direccion: '',
+    rfc: 'DHAIUVDN243',
+    telefono: '',
+    correo: '',
+    giroEmpresa: '',
+  },
+  {
+    rasonSocial: 'Empresa 3',
+    direccion: '',
+    rfc: 'JHOPAJBW1231',
+    telefono: '',
+    correo: '',
+    giroEmpresa: '',
+  },
 ];
 const conductores = [
   {
     idConductor: 'C2',
-    foto:'https://firebasestorage.googleapis.com/v0/b/isae-de6da.appspot.com/o/Sesion%2FUsuarios%2Falondra.santiago%2F7904-alondra.santiago.png?alt=media&token=7904-alondra.santiago.png.png',
+    foto: 'https://firebasestorage.googleapis.com/v0/b/isae-de6da.appspot.com/o/Sesion%2FUsuarios%2Falondra.santiago%2F7904-alondra.santiago.png?alt=media&token=7904-alondra.santiago.png.png',
     nombreCompleto: 'Alondra Santiago Bernabe',
     edad: '54',
     tipoDeSangre: 'O+',
@@ -41,7 +61,7 @@ const conductores = [
   },
   {
     idConductor: 'C3',
-    foto:'https://firebasestorage.googleapis.com/v0/b/isae-de6da.appspot.com/o/Sesion%2FUsuarios%2Fc.alejandromarquez%2F5803-c.alejandromarquez.png?alt=media&token=5803-c.alejandromarquez.png.png',
+    foto: 'https://firebasestorage.googleapis.com/v0/b/isae-de6da.appspot.com/o/Sesion%2FUsuarios%2Fc.alejandromarquez%2F5803-c.alejandromarquez.png?alt=media&token=5803-c.alejandromarquez.png.png',
     nombreCompleto: 'Carlos Alejandro Marquez Martinez',
     edad: '76',
     tipoDeSangre: 'A',
@@ -53,7 +73,7 @@ const conductores = [
   },
   {
     idConductor: 'C4',
-    foto:'https://firebasestorage.googleapis.com/v0/b/isae-de6da.appspot.com/o/Sesion%2FUsuarios%2Fgeovani.rubio%2F4737-geovani.rubio.png?alt=media&token=4737-geovani.rubio.png.png',
+    foto: 'https://firebasestorage.googleapis.com/v0/b/isae-de6da.appspot.com/o/Sesion%2FUsuarios%2Fgeovani.rubio%2F4737-geovani.rubio.png?alt=media&token=4737-geovani.rubio.png.png',
     nombreCompleto: 'Geovanni Rubio',
     edad: '64',
     tipoDeSangre: 'A',
@@ -65,7 +85,7 @@ const conductores = [
   },
   {
     idConductor: 'C5',
-    foto:'https://firebasestorage.googleapis.com/v0/b/isae-de6da.appspot.com/o/Sesion%2FUsuarios%2Fgerardo.felman%2F8552-gerardo.felman.png?alt=media&token=8552-gerardo.felman.png.png',
+    foto: 'https://firebasestorage.googleapis.com/v0/b/isae-de6da.appspot.com/o/Sesion%2FUsuarios%2Fgerardo.felman%2F8552-gerardo.felman.png?alt=media&token=8552-gerardo.felman.png.png',
     nombreCompleto: 'Gerardo Gonzales Felman',
     edad: '32',
     tipoDeSangre: 'A',
@@ -78,30 +98,34 @@ const conductores = [
 ];
 
 const initialValues = {
-  Empresa: {
-    nombre: '',
-    direccion: '',
-    rfc: '',
-  },
-  Conductor: {
-    idConductor: '',
-    nombreCompleto: '',
-    edad: '',
-    tipoDeSangre: '',
-    numeroContacto: '',
-    numeroLicencia: '',
-    tipoLicencia: '',
-    vigencia: '',
-    licencia: '',
-  },
-  diaSalida: '',
-  direccionPartida: '',
-  latPartida: '',
-  lngPartida: '',
-  direccionLlegada: '',
-  latLlegada: '',
-  lngLlegada: '',
-
+  viaje:{
+    Empresa: {
+      rasonSocial: '',
+      direccion: '',
+      rfc: '',
+      telefono: '',
+      correo: '',
+      giroEmpresa: '',
+    },
+    Conductor: {
+      idConductor: '',
+      nombreCompleto: '',
+      edad: '',
+      tipoDeSangre: '',
+      numeroContacto: '',
+      numeroLicencia: '',
+      tipoLicencia: '',
+      vigencia: '',
+      licencia: '',
+    },
+    diaSalida: '',
+    direccionPartida: '',
+    latPartida: '',
+    lngPartida: '',
+    direccionLlegada: '',
+    latLlegada: '',
+    lngLlegada: '',
+  }
 };
 
 export const RegistroViajesScreen = () => {
@@ -120,6 +144,7 @@ export const RegistroViajesScreen = () => {
 
   const onSubmit = (values) => {
     console.log(values);
+    // resetForm();
   };
 
   return (
@@ -131,46 +156,66 @@ export const RegistroViajesScreen = () => {
             <p className="fs-4">Nuevo Viaje</p>
           </h1>
           <Formik initialValues={initialValues} onSubmit={onSubmit}>
-            <div className="container text-center">
-              <div className="row align-items-center">
-                <div className="col">
-                  <div className="p-inputgroup flex-1">
-                    <span className='p-float-label'>
-                      <Dropdown value={empresaSeleccionada} onChange={(e) => setEmpresaSeleccionada(e.value)} options={empresas} optionLabel="nombre"
-                        showClear filter filterPlaceholder='Buscar por nombre' emptyFilterMessage='Empresa no registrada' placeholder="Selecciona una empresa" className="w-full md:w-14rem" />
-                      <label htmlFor="nombre" style={colorTexto}>Empresa</label>
-                    </span>
-                    <Button icon="pi pi-building" onClick={() => setMostrarEmpresa(true)} disabled={empresaSeleccionada === undefined ? true : false} />
+            {({ values, handleChange, handleSubmit }) => (
+              <Form onSubmit={handleSubmit}>
+                <div className="container text-center">
+                  <div className="row align-items-center">
+                    <div className="col">
+                      <div className="p-inputgroup flex-1">
+                        <span className='p-float-label'>
+                          <Field
+                          name='viaje.Empresa'
+                          as= {Dropdown}
+                          value={values.viaje.Empresa} 
+                          onChange={handleChange} 
+                          options={empresas} 
+                          optionLabel="rasonSocial"
+                          
+                          filter 
+                          filterPlaceholder='Buscar por nombre' 
+                          emptyFilterMessage='Empresa no registrada' 
+                          placeholder="Selecciona una empresa" 
+                          className="w-full md:w-14rem" 
+                          required={true}
+                          />
+                          <label className='fs-6' htmlFor="nombre" style={colorTexto}>Empresa</label>
+                        </span>
+                        <Button icon="pi pi-building" type='button' onClick={() => setMostrarEmpresa(true)} disabled={values.viaje.Empresa.rasonSocial === '' ? true : false} />
+                      </div>
+                    </div>
+                    <div className="col">
+                      <div className="p-inputgroup flex-1">
+                        <span className='p-float-label'>
+                          <Dropdown value={conductorSeleccionado}  onChange={(e) => setConductorSeleccionado(e.value)} options={conductores} optionLabel="nombreCompleto"
+                            showClear filter filterPlaceholder='Buscar por nombre' emptyFilterMessage='Conductor no registrado' placeholder="Selecciona una empresa" className="w-full md:w-14rem" />
+                          <label className='fs-6' htmlFor="conductor" style={colorTexto}>Conductor</label>
+                        </span>
+                        <Button icon="pi pi-user" onClick={() => setMostrarConductor(true)} disabled={conductorSeleccionado === undefined ? true : false} />
+                      </div>
+                    </div>
+                    <div className="col">
+                      <div className="p-inputgroup flex-1">
+                        <span className='p-float-label'>
+                          <Calendar inputId='salida' name='salida' showIcon value={diaSalida} onChange={(e) => { setDiaSalida(e.value) }} />
+                          <label htmlFor="Dia de salida" style={colorTexto}>Dia de salida</label>
+                        </span>
+                      </div>
+                    </div>
+                    <div className="col">
+                      <Button label='Registrar'/>
+                    </div>
+                  </div>
+
+                  <div className="row align-items-center">
+
+                    <div className='col'>
+                      <SeleccionarUbicacion />
+
+                    </div>
                   </div>
                 </div>
-                <div className="col">
-                  <div className="p-inputgroup flex-1">
-                    <span className='p-float-label'>
-                      <Dropdown value={conductorSeleccionado} onChange={(e) => setConductorSeleccionado(e.value)} options={conductores} optionLabel="nombreCompleto"
-                        showClear filter filterPlaceholder='Buscar por nombre' emptyFilterMessage='Conductor no registrado' placeholder="Selecciona una empresa" className="w-full md:w-14rem" />
-                      <label htmlFor="conductor" style={colorTexto}>Conductor</label>
-                    </span>
-                    <Button icon="pi pi-user" onClick={() => setMostrarConductor(true)} disabled={conductorSeleccionado === undefined ? true : false} />
-                  </div>
-                </div>
-                <div className="col">
-                  <div className="p-inputgroup flex-1">
-                    <span className='p-float-label'>
-                      <Calendar inputId='salida' name='salida' showIcon value={diaSalida} onChange={(e) => { setDiaSalida(e.value) }} />
-                      <label htmlFor="Dia de salida" style={colorTexto}>Dia de salida</label>
-                    </span>
-                  </div>
-                </div>
-              </div>
-
-              <div className="row align-items-center">
-
-                <div className='col'>
-                  <SeleccionarUbicacion />
-
-                </div>
-              </div>
-            </div>
+              </Form>
+            )}
           </Formik>
         </div>
       </section>
@@ -181,7 +226,7 @@ export const RegistroViajesScreen = () => {
         </p>
       </Dialog>
       <Dialog header="Conductor" visible={mostrarConductor} style={{ width: '50vw' }} onHide={() => setMostrarConductor(false)}>
-        <InformacionConductor conductorSeleccionado={conductorSeleccionado}/>
+        <InformacionConductor conductorSeleccionado={conductorSeleccionado} />
       </Dialog>
     </>
   )
