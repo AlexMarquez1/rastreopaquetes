@@ -8,6 +8,7 @@ import HistorialViajesScreen from "../rastreo/pages/HistorialViajesScreen"
 import { NavBarPrincipal } from "../rastreo/components/NavBarPrincipal"
 import ConductoresScreen from "../rastreo/pages/ConductoresScreen"
 import VehiculosScreen from "../rastreo/pages/VehiculosScreen"
+import EmpresaScreen from "../rastreo/pages/EmpresaScreen"
 
 export const AppRouter = () => {
   return (
@@ -23,6 +24,7 @@ export const AppRouter = () => {
             <Route path="historial" element={<HistorialViajesScreen/>}/>
             <Route path="conductores" element={<ConductoresScreen/>}/>
             <Route path="vehiculos" element={<VehiculosScreen/>}/>
+            <Route path="empresas" element={<EmpresaScreen/>}/>
             <Route path="mapa" element={<Mapa/>}/>
         </Routes>
     </div>    
