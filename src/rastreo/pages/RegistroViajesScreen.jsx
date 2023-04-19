@@ -1,10 +1,12 @@
 import React, { useState } from 'react'
 import { NavBarPrincipal } from '../components/NavBarPrincipal'
 import { InputText } from 'primereact/inputtext';
+import { Dropdown } from 'primereact/dropdown';
 import { Button } from 'primereact/button';
 import { Calendar } from 'primereact/calendar';
 
 import { SeleccionarUbicacion } from '../components/SeleccionarUbicacion';
+import { Dialog } from 'primereact/dialog';
 
 const styleRegistro = {
   width: '85%',
@@ -15,9 +17,27 @@ const colorTexto = {
   color: 'black',
 }
 
+const empresas= [
+  { nombre: 'Empresa 1', codigo: 'E1' },
+  { nombre: 'Empresa 2', codigo: 'E2' },
+  { nombre: 'Empresa 3', codigo: 'E3' },
+  { nombre: 'Empresa 4', codigo: 'E4' },
+  { nombre: 'Empresa 5', codigo: 'E5' }
+];
+const conductores= [
+  { nombre: 'Conductor 1', codigo: 'C1' },
+  { nombre: 'Conductor 2', codigo: 'C2' },
+  { nombre: 'Conductor 3', codigo: 'C3' },
+  { nombre: 'Conductor 4', codigo: 'C4' },
+  { nombre: 'Conductor 5', codigo: 'C5' }
+];
+
 export const RegistroViajesScreen = () => {
 
   const [loading, setLoading] = useState(false);
+  const [mensaje, setMensaje] = useState(false);
+  const [empresaSeleccionada, setEmpresaSeleccionada] = useState(undefined);
+  const [conductorSeleccionado, setConductorSeleccionado] = useState(undefined);
 
   const registrarViaje = async (e) => {
     e.preventDefault();
@@ -30,8 +50,6 @@ export const RegistroViajesScreen = () => {
 
   return (
     <>
-      <NavBarPrincipal />
-
       <section className="section_item flex-container" >
         <div className="card form" style={styleRegistro}>
           <br />
@@ -44,43 +62,23 @@ export const RegistroViajesScreen = () => {
                 <div className="col">
                   <div className="p-inputgroup flex-1">
                     <span className='p-float-label'>
-                      <InputText required={true} inputid='nombre' name='nombre' onChange={handleInputChange} />
+                      <Dropdown value={empresaSeleccionada} onChange={(e) => setEmpresaSeleccionada(e.value)} options={empresas} optionLabel="nombre"
+                        showClear filter filterPlaceholder='Buscar por nombre' emptyFilterMessage='Empresa no registrada'  placeholder="Selecciona una empresa" className="w-full md:w-14rem" />
                       <label htmlFor="nombre" style={colorTexto}>Empresa</label>
                     </span>
+                    <Button icon="pi pi-building" onClick={() => setMensaje(true)} disabled={empresaSeleccionada === undefined ? true : false} />
                   </div>
                 </div>
-              </div>
-              <div className="row align-items-center">
                 <div className="col">
                   <div className="p-inputgroup flex-1">
                     <span className='p-float-label'>
-                      <InputText inputid='telefono' name='telefonocontacto' disabled={true} />
-                      <label htmlFor="telefono" style={colorTexto}>Rason social</label>
+                    <Dropdown value={conductorSeleccionado} onChange={(e) => setConductorSeleccionado(e.value)} options={conductores} optionLabel="nombre"
+                        showClear filter filterPlaceholder='Buscar por nombre' emptyFilterMessage='Conductor no registrado' placeholder="Selecciona una empresa" className="w-full md:w-14rem" />
+                      <label htmlFor="conductor" style={colorTexto}>Conductor</label>
                     </span>
+                    <Button icon="pi pi-user" onClick={() => setMensaje(true)} disabled={conductorSeleccionado === undefined ? true : false} />
                   </div>
                 </div>
-              </div>
-              <div className="row align-items-center">
-                <div className="col">
-                  <div className="p-inputgroup flex-1">
-                    <span className='p-float-label'>
-                      <InputText inputid='usuario' name='usuario' disabled={true} />
-                      <label htmlFor="usuario" style={colorTexto}>Direccion</label>
-                    </span>
-                  </div>
-                </div>
-              </div>
-              <div className="row align-items-center">
-                <div className="col">
-                  <div className="p-inputgroup flex-1">
-                    <span className='p-float-label'>
-                      <InputText inputid='usuario' name='usuario' disabled={true} />
-                      <label htmlFor="usuario" style={colorTexto}>RFC</label>
-                    </span>
-                  </div>
-                </div>
-              </div>
-              <div className="row align-items-center">
                 <div className="col">
                   <div className="p-inputgroup flex-1">
                     <span className='p-float-label'>
@@ -102,6 +100,12 @@ export const RegistroViajesScreen = () => {
           </form>
         </div>
       </section>
+
+      <Dialog header="Empresa" visible={mensaje} style={{ width: '50vw' }} onHide={() => setMensaje(false)}>
+        <p className="m-0">
+          Empresa: Nombre de la empresa
+        </p>
+      </Dialog>
     </>
 
 

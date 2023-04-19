@@ -38,7 +38,6 @@ export const RegistroUsuariosScreen = () => {
     ];
     return (
         <>
-            <NavBarPrincipal />
             <div className='fondo2'>
                 <NuevoUsuario usuarioActual={usuarioActual} setUsuarioActual={setusuarioActual}/>
                 <section className="section_item flex-container" style={{ paddingTop: '5%' }}>
