@@ -124,7 +124,7 @@ const NuevaEmpresasForm = () => {
                                             <span className='p-float-label'>
                                                 <Field
                                                     as={InputText}
-                                                    name="giro de la empresa"
+                                                    name="girodelaempresa"
                                                     onChange={handleChange}
                                                     value={values.girodelaempresa}
                                                     inputid='girodelaempresa'
