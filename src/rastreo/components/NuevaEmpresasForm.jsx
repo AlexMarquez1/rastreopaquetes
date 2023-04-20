@@ -2,6 +2,8 @@ import { Field, Form, Formik } from 'formik';
 import React from 'react'
 import { Dropdown } from 'primereact/dropdown';
 import { InputText } from 'primereact/inputtext';
+import { Button } from 'primereact/button';
+
 
 
 const NuevaEmpresasForm = () => {
@@ -26,7 +28,6 @@ const NuevaEmpresasForm = () => {
                     {({ values, handleChange, handleSubmit }) => (
                         <Form onSubmit={handleSubmit}>
                             <div className='container'>
-                                <h1 className='text-start p-3'>Datos de la empresa</h1>
                                 <div className='row'>
                                     <div className="col-sm-6 col-md-6 col-xl-4 pb-5">
                                         <div className='p-inputgroup flex-1'>
@@ -64,8 +65,82 @@ const NuevaEmpresasForm = () => {
                                             </span>
                                         </div>
                                     </div>
+                                    <div className="col-sm-6 col-md-6 col-xl-4 pb-5">
+                                        <div className='p-inputgroup flex-1'>
+                                            <span className='p-float-label'>
+                                                <Field
+                                                    as={InputText}
+                                                    name="rfc"
+                                                    onChange={handleChange}
+                                                    value={values.rfc}
+                                                    inputid='rfc'
+                                                    required={true}
+                                                />
+                                                <span className="p-inputgroup-addon">
+                                                    <i className="pi pi-building"></i>
+                                                </span>
+                                                <label htmlFor="rfc" className='text-body'>RFC</label>
+                                            </span>
+                                        </div>
+                                    </div>
+                                    <div className="col-sm-6 col-md-6 col-xl-4 pb-5">
+                                        <div className='p-inputgroup flex-1'>
+                                            <span className='p-float-label'>
+                                                <Field
+                                                    as={InputText}
+                                                    name="telefono"
+                                                    onChange={handleChange}
+                                                    value={values.telefono}
+                                                    inputid='telefono'
+                                                    required={true}
+                                                />
+                                                <span className="p-inputgroup-addon">
+                                                    <i className="pi pi-building"></i>
+                                                </span>
+                                                <label htmlFor="telefono" className='text-body'>Telefono</label>
+                                            </span>
+                                        </div>
+                                    </div>
+                                    <div className="col-sm-6 col-md-6 col-xl-4 pb-5">
+                                        <div className='p-inputgroup flex-1'>
+                                            <span className='p-float-label'>
+                                                <Field
+                                                    as={InputText}
+                                                    name="correo"
+                                                    onChange={handleChange}
+                                                    value={values.correo}
+                                                    inputid='telefono'
+                                                    required={true}
+                                                />
+                                                <span className="p-inputgroup-addon">
+                                                    <i className="pi pi-building"></i>
+                                                </span>
+                                                <label htmlFor="correo" className='text-body'>Correo</label>
+                                            </span>
+                                        </div>
+                                    </div>
+                                    <div className="col-sm-6 col-md-6 col-xl-4 pb-5">
+                                        <div className='p-inputgroup flex-1'>
+                                            <span className='p-float-label'>
+                                                <Field
+                                                    as={InputText}
+                                                    name="giro de la empresa"
+                                                    onChange={handleChange}
+                                                    value={values.girodelaempresa}
+                                                    inputid='girodelaempresa'
+                                                    required={true}
+                                                />
+                                                <span className="p-inputgroup-addon">
+                                                    <i className="pi pi-building"></i>
+                                                </span>
+                                                <label htmlFor="girodelaempresa" className='text-body'>Giro de la empresa</label>
+                                            </span>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
+                           
+                            <Button type="submit" label="Submit" className='m-4'/>
                         </Form>
                     )}
                 </Formik>
@@ -75,4 +150,8 @@ const NuevaEmpresasForm = () => {
 }
 
 export default NuevaEmpresasForm
+
+
+
+
 
