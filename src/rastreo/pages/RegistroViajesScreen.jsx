@@ -97,8 +97,47 @@ const conductores = [
   },
 ];
 
+const vehiculos = [
+  {
+    idVeiculo: '',
+    tipo: 'Motocicleta',
+    marca: '',
+    modelo: '',
+    placas: '',
+    numeroSerie: '',
+    tarjetaCirculacion: '',
+    Seguro: {
+      aseguradora: '',
+      numeroPolisa: '',
+      telefono: '',
+      web: '',
+      fechaAlta: '',
+      fechaVencimiento: '',
+      poliza: '',
+    }
+  },
+  {
+    idVeiculo: '',
+    tipo: 'Camion',
+    marca: '',
+    modelo: '',
+    placas: '',
+    numeroSerie: '', 
+    tarjetaCirculacion: '',
+    Seguro: {
+      aseguradora: '',
+      numeroPolisa: '',
+      telefono: '',
+      web: '',
+      fechaAlta: '',
+      fechaVencimiento: '',
+      poliza: '',
+    }
+  }
+];
+
 const initialValues = {
-  viaje:{
+  viaje: {
     Empresa: {
       rasonSocial: '',
       direccion: '',
@@ -118,6 +157,26 @@ const initialValues = {
       vigencia: '',
       licencia: '',
     },
+    Vehiculo: {
+      idVeiculo: '',
+      tipo: '',
+      marca: '',
+      modelo: '',
+      placas: '',
+      numeroSerie: '',
+      tarjetaCirculacion: '',
+      Seguro: {
+        aseguradora: '',
+        numeroPolisa: '',
+        telefono: '',
+        web: '',
+        fechaAlta: '',
+        fechaVencimiento: '',
+        poliza: '',
+      }
+    },
+    descripcionViaje: '',
+    tipoServicio: '',
     diaSalida: '',
     direccionPartida: '',
     latPartida: '',
@@ -133,9 +192,7 @@ export const RegistroViajesScreen = () => {
   const [loading, setLoading] = useState(false);
   const [mostrarEmpresa, setMostrarEmpresa] = useState(false);
   const [mostrarConductor, setMostrarConductor] = useState(false);
-  const [empresaSeleccionada, setEmpresaSeleccionada] = useState(undefined);
-  const [conductorSeleccionado, setConductorSeleccionado] = useState(undefined);
-  const [diaSalida, setDiaSalida] = useState('');
+  const [mostrarVehiculo, setMostrarVehiculo] = useState(false);
 
   const registrarViaje = async (e) => {
     e.preventDefault();
@@ -158,76 +215,136 @@ export const RegistroViajesScreen = () => {
           <Formik initialValues={initialValues} onSubmit={onSubmit}>
             {({ values, handleChange, handleSubmit }) => (
               <Form onSubmit={handleSubmit}>
-                <div className="container text-center">
-                  <div className="row align-items-center">
+                <div className="container text-start">
+                  <div className="row">
                     <div className="col">
                       <div className="p-inputgroup flex-1">
-                        <span className='p-float-label'>
-                          <Field
+                        <Field
                           name='viaje.Empresa'
-                          as= {Dropdown}
-                          value={values.viaje.Empresa} 
-                          onChange={handleChange} 
-                          options={empresas} 
+                          as={Dropdown}
+                          value={values.viaje.Empresa}
+                          onChange={handleChange}
+                          options={empresas}
                           optionLabel="rasonSocial"
-                          
-                          filter 
-                          filterPlaceholder='Buscar por nombre' 
-                          emptyFilterMessage='Empresa no registrada' 
-                          placeholder="Selecciona una empresa" 
-                          className="w-full md:w-14rem" 
+                          filter
+                          filterPlaceholder='Buscar por nombre'
+                          emptyFilterMessage='Empresa no registrada'
+                          placeholder="Selecciona una empresa"
+                          className="w-full md:w-14rem"
                           required={true}
-                          />
-                          <label className='fs-6' htmlFor="nombre" style={colorTexto}>Empresa</label>
-                        </span>
+                        />
                         <Button icon="pi pi-building" type='button' onClick={() => setMostrarEmpresa(true)} disabled={values.viaje.Empresa.rasonSocial === '' ? true : false} />
                       </div>
                     </div>
                     <div className="col">
                       <div className="p-inputgroup flex-1">
-                        <span className='p-float-label'>
-                          <Dropdown value={conductorSeleccionado}  onChange={(e) => setConductorSeleccionado(e.value)} options={conductores} optionLabel="nombreCompleto"
-                            showClear filter filterPlaceholder='Buscar por nombre' emptyFilterMessage='Conductor no registrado' placeholder="Selecciona una empresa" className="w-full md:w-14rem" />
-                          <label className='fs-6' htmlFor="conductor" style={colorTexto}>Conductor</label>
-                        </span>
-                        <Button icon="pi pi-user" onClick={() => setMostrarConductor(true)} disabled={conductorSeleccionado === undefined ? true : false} />
+                        <Field
+                          name='viaje.Conductor'
+                          as={Dropdown}
+                          value={values.viaje.Conductor}
+                          onChange={handleChange}
+                          options={conductores}
+                          optionLabel="nombreCompleto"
+                          filter
+                          filterPlaceholder='Buscar por nombre'
+                          emptyFilterMessage='Conductor no registrado'
+                          placeholder="Selecciona un conductor"
+                          className="w-full md:w-14rem"
+                          required={true}
+                        />
+                        <Button icon="pi pi-user" type='button' onClick={() => setMostrarConductor(true)} disabled={values.viaje.Conductor.nombreCompleto === '' ? true : false} />
                       </div>
                     </div>
                     <div className="col">
                       <div className="p-inputgroup flex-1">
-                        <span className='p-float-label'>
-                          <Calendar inputId='salida' name='salida' showIcon value={diaSalida} onChange={(e) => { setDiaSalida(e.value) }} />
-                          <label htmlFor="Dia de salida" style={colorTexto}>Dia de salida</label>
+                        <Field
+                          name="viaje.diaSalida"
+                          as={Calendar}
+                          value={values.viaje.diaSalida}
+                          onChange={handleChange}
+                          inputId='salida'
+                          showIcon
+                          placeholder="Fecha de salida"
+                          dateFormat='dd/mm/yy'
+                        />
+                      </div>
+                    </div>
+                  </div>
+
+                  <div className="row">
+                    <div className="col">
+                      <div className="p-inputgroup flex-1">
+
+                        <Field
+                          name='viaje.Vehiculo'
+                          as={Dropdown}
+                          value={values.viaje.Vehiculo}
+                          onChange={handleChange}
+                          options={vehiculos}
+                          optionLabel="tipo"
+                          filter
+                          filterPlaceholder='Buscar por tipo'
+                          emptyFilterMessage='Vehiculo no registrado'
+                          placeholder="Selecciona un vehiculo"
+                          className="w-full md:w-14rem"
+                          required={true}
+                        />
+                        <Button icon="pi pi-car" type='button' onClick={() => setMostrarVehiculo(true)} disabled={values.viaje.Vehiculo.tipo === '' ? true : false} />
+
+                      </div>
+                    </div>
+                    <div className='col'>
+                      <div className="p-inputgroup flex-1">
+                        <Field
+                          name='viaje.tipoServicio'
+                          as={Dropdown}
+                          value={values.viaje.tipoServicio}
+                          onChange={handleChange}
+                          options={[{ tipo: 'Consolidado', codigo: 'CONS' }, { tipo: 'Completo', codigo: 'COM' }]}
+                          optionLabel="tipo"
+                          placeholder="Selecciona un tipo de servicio"
+                          className="w-full md:w-14rem"
+                          required={true}
+                        />
+                        <span className="p-inputgroup-addon">
+                          <i className="pi pi-truck"></i>
                         </span>
                       </div>
                     </div>
-                    <div className="col">
-                      <Button label='Registrar'/>
+                    <div className='col'>
+                      <div className="p-inputgroup flex-1">
+                        <Button label='Agregar' />
+                      </div>
                     </div>
                   </div>
 
                   <div className="row align-items-center">
-
                     <div className='col'>
-                      <SeleccionarUbicacion />
+                      <div className="p-inputgroup flex-1">
+                        <SeleccionarUbicacion />
+                      </div>
 
                     </div>
                   </div>
                 </div>
+                <Dialog header="Empresa" visible={mostrarEmpresa} style={{ width: '50vw' }} onHide={() => setMostrarEmpresa(false)}>
+                  <p className="m-0">
+                    Empresa: Informacion de la empresa
+                  </p>
+                </Dialog>
+                <Dialog header="Vehiculo" visible={mostrarVehiculo} style={{ width: '50vw' }} onHide={() => setMostrarVehiculo(false)}>
+                  <p className="m-0">
+                    Vehiculo: Informacion del vehiculo
+                  </p>
+                </Dialog>
+                <Dialog header="Conductor" visible={mostrarConductor} style={{ width: '50vw' }} onHide={() => setMostrarConductor(false)}>
+                  <InformacionConductor conductorSeleccionado={values.viaje.Conductor} />
+                </Dialog>
               </Form>
             )}
           </Formik>
         </div>
       </section>
-
-      <Dialog header="Empresa" visible={mostrarEmpresa} style={{ width: '50vw' }} onHide={() => setMostrarEmpresa(false)}>
-        <p className="m-0">
-          Empresa: Nombre de la empresa
-        </p>
-      </Dialog>
-      <Dialog header="Conductor" visible={mostrarConductor} style={{ width: '50vw' }} onHide={() => setMostrarConductor(false)}>
-        <InformacionConductor conductorSeleccionado={conductorSeleccionado} />
-      </Dialog>
     </>
   )
 }
