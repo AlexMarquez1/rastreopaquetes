@@ -45,7 +45,7 @@ const NuevoVehiculoForm = () => {
       <Formik initialValues={initialValues} onSubmit={onSubmit}>
         {({ values, handleChange, handleSubmit }) => (
           <Form onSubmit={handleSubmit}>
-            <div className='container'>
+            <div className='container text-start'>
             <h2 className='text-start p-3'>Datos del vehículo</h2>
                 <div className='row'>
                     <div className="col-sm-6 col-md-6 col-xl-4 pb-5">

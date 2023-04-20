@@ -13,10 +13,10 @@ function ConductoresScreen() {
     <section className="section_item flex-container" style={{ paddingTop: '5%' }}>
         <div className="card form" style={styleRegistro}>
             <br />
-            <h1 className="card-title">
-                <p className="fs-4"></p>
-                <NuevoConductorForm/>
+            <h1 className="card-title pb-4">
+                <p className="fs-4">Registrar un nuevo conductor</p>
             </h1>
+                <NuevoConductorForm/>
         </div>
     </section>
     </>
