@@ -178,7 +178,7 @@ const initialValues = {
     descripcionViaje: '',
     tipoServicio: '',
     diaSalida: '',
-    direccionPartida: '',
+    direccionPartida: 'hola',
     latPartida: '',
     lngPartida: '',
     direccionLlegada: '',
@@ -321,7 +321,7 @@ export const RegistroViajesScreen = () => {
                   <div className="row align-items-center">
                     <div className='col'>
                       <div className="p-inputgroup flex-1">
-                        <SeleccionarUbicacion />
+                        <SeleccionarUbicacion direccionPartida={values.viaje.direccionPartida} handleChange={handleChange}/>
                       </div>
 
                     </div>
@@ -338,7 +338,7 @@ export const RegistroViajesScreen = () => {
                   </p>
                 </Dialog>
                 <Dialog header="Conductor" visible={mostrarConductor} style={{ width: '50vw' }} onHide={() => setMostrarConductor(false)}>
-                  <InformacionConductor conductorSeleccionado={values.viaje.Conductor} />
+                  <InformacionConductor conaductorSeleccionado={values.viaje.Conductor} />
                 </Dialog>
               </Form>
             )}

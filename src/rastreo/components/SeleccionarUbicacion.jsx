@@ -6,6 +6,7 @@ import PlacesAutocomplete, {
 } from 'react-places-autocomplete';
 import { InputText } from 'primereact/inputtext';
 import { InputTextarea } from 'primereact/inputtextarea';
+import { useField } from 'formik';
 
 const lib = [["places"]];
 const colorTexto = {
@@ -16,16 +17,17 @@ const center = {
     lng: -99.134695,
 };
 
-export const SeleccionarUbicacion = () => {
+export const SeleccionarUbicacion = ({ direccionPartida, handleChange }) => {
     const [selectedLocation, setSelectedLocation] = useState(null);
     const [direccionLlegada, setDireccionLlegada] = useState('');
-    const [direccionPartida, setDireccionPartida] = useState('');
+    // const [direccionPartida, setDireccionPartida] = useState('');
+    const [partidaSeleccionada, setPartidaSeleccionada] = useState(false);
     const [markerActivo, setMarkerActivo] = useState({});
     const [mostrarInfo, setMostrarInfo] = useState({
-        0:{
-            isOpen:false,
+        0: {
+            isOpen: false,
         },
-        1:{
+        1: {
             isOpen: false,
         }
     });
@@ -42,7 +44,7 @@ export const SeleccionarUbicacion = () => {
     const { isLoaded } = useJsApiLoader({
         id: 'google-map-script',
         googleMapsApiKey: "AIzaSyAwXqH5JgdnOqOJy8F8_PrkvOqLtHhy60I",
-        libraries: lib ,
+        libraries: lib,
     });
     const onLoad = useCallback((map) => {
         const bounds = new window.google.maps.LatLngBounds(center);
@@ -55,16 +57,21 @@ export const SeleccionarUbicacion = () => {
 
     // Función para manejar el cambio en el input de búsqueda de dirección
     const handleLlegadaChange = (value) => {
-        setDireccionLlegada(value); 
+        setDireccionLlegada(value);
     };
 
     const handlePartidaChange = (value) => {
-        setDireccionPartida(value);
+        // setDireccionPartida(value);
+        if (direccionPartida === '') {
+            setPartidaSeleccionada(false);
+        } else {
+            setPartidaSeleccionada(true);
+        }
     };
 
     // Función para manejar la selección de una dirección de búsqueda
     const handlePartidaSelect = async (value) => {
-        setDireccionPartida(value);
+        // setDireccionPartida(value);
         try {
             const results = await geocodeByAddress(value);
             const latLng = await getLatLng(results[0]);
@@ -73,6 +80,7 @@ export const SeleccionarUbicacion = () => {
         } catch (error) {
             console.error('Error al obtener la ubicación:', error);
         }
+        setPartidaSeleccionada(false);
     };
     const handleLlegadaSelect = async (value) => {
         setDireccionLlegada(value);
@@ -91,7 +99,15 @@ export const SeleccionarUbicacion = () => {
         const lat = latLng.lat();
         const lng = latLng.lng();
         setSelectedLocation({ lat, lng });
+
     };
+
+    // const [field, meta, helpers] = useField(props.name);
+ 
+    // const { value } = meta;
+    // const { setValue } = helpers;
+  
+    // const isSelected = v => (v === value ? 'selected' : '');
 
     return isLoaded ? (
         <>
@@ -100,46 +116,15 @@ export const SeleccionarUbicacion = () => {
                     <div className="col">
                         <div className='row'>
                             <div className='col'>
-                                <PlacesAutocomplete
-                                    value={direccionPartida}
-                                    onChange={handlePartidaChange}
-                                    onSelect={handlePartidaSelect}
-                                >
-                                    {({ getInputProps, suggestions, getSuggestionItemProps, loading }) => (
-                                        <div style={{ position: 'relative' }}>
-                                            <div className="p-inputgroup flex-1">
-                                                <span className='p-float-label'>
-                                                    <InputText {...getInputProps({
-                                                        inputid: 'partida', name: 'partida',
-                                                        'aria-expanded': false
-                                                    })} />
-                                                    <label htmlFor="partida">Direccion de Partida</label>
-                                                </span>
-                                                <span className="p-inputgroup-addon">
-                                                    <i className="pi pi-map-marker"></i>
-                                                </span>
-                                            </div>
-                                            {
-                                                direccionPartida !== '' ? <div className="autocomplete-dropdown-container">
-                                                    {
-                                                        !loading ?
-                                                            suggestions.map((suggestion, index) => {
-                                                                const className = suggestion.active
-                                                                    ? 'suggestion-item--active'
-                                                                    : 'suggestion-item';
-                                                                return (
-                                                                    <div key={index}
-                                                                        {...getSuggestionItemProps(suggestion, { className })}
-                                                                    >
-                                                                        <span>{suggestion.description}</span>
-                                                                    </div>
-                                                                );
-                                                            }) : 'Cargando...'}
-                                                </div> : <div />
-                                            }
-                                        </div>
-                                    )}
-                                </PlacesAutocomplete>
+                                <div className="p-inputgroup flex-1">
+                                    <span className='p-float-label'>
+                                        <InputText/>
+                                        <label htmlFor="llegada">Direccion de partida</label>
+                                    </span>
+                                    <span className="p-inputgroup-addon">
+                                        <i className="pi pi-map-marker"></i>
+                                    </span>
+                                </div>
                             </div>
                         </div>
                         <div className='row'>
@@ -216,14 +201,14 @@ export const SeleccionarUbicacion = () => {
                                             onClick={(props, marker, e) => { setMarkerActivo(marker); setMostrarInfo(true) }}
                                         >
                                             {
-                                                mostrarInfo && <InfoWindow
-                                                    marker={markerActivo}
-                                                    onCloseClick={() => { setMostrarInfo(false) }}
-                                                >
-                                                    <div>
-                                                        <h4>Texto</h4>
-                                                    </div>
-                                                </InfoWindow>
+                                                // mostrarInfo && <InfoWindow
+                                                //     marker={markerActivo}
+                                                //     onCloseClick={() => { setMostrarInfo(false) }}
+                                                // >
+                                                //     <div>
+                                                //         <h4>Texto</h4>
+                                                //     </div>
+                                                // </InfoWindow>
                                             }
 
                                         </Marker>
