@@ -19,22 +19,34 @@ export const MenuScreen = () => {
           <div class="col">
             <div class="card">
               <div class="card-body">
+                <i className="pi  pi-car " style={{ fontSize: '3rem' }}></i>
+                <br></br>
                 conductores activos.
               </div>
             </div>
           </div>
           <div class="col">
-            One of three columns
+            <div class="card">
+              <div class="card-body">
+                <i className="pi pi-map-marker " style={{ fontSize: '3rem' }}></i>
+                <br></br>
+                viajes actuales.
+              </div>
+            </div>
           </div>
           <div class="col">
-            One of three columns
+            <div class="card">
+              <div class="card-body">
+                <i className="pi  pi-building " style={{ fontSize: '3rem' }}></i>
+                <br></br>
+                Empresas
+              </div>
+            </div>
           </div>
         </div>
       </div>
 
+
     </>
   )
 }
-
-
-
