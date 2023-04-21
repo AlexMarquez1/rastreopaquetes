@@ -17,7 +17,6 @@ const RastreoRoutes = () => {
     <NavBarPrincipal/>
     <div className="pt-7">
         <Routes>
-            <Route path="login" element={<LoginScreen/>}/>
             <Route path="menu" element={<MenuScreen/>}/>
             <Route path="viajes" element={<RegistroViajesScreen/>}/>
             <Route path="usuarios" element={<RegistroUsuariosScreen/>}/>
