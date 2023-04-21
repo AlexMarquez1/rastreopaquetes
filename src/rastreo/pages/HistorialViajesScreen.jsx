@@ -2,6 +2,8 @@ import React, { useEffect, useState } from 'react'
 import TarjetaRutas from '../components/TarjetaRutas'
 import BarraBusqueda from '../components/BarraBusqueda';
 import { Dialog } from 'primereact/dialog';
+import TarjetaMenuHistorial from '../components/TarjetaMenuHistorial';
+import TarjeMenuActivas from '../components/TarjeMenuActivas';
 
 const styleRegistro = {
     width: '85%',
@@ -272,6 +274,9 @@ const [cardsData, setCardsData] = useState([
                 
         </section>   
     </Dialog>
+    <div className='container p-4'>
+    <TarjeMenuActivas/>
+    </div>
     </>
   )
 }
