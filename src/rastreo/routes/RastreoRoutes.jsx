@@ -25,7 +25,7 @@ const RastreoRoutes = () => {
             <Route path="vehiculos" element={<VehiculosScreen/>}/>
             <Route path="empresas" element={<EmpresaScreen/>}/>
             <Route path="mapa" element={<Mapa/>}/>
-            <Route path="/" element={<Navigate to='nemu'/>}/>
+            <Route path="/" element={<Navigate to='menu'/>}/>
         </Routes>
         </div>
     </>
