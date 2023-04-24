@@ -1,45 +1,36 @@
 import React, { useState, useCallback } from 'react';
-import { GoogleMap, InfoWindow, useJsApiLoader, Marker } from '@react-google-maps/api';
-import PlacesAutocomplete, {
-    geocodeByAddress,
-    getLatLng
-} from 'react-places-autocomplete';
+import { GoogleMap, InfoWindow, useJsApiLoader, Marker, StandaloneSearchBox, DirectionsRenderer } from '@react-google-maps/api';
 import { InputText } from 'primereact/inputtext';
 import { InputTextarea } from 'primereact/inputtextarea';
+import { Button } from 'primereact/button';
 import { useField } from 'formik';
 
 const lib = [["places"]];
 const colorTexto = {
     color: 'black',
 }
-const center = {
-    lat: 19.410757,
-    lng: -99.134695,
-};
 
-export const SeleccionarUbicacion = ({ direccionPartida, handleChange }) => {
-    const [selectedLocation, setSelectedLocation] = useState(null);
-    const [direccionLlegada, setDireccionLlegada] = useState('');
-    // const [direccionPartida, setDireccionPartida] = useState('');
-    const [partidaSeleccionada, setPartidaSeleccionada] = useState(false);
-    const [markerActivo, setMarkerActivo] = useState({});
-    const [mostrarInfo, setMostrarInfo] = useState({
-        0: {
-            isOpen: false,
-        },
-        1: {
-            isOpen: false,
-        }
+export const SeleccionarUbicacion = ({initialValue}) => {
+    const [searchBox, setSearchBox] = useState();
+    const [center, setCenter] = useState({
+        lat: 19.410757,
+        lng: -99.134695,
     });
+    const [zoom, setZoom] = useState(10);
+    const [marcador, setMarcador] = useState(undefined);
+    const [mostrarInfo, setMostrarInfo] = useState(false);
     const [map, setMap] = useState(null);
-    const [marcadores, setMarcadores] = useState([
-        {
-            lat: 0,
-            lng: 0,
-        }, {
-            lat: 0,
-            lng: 0,
-        }]);
+    const [markerActivo, setMarkerActivo] = useState();
+    const [direccionPartida, setDireccionPartida] = useState({ formatted_address: '', geometry: { location: { lat: function lat() { }, lng: function lng() { } } } });
+    const [direccionLlegada, setDireccionLlegada] = useState({ formatted_address: '', geometry: { location: { lat: function lat() { }, lng: function lng() { } } } });
+    const [direccionSeleccionada, setDireccionSeleccionada] = useState();
+    const [ruta, setRuta] = useState(undefined);
+    const [ fieldPartida, metaPartida, helpersPartida ] = useField({type: "custom", name:"viaje.direccionPartida", value : initialValue});
+    const [ fieldLlegada, metaLlegada, helpersLlegada ] = useField({type: "custom", name:"viaje.direccionLlegada", value : initialValue});
+    const { value: valuePartida } = metaPartida;
+    const { setValue: setValuePartida } = helpersPartida;
+    const { value: valueLlegada } = metaLlegada;
+    const { setValue: setValueLlegada } = helpersLlegada;
 
     const { isLoaded } = useJsApiLoader({
         id: 'google-map-script',
@@ -55,126 +46,106 @@ export const SeleccionarUbicacion = ({ direccionPartida, handleChange }) => {
         setMap(null)
     }, []);
 
-    // Función para manejar el cambio en el input de búsqueda de dirección
-    const handleLlegadaChange = (value) => {
-        setDireccionLlegada(value);
-    };
-
-    const handlePartidaChange = (value) => {
-        // setDireccionPartida(value);
-        if (direccionPartida === '') {
-            setPartidaSeleccionada(false);
-        } else {
-            setPartidaSeleccionada(true);
-        }
-    };
-
-    // Función para manejar la selección de una dirección de búsqueda
-    const handlePartidaSelect = async (value) => {
-        // setDireccionPartida(value);
-        try {
-            const results = await geocodeByAddress(value);
-            const latLng = await getLatLng(results[0]);
-            setMarcadores([latLng, marcadores[1]]);
-
-        } catch (error) {
-            console.error('Error al obtener la ubicación:', error);
-        }
-        setPartidaSeleccionada(false);
-    };
-    const handleLlegadaSelect = async (value) => {
-        setDireccionLlegada(value);
-        try {
-            const results = await geocodeByAddress(value);
-            const latLng = await getLatLng(results[0]);
-            setMarcadores([marcadores[0], latLng]);
-        } catch (error) {
-            console.error('Error al obtener la ubicación:', error);
-        }
-    };
-
     // Función para manejar el evento de clic en el mapa
     const handleMapClick = (event) => {
         const { latLng } = event;
         const lat = latLng.lat();
         const lng = latLng.lng();
-        setSelectedLocation({ lat, lng });
+        setMarcador({ position: { lat: lat, lng: lng } });
+        const geocoder = new window.google.maps.Geocoder();
+        geocoder.geocode({ location: { lat, lng } }, (results, status) => {
+            if (status === 'OK') {
+                setDireccionSeleccionada(results[0]);
+            } else {
+                console.log('Geocode was not successful for the following reason: ' + status);
+            }
+        });
 
     };
 
     // const [field, meta, helpers] = useField(props.name);
- 
+
     // const { value } = meta;
     // const { setValue } = helpers;
-  
+
     // const isSelected = v => (v === value ? 'selected' : '');
+
+    const handlePlaceChanged = () => {
+        const place = searchBox.getPlaces()[0];
+        setDireccionSeleccionada(place);
+        const { geometry } = place;
+        const { location } = geometry;
+        setCenter({ lat: location.lat(), lng: location.lng() });
+        setZoom(15);
+        setMarcador({ position: { lat: location.lat(), lng: location.lng() } });
+    }
+    const handleClickLocation = (location) => {
+        console.log(location);
+        setCenter({ lat: location.lat(), lng: location.lng() });
+        setZoom(20);
+    }
+
+    const obtenerRuta = (origin, destination) => {
+        const directionsService = new google.maps.DirectionsService();
+
+        if (origin !== null && destination !== null) {
+            directionsService.route(
+                {
+                    origin: origin,
+                    destination: destination,
+                    travelMode: google.maps.TravelMode.DRIVING
+                },
+                (result, status) => {
+                    if (status === google.maps.DirectionsStatus.OK) {
+                        setRuta(result);
+                    } else {
+                        console.error(`error fetching directions ${result}`);
+                    }
+                }
+            );
+        } else {
+            console.log('Please mark your destination in the map first!');
+        }
+    }
 
     return isLoaded ? (
         <>
-            <div className="container text-start">
-                <div className="row">
-                    <div className="col">
-                        <div className='row'>
-                            <div className='col'>
-                                <div className="p-inputgroup flex-1">
-                                    <span className='p-float-label'>
-                                        <InputText/>
-                                        <label htmlFor="llegada">Direccion de partida</label>
-                                    </span>
-                                    <span className="p-inputgroup-addon">
-                                        <i className="pi pi-map-marker"></i>
-                                    </span>
-                                </div>
-                            </div>
-                        </div>
-                        <div className='row'>
-                            <div className='col'>
-                                <PlacesAutocomplete
-                                    value={direccionLlegada}
-                                    onChange={handleLlegadaChange}
-                                    onSelect={handleLlegadaSelect}
-                                >
-                                    {({ getInputProps, suggestions, getSuggestionItemProps, loading }) => (
-                                        <div style={{ position: 'relative' }}>
-                                            <div className="p-inputgroup flex-1">
-                                                <span className='p-float-label'>
-                                                    <InputText {...getInputProps({
-                                                        inputid: 'llegada',
-                                                        name: 'llegada',
-                                                    })} />
-                                                    <label htmlFor="llegada">Direccion de llegada</label>
-                                                </span>
-                                                <span className="p-inputgroup-addon">
-                                                    <i className="pi pi-map-marker"></i>
-                                                </span>
-                                            </div>
-                                            {
-                                                direccionLlegada !== '' ? <div className="autocomplete-dropdown-container">
-                                                    {!loading ?
-                                                        suggestions.map((suggestion, index) => {
-                                                            const className = suggestion.active
-                                                                ? 'suggestion-item--active'
-                                                                : 'suggestion-item';
-                                                            return (
-                                                                <div key={index}
-                                                                    {...getSuggestionItemProps(suggestion, { className })}
-                                                                >
-                                                                    <span>{suggestion.description}</span>
-                                                                </div>
-                                                            );
-                                                        }) : 'Cargando...'
-                                                    }
-                                                </div> : <div />
-                                            }
-                                        </div>
-                                    )}
-                                </PlacesAutocomplete>
-                            </div>
-                        </div>
-                        <div className='row'>
-                            <InputTextarea rows={5} cols={30} placeholder='Descripcion' />
+            <div className="container text-start" style={{ position: 'relative', height: '500px' }}>
+                <div className='row'>
+                    <div className='col'>
+                        <div className="p-inputgroup flex-1">
+                            <InputText
+                                {...fieldPartida}
+                                name="viaje.direccionPartida"
+                                placeholder='Direccion de partida'
+                                value={valuePartida}
+                            />
+                            <Button
+                                icon="pi pi-map-marker"
+                                type='button'
+                                disabled={direccionPartida.formatted_address === '' ? true : false}
+                                onClick={() => { handleClickLocation(direccionPartida.geometry.location); }}
+                            />
                         </div>
                     </div>
+                    <div className='col'>
+                        <div className="p-inputgroup flex-1">
+                            <InputText
+                                {...fieldLlegada}
+                                name="viaje.direccionLlegada"
+                                placeholder='Direccion de llegada'
+                                value={valueLlegada}
+                            />
+                            <Button
+                                icon="pi pi-map-marker"
+                                type='button'
+                                disabled={direccionLlegada.formatted_address === '' ? true : false}
+                                onClick={() => { handleClickLocation(direccionLlegada.geometry.location); }}
+                            />
+                        </div>
+                    </div>
+                </div>
+                <div className="row">
                     <div className='col'>
                         <GoogleMap
                             onLoad={onLoad}
@@ -184,37 +155,102 @@ export const SeleccionarUbicacion = ({ direccionPartida, handleChange }) => {
                                 width: '100%',
                             }}
                             center={center}
-                            zoom={10} // Nivel de zoom inicial del mapa
-                        // onClick={handleMapClick} // Asignamos la función de manejo de clic en el mapa
+                            zoom={zoom} // Nivel de zoom inicial del mapa
+                            onClick={handleMapClick} // Asignamos la función de manejo de clic en el mapa
                         >
+
                             {
-                                marcadores.map((marcador, index) => {
-                                    return marcador.lat !== 0 && marcador.lng !== 0 ?
-                                        <Marker
-                                            key={index}
-                                            position={{
-                                                lat: marcador.lat,
-                                                lng: marcador.lng,
-                                            }}
+                                //Marcador temporal
+                                marcador !== undefined ? <Marker
 
-                                            animation={4}
-                                            onClick={(props, marker, e) => { setMarkerActivo(marker); setMostrarInfo(true) }}
+                                    position={{
+                                        lat: marcador.position.lat,
+                                        lng: marcador.position.lng,
+                                    }}
+
+                                    animation={4}
+                                    onClick={(props, marker, e) => { setMarkerActivo(marker); setMostrarInfo(!mostrarInfo) }}
+                                >
+                                    {
+                                        mostrarInfo && <InfoWindow
+                                            marker={markerActivo}
+                                            onCloseClick={() => { setMostrarInfo(false) }}
+
                                         >
-                                            {
-                                                // mostrarInfo && <InfoWindow
-                                                //     marker={markerActivo}
-                                                //     onCloseClick={() => { setMostrarInfo(false) }}
-                                                // >
-                                                //     <div>
-                                                //         <h4>Texto</h4>
-                                                //     </div>
-                                                // </InfoWindow>
-                                            }
+                                            <div>
+                                                <h4>Dirección: {direccionSeleccionada.formatted_address}</h4>
+                                                <br />
+                                                {/* <h4>Coordenadas: {direccionSeleccionada.geometry.localtion.lat()}</h4> */}
+                                                <br />
+                                                <h4>Selecciona si esta ubicacion es el punto de partida o el punto de llegada</h4>
+                                                <div className="container text-center" >
+                                                    <div className='row'>
+                                                        <div className='col'>
+                                                            <Button
+                                                                icon="pi pi-map-marker"
+                                                                label='Punto de partida'
+                                                                onClick={() => {
+                                                                    setValuePartida(direccionSeleccionada.formatted_address);
+                                                                    // setDireccionPartida(direccionSeleccionada)
+                                                                    if (valueLlegada !== '') {
+                                                                        obtenerRuta(direccionSeleccionada.formatted_address,valueLlegada);
+                                                                    }
+                                                                }}
+                                                            />
+                                                        </div>
+                                                        <div className='col'>
+                                                            <Button
+                                                                icon="pi pi-map-marker"
+                                                                label='Punto de llegada'
+                                                                onClick={() => {
+                                                                    // setDireccionLlegada(direccionSeleccionada)
+                                                                    setValueLlegada(direccionSeleccionada.formatted_address);
+                                                                    if (valuePartida !== '') {
+                                                                        obtenerRuta(valuePartida, direccionSeleccionada.formatted_address);
+                                                                    }
+                                                                }} />
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </InfoWindow>
+                                    }
 
-                                        </Marker>
-                                        : <div key={index} />
-                                })
+                                </Marker> : <></>
                             }
+
+                            {ruta !== undefined && (<DirectionsRenderer directions={ruta} />)}
+
+                            <StandaloneSearchBox
+                                onLoad={(ref) => { setSearchBox(ref); }}
+                                onPlacesChanged={handlePlaceChanged}
+                            >
+                                <div className="p-inputgroup flex-1">
+                                    <InputText
+                                        type="text"
+                                        placeholder="Buscar dirección..."
+                                        style={{
+                                            boxSizing: 'border-box',
+                                            border: '1px solid transparent',
+                                            width: '50%',
+                                            height: '32px',
+                                            padding: '0 12px',
+                                            borderRadius: '20px',
+                                            boxShadow: '0 2px 6px rgba(0, 0, 0, 0.3)',
+                                            fontSize: '14px',
+                                            outline: 'none',
+                                            textOverflow: 'ellipses',
+                                            position: 'absolute',
+                                            zIndex: '1',
+                                            top: '10px',
+                                            left: '25%',
+                                        }}
+                                    />
+                                    <span className="p-inputgroup-addon">
+                                        <i className="pi pi-truck"></i>
+                                    </span>
+                                </div>
+                            </StandaloneSearchBox>
                         </GoogleMap>
                     </div>
                 </div>

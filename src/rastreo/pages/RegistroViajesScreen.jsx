@@ -178,7 +178,7 @@ const initialValues = {
     descripcionViaje: '',
     tipoServicio: '',
     diaSalida: '',
-    direccionPartida: 'hola',
+    direccionPartida: '',
     latPartida: '',
     lngPartida: '',
     direccionLlegada: '',
@@ -321,7 +321,7 @@ export const RegistroViajesScreen = () => {
                   <div className="row align-items-center">
                     <div className='col'>
                       <div className="p-inputgroup flex-1">
-                        <SeleccionarUbicacion direccionPartida={values.viaje.direccionPartida} handleChange={handleChange}/>
+                        <SeleccionarUbicacion initialValue={initialValues}/>
                       </div>
 
                     </div>
