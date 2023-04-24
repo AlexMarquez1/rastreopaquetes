@@ -45,15 +45,15 @@ const HistorialViajesScreen = () => {
 
 const [mensaje, setMensaje] = useState(false);
 const [cardsData, setCardsData] = useState([
-    { idViaje: '00001', estatus: 'activa', descripcion: 'Descripción de la Card 1', chofer: 'Andres Uribe Martinez', idVehiculo: '0001', vehiculoTipo: 'Motocicleta', partida: 'CDMX', destino: 'Durango'},
-    { idViaje: '00002', estatus: 'activa', descripcion: 'Descripción de la Card 2', chofer: 'Jorge Ramirez Santana', idVehiculo: '0008', vehiculoTipo: 'torton', partida: 'CDMX', destino: 'Monterrey'},
-    { idViaje: '00003', estatus: 'asignada', descripcion: 'Descripción de la Card 3', chofer: 'Raul Chavarria Gudiño', idVehiculo: '0012', vehiculoTipo: 'rabon', partida: 'CDMX', destino: 'Guadalajara'},
+    { idViaje: '00001', estatus: 'completada', descripcion: 'Descripción de la Card 1', chofer: 'Andres Uribe Martinez', idVehiculo: '0001', vehiculoTipo: 'Motocicleta', partida: 'CDMX', destino: 'Durango'},
+    { idViaje: '00002', estatus: 'completada', descripcion: 'Descripción de la Card 2', chofer: 'Jorge Ramirez Santana', idVehiculo: '0008', vehiculoTipo: 'torton', partida: 'CDMX', destino: 'Monterrey'},
+    { idViaje: '00003', estatus: 'completada', descripcion: 'Descripción de la Card 3', chofer: 'Raul Chavarria Gudiño', idVehiculo: '0012', vehiculoTipo: 'rabon', partida: 'CDMX', destino: 'Guadalajara'},
     { idViaje: '00004', estatus: 'completada', descripcion: 'Descripción de la Card 4', chofer: 'Andres Pliego Martinez', idVehiculo: '0015', vehiculoTipo: 'nissan', partida: 'CDMX', destino: 'Guadalajara'},
-    { idViaje: '00005', estatus: 'completada', descripcion: 'Descripción de la Card 5', chofer: 'Andres Uribe Martinez', idVehiculo: '0009', vehiculoTipo: 'nissan', partida: 'CDMX', destino: 'Yucatan'},
-    { idViaje: '00004', estatus: 'completada', descripcion: 'Descripción de la Card 4', chofer: 'Andres Pliego Martinez', idVehiculo: '0015', vehiculoTipo: 'nissan', partida: 'CDMX', destino: 'Guadalajara'},
-    { idViaje: '00005', estatus: 'completada', descripcion: 'Descripción de la Card 5', chofer: 'Andres Uribe Martinez', idVehiculo: '0009', vehiculoTipo: 'nissan', partida: 'CDMX', destino: 'Yucatan'},
-    { idViaje: '00004', estatus: 'completada', descripcion: 'Descripción de la Card 4', chofer: 'Andres Pliego Martinez', idVehiculo: '0015', vehiculoTipo: 'nissan', partida: 'CDMX', destino: 'Guadalajara'},
-    { idViaje: '00005', estatus: 'completada', descripcion: 'Descripción de la Card 5', chofer: 'Andres Uribe Martinez', idVehiculo: '0009', vehiculoTipo: 'nissan', partida: 'CDMX', destino: 'Yucatan'},
+    { idViaje: '00005', estatus: 'asignada', descripcion: 'Descripción de la Card 5', chofer: 'Andres Uribe Martinez', idVehiculo: '0009', vehiculoTipo: 'nissan', partida: 'CDMX', destino: 'Yucatan'},
+    { idViaje: '00006', estatus: 'asignada', descripcion: 'Descripción de la Card 4', chofer: 'Andres Pliego Martinez', idVehiculo: '0015', vehiculoTipo: 'nissan', partida: 'CDMX', destino: 'Guadalajara'},
+    { idViaje: '00007', estatus: 'asignada', descripcion: 'Descripción de la Card 5', chofer: 'Andres Uribe Martinez', idVehiculo: '0009', vehiculoTipo: 'nissan', partida: 'CDMX', destino: 'Yucatan'},
+    { idViaje: '00008', estatus: 'activa', descripcion: 'Descripción de la Card 4', chofer: 'Andres Pliego Martinez', idVehiculo: '0015', vehiculoTipo: 'nissan', partida: 'CDMX', destino: 'Guadalajara'},
+    { idViaje: '00009', estatus: 'activa', descripcion: 'Descripción de la Card 5', chofer: 'Andres Uribe Martinez', idVehiculo: '0009', vehiculoTipo: 'nissan', partida: 'CDMX', destino: 'Yucatan'},
   ]);
 
   const handleSearch = (searchTerm) => {
@@ -208,11 +208,11 @@ const [cardsData, setCardsData] = useState([
                         <div className='col-sm-6 col-md-6 col-xl-4 p-4'>
                           <ul className="list-group list-group-flush">
                             <p className="list-group-item-dark btn mr-auto" aria-current="true">Id Conductor: {'00001'}</p>
-                            <img className="list-group-item btn mr-auto h-7 w-7 rounded-full" src='https://randomuser.me/api/portraits/men/1.jpg' alt=""/>
-                            <li className="list-group-item btn mr-auto">Nombre completo: {''}</li>
-                            <li className="list-group-item btn mr-auto">Edad: {''}</li>
-                            <li className="list-group-item btn mr-auto">Numero de contacto: {''}</li>
-                            <li className="list-group-item btn mr-auto">Tipo de sangre: {''}</li>
+                            <img className="list-group-item mr-auto h-48 w-48" src='https://randomuser.me/api/portraits/men/1.jpg' alt=""/>
+                            <li className="list-group-item mr-auto">Nombre completo: {''}</li>
+                            <li className="list-group-item mr-auto">Edad: {''}</li>
+                            <li className="list-group-item mr-auto">Numero de contacto: {''}</li>
+                            <li className="list-group-item mr-auto">Tipo de sangre: {''}</li>
                           </ul>
                         </div>
                         <div className='col-sm-6 col-md-6 col-xl-4 p-4'>
@@ -221,8 +221,8 @@ const [cardsData, setCardsData] = useState([
                             <li className="list-group-item mr-auto">Tipo de licencia: {''}</li>
                             <li className="list-group-item mr-auto">Vigencia: {''}</li>
                             <button type="button" className="btn btn-outline-secondary">
-                                <i className="pi pi-download p-2"></i>
-                                    Descargar licencia
+                                <i className="pi pi-eye p-2"></i>
+                                    Ver licencia
                             </button>
                           </ul>
                         </div>
@@ -267,11 +267,9 @@ const [cardsData, setCardsData] = useState([
                             <li className="list-group-item mr-auto">QR: {''}</li>
                           </ul>
                         </div>
-                        
                     </div>
                 </div>
-            }
-                
+            }  
         </section>   
     </Dialog>
     </>
