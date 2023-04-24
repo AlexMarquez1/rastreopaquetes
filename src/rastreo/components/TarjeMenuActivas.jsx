@@ -2,7 +2,18 @@ import React, { useState } from 'react'
 import { GoogleMap, LoadScript, Marker } from '@react-google-maps/api';
 import Slider from "react-slick";
 
+const styleRegistroModal = {
+  width: '95%',
+  background: 'rgb(194,103,72)',
+}
+
 const TarjeMenuActivas = () => {
+
+  const [show, setShow] = useState(null);
+
+  const toggleAccordionViaje = () => {
+    setShow(!show); 
+  };
 
     const settings = {
         dots: true,
@@ -116,12 +127,7 @@ const TarjeMenuActivas = () => {
           >
             <i className="pi pi-times-circle"></i>
           </button>
-          <p className="text-gray-700 text-base">
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce
-            eget lorem eu velit ultrices dapibus ac eget mauris. Sed id
-            tellus ac eros vulputate rhoncus nec sed urna. Morbi sit amet
-            justo nec mauris bibendum vulputate in eget sapien.
-          </p>
+      
         </div>
         
       </div>

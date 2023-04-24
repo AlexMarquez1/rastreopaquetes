@@ -7,7 +7,10 @@ const styleRegistro = {
 
 const EmpresaScreen = () => {
   return (
-    <> <section className="section_item flex-container" style={{ paddingTop: '5%' }}>
+    
+    <> 
+    <h1 className="pt-4 text-5xl">Empresas relacionadas</h1>
+    <section className="section_item flex-container" style={{ paddingTop: '5%' }}>
     <div className="card form" style={styleRegistro}>
         <br />
         <h1 className="card-title pb-4">

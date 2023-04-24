@@ -9,12 +9,12 @@ const styleRegistro = {
 function ConductoresScreen() {
   return (
     <>
-    <h1 className='pt-4'>Conductores</h1>
+    <h1 className='pt-4 text-5xl'>Conductores</h1>
     <section className="section_item flex-container" style={{ paddingTop: '5%' }}>
         <div className="card form" style={styleRegistro}>
             <br />
             <h1 className="card-title pb-4">
-                <p className="fs-4">Registrar un nuevo conductor</p>
+                <p className="text-3xl">Registrar un nuevo conductor</p>
             </h1>
                 <NuevoConductorForm/>
         </div>

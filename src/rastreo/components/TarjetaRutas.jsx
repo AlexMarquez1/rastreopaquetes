@@ -19,7 +19,7 @@ const TarjetaRutas = ({idViaje, descripcion, chofer, idVehiculo, partida, destin
   return (
     <>
     
-        <div className='col-sm-6 col-md-6 col-xl-3 pb-4'>
+        <div className='col-sm-6 col-md-6 col-xl-4 pb-4'>
         <div className="card">
           <LoadScript
             googleMapsApiKey="AIzaSyAwXqH5JgdnOqOJy8F8_PrkvOqLtHhy60I"
@@ -67,8 +67,9 @@ const TarjetaRutas = ({idViaje, descripcion, chofer, idVehiculo, partida, destin
                     <li className="list-group-item">Traslado: {partida} - {destino}</li>
                   </ul>
                   <div className="card-body">
-                    <a href="#" className="card-link">Seguimiento</a>
-                    <a href="#" className="card-link" onClick={() => {setMensaje(true)}}>Ver más detalles</a>
+                    <a href="#" className="card-link text-indigo-600 hover:text-indigo-400 text-lg"> <i className="pi pi-map-marker text-indigo-600 hover:text-indigo-400"></i> Seguimiento</a>
+                    <a href="#" className="card-link text-indigo-600 hover:text-indigo-400 text-lg" onClick={() => {setMensaje(true)}}><i className="pi pi-external-link text-indigo-600 hover:text-indigo-400"></i> Ver más 
+                    </a>
                   </div>
                 </div>
             } 

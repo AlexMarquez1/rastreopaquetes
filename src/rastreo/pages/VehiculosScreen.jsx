@@ -29,7 +29,7 @@ const columns = [
 ];
   return (
     <>
-    <h1 className='pt-4'>Mis vehículos</h1>
+    <h1 className='pt-4 text-5xl'>Mis vehículos</h1>
     <section className="section_item flex-container" style={{ paddingTop: '5%' }}>
         <div className="card form" style={styleRegistro}>
             <br />

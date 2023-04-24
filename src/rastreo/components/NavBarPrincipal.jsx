@@ -19,22 +19,29 @@ export const NavBarPrincipal = () => {
                     aria-labelledby="offcanvasNavbarLabel">
                     <div className="offcanvas-header">
 
-                        <button type="button" className="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+                        <button type="button" className="btn-close" data-bs-dismiss="offcanvas" aria-label="Close" style={{ color: "black" }}>
+                            <i className="pi pi-times"></i>
+                        </button>
                     </div>
                     <div className="offcanvas-body">
                         <ul className="navbar-nav justify-content-end flex-grow-1 pe-3">
-
+                            <li className="nav-item">
+                                <Link className="nav-link" to='/usuarios'>
+                                    <i className="bi bi-person-circle px-2"></i>
+                                    Usuario</Link>
+                                <hr size='3' />
+                            </li>
                             <li className="nav-item">
                                 <Link className="nav-link" to="/mapa">
-                                    <i className="bi bi-person-badge-fill px-2"></i>
-                                    Registro
+                                    <i className="pi pi-map px-2"></i>
+                                    Mapa
                                 </Link>
                                 <hr size='3' />
                             </li>
                             <li className="nav-item">
-                                <Link  className="nav-link" to='/usuarios'>
-                                    <i className="bi bi-person-circle px-2"></i>
-                                    Usuario</Link>
+                                <Link className="nav-link" to="/viajes">
+                                <i className="pi pi-truck px-2"></i>
+                                    +Nuevo viaje </Link>
                                 <hr size='3' />
                             </li>
                             <li className="nav-item">
@@ -44,9 +51,9 @@ export const NavBarPrincipal = () => {
                                 <hr size='3' />
                             </li>
                             <li className="nav-item">
-                                <a className="nav-link" href="#">
-                                    <i className="bi bi-pc-display-horizontal px-2"></i>
-                                    Empresas</a>
+                                <Link className="nav-link" to='/empresas'>
+                                    <i className="pi pi-building px-2"></i>
+                                    Empresas</Link>
                                 <hr size='3' />
                             </li>
                             <li className="nav-item">
@@ -57,20 +64,14 @@ export const NavBarPrincipal = () => {
                             </li>
                             <li className="nav-item">
                                 <a className="nav-link" href="#">
-                                    <i className="bi bi-geo-alt-fill px-2"></i>
+                                    <i className="pi pi-map-marker px-2"></i>
                                     Rastreo</a>
                                 <hr size='3' />
                             </li>
                             <li className="nav-item">
                                 <Link className="nav-link" to='/historial'>
                                 <i className="pi pi-history px-2"></i>
-                                    historial de viaje </Link>
-                                <hr size='3' />
-                            </li>
-                            <li className="nav-item">
-                                <a className="nav-link" href="#">
-                                <i className="pi pi-truck px-2"></i>
-                                    Viajes </a>
+                                    historial de viajes </Link>
                                 <hr size='3' />
                             </li>
                             <li className="nav-item">

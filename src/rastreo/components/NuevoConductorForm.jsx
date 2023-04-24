@@ -56,7 +56,7 @@ const NuevoConductorForm = () => {
             {({ values, handleChange, handleSubmit }) => (
                 <Form onSubmit={handleSubmit}>
                     <div className='container'>
-                    <h2 className='text-start p-3'>Datos del conductor</h2>
+                    <h2 className='text-start pb-5 text-2xl'>Datos del conductor</h2>
                         <div className='row'>
                             <div className="col-sm-6 col-md-6 col-xl-4 pb-5">
                                 <div className='p-inputgroup flex-1'>
@@ -172,7 +172,7 @@ const NuevoConductorForm = () => {
                                     </span>
                                 </div>
                             </div>
-                            <h2 className='text-start p-3'>Datos de la dirección del conductor</h2> 
+                            <h2 className='text-start pb-5 text-2xl'>Datos de la dirección del conductor</h2> 
                             <div className="col-sm-6 col-md-6 col-xl-4 pb-5">
                                 <div className='p-inputgroup flex-1'>
                                     <span className='p-float-label'>
@@ -294,7 +294,7 @@ const NuevoConductorForm = () => {
                             </div> */}
 
 
-                            <h2 className='text-start p-3'>Datos de la licencia de conducir</h2>
+                            <h2 className='text-start pb-5 text-2xl'>Datos de la licencia de conducir</h2>
                             <div className="col-sm-6 col-md-6 col-xl-4 pb-5">
                                 <div className='p-inputgroup flex-1'>
                                     <span className='p-float-label'>
@@ -415,7 +415,7 @@ const NuevoConductorForm = () => {
                             
                         </div>
                     </div>
-                    <Button type="submit" label="Submit" className='m-4'/>
+                    <Button type="submit" label="Submit" className='shadow-indigo-500/50 m-4'/>
                 </Form>
             )}
         </Formik>

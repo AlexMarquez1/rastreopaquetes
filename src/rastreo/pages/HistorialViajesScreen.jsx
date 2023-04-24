@@ -65,7 +65,7 @@ const [cardsData, setCardsData] = useState([
 
   return (
     <>
-    <h1 className='pt-4'>Historial de rutas</h1>
+    <h1 className='pt-4 pb-4 text-5xl'>Historial de rutas</h1>
     <div className='container'>
         <BarraBusqueda handleSearch={handleSearch} cardsData={cardsData}/>
     </div>
@@ -274,9 +274,6 @@ const [cardsData, setCardsData] = useState([
                 
         </section>   
     </Dialog>
-    <div className='container p-4'>
-    <TarjeMenuActivas/>
-    </div>
     </>
   )
 }
