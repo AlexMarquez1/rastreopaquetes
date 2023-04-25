@@ -179,11 +179,15 @@ const initialValues = {
     tipoServicio: '',
     diaSalida: '',
     direccionPartida: '',
-    latPartida: '',
-    lngPartida: '',
+    coordenadasPartida: {
+      lat:0,
+      lng:0,
+    },
     direccionLlegada: '',
-    latLlegada: '',
-    lngLlegada: '',
+    coordenadasLlegada: {
+      lat:0,
+      lng:0,
+    },
     ruta: undefined
   }
 };

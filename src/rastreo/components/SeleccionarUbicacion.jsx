@@ -21,13 +21,18 @@ export const SeleccionarUbicacion = ({initialValue}) => {
     const [mostrarInfo, setMostrarInfo] = useState(true);
     const [map, setMap] = useState(null);
     const [markerActivo, setMarkerActivo] = useState();
-    const [direccionPartida, setDireccionPartida] = useState({ formatted_address: '', geometry: { location: { lat: function lat() { }, lng: function lng() { } } } });
-    const [direccionLlegada, setDireccionLlegada] = useState({ formatted_address: '', geometry: { location: { lat: function lat() { }, lng: function lng() { } } } });
+    const [direccionRender, setDireccionRender] = useState(null);
     const [direccionSeleccionada, setDireccionSeleccionada] = useState({ formatted_address: '', geometry: { location: { lat: function lat() { }, lng: function lng() { } } } });
     // const [ruta, setRuta] = useState(undefined);
     const [ fieldPartida, metaPartida, helpersPartida ] = useField({type: "custom", name:"viaje.direccionPartida", value : initialValue});
     const [ fieldLlegada, metaLlegada, helpersLlegada ] = useField({type: "custom", name:"viaje.direccionLlegada", value : initialValue});
     const [ fieldRuta, metaRuta, helpersRuta ] = useField({type: "custom", name:"viaje.ruta", value : initialValue});
+    const [ fieldCoordenadasPartida, metaCoordenadasPartida, helpersCoordenadasPartida ] = useField({type: "custom", name:"viaje.coordenadasPartida", value : initialValue});
+    const { value: valueCoordenadasPartida } = metaCoordenadasPartida;
+    const { setValue: setValueCoordenadasPartida } = helpersCoordenadasPartida;
+    const [ fieldCoordenadasLlegada, metaCoordenadasLlegada, helpersCoordenadasLlegada ] = useField({type: "custom", name:"viaje.coordenadasLlegada", value : initialValue});
+    const { value: valueCoordenadasLlegada } = metaCoordenadasLlegada;
+    const { setValue: setValueCoordenadasLlegada } = helpersCoordenadasLlegada;
     const { value: valuePartida } = metaPartida;
     const { setValue: setValuePartida } = helpersPartida;
     const { value: valueRuta } = metaRuta;
@@ -73,6 +78,7 @@ export const SeleccionarUbicacion = ({initialValue}) => {
 
     // const isSelected = v => (v === value ? 'selected' : '');
 
+
     const handlePlaceChanged = () => {
         const place = searchBox.getPlaces()[0];
         setDireccionSeleccionada(place);
@@ -84,7 +90,7 @@ export const SeleccionarUbicacion = ({initialValue}) => {
     }
     const handleClickLocation = (location) => {
         console.log(location);
-        setCenter({ lat: location.lat(), lng: location.lng() });
+        setCenter({ lat: location.lat, lng: location.lng });
         setZoom(20);
     }
 
@@ -100,7 +106,7 @@ export const SeleccionarUbicacion = ({initialValue}) => {
                 },
                 (result, status) => {
                     if (status === google.maps.DirectionsStatus.OK) {
-                        setValueRuta(result);
+                        handleDirectionsResponse(result);
                     } else {
                         console.error(`error fetching directions ${result}`);
                     }
@@ -110,6 +116,33 @@ export const SeleccionarUbicacion = ({initialValue}) => {
             console.log('Please mark your destination in the map first!');
         }
     }
+
+    const handleDirectionsResponse = (response) => {
+        if (direccionRender) {
+          // Si ya hay un DirectionsRenderer, lo eliminamos del mapa
+          direccionRender.setMap(null);
+          
+        }
+    
+        // Creamos un nuevo DirectionsRenderer con la nueva respuesta
+        const newDirectionsRenderer = new window.google.maps.DirectionsRenderer({
+          directions: response,
+          map: map.current,
+        });
+    
+        // Lo guardamos en el estado
+        setDireccionRender(newDirectionsRenderer);
+        setValueRuta(response);
+      };
+
+      const handleClearDirections = () => {
+        if (direccionRender) {
+          // Si ya hay un DirectionsRenderer, lo eliminamos del mapa
+          direccionRender.setMap(null);
+        }
+    
+        setValueRuta(null);
+      };
 
     return isLoaded ? (
         <>
@@ -128,8 +161,8 @@ export const SeleccionarUbicacion = ({initialValue}) => {
                                 className='bg-indigo-500'
                                 icon="pi pi-map-marker"
                                 type='button'
-                                disabled={direccionPartida.formatted_address === '' ? true : false}
-                                onClick={() => { handleClickLocation(direccionPartida.geometry.location); }}
+                                disabled={valuePartida === '' ? true : false}
+                                onClick={() => { handleClickLocation(valueCoordenadasPartida); }}
                             />
                         </div>
                     </div>
@@ -146,8 +179,8 @@ export const SeleccionarUbicacion = ({initialValue}) => {
                             className='bg-indigo-500'
                                 icon="pi pi-map-marker"
                                 type='button'
-                                disabled={direccionLlegada.formatted_address === '' ? true : false}
-                                onClick={() => { handleClickLocation(direccionLlegada.geometry.location); }}
+                                disabled={valueLlegada === '' ? true : false}
+                                onClick={() => { handleClickLocation(valueCoordenadasLlegada); }}
                             />
                         </div>
                     </div>
@@ -204,8 +237,12 @@ export const SeleccionarUbicacion = ({initialValue}) => {
                                                                 type='button'
                                                                 onClick={() => {
                                                                     setValuePartida(direccionSeleccionada.formatted_address);
-                                                                    // setDireccionPartida(direccionSeleccionada)
+                                                                    setValueCoordenadasPartida({
+                                                                        lat: direccionSeleccionada.geometry.location.lat(),
+                                                                        lng: direccionSeleccionada.geometry.location.lng()
+                                                                    });
                                                                     if (valueLlegada !== '') {
+                                                                        handleClearDirections();
                                                                         obtenerRuta(direccionSeleccionada.formatted_address,valueLlegada);
                                                                     }
                                                                 }}
@@ -218,9 +255,13 @@ export const SeleccionarUbicacion = ({initialValue}) => {
                                                                 label='Punto de llegada'
                                                                 type='button'
                                                                 onClick={() => {
-                                                                    // setDireccionLlegada(direccionSeleccionada)
                                                                     setValueLlegada(direccionSeleccionada.formatted_address);
+                                                                    setValueCoordenadasLlegada({
+                                                                        lat: direccionSeleccionada.geometry.location.lat(),
+                                                                        lng: direccionSeleccionada.geometry.location.lng()
+                                                                    });
                                                                     if (valuePartida !== '') {
+                                                                        handleClearDirections();
                                                                         obtenerRuta(valuePartida, direccionSeleccionada.formatted_address);
                                                                     }
                                                                 }} />
@@ -279,8 +320,8 @@ export const SeleccionarUbicacion = ({initialValue}) => {
                                 boxShadow: '0 2px 6px rgba(0, 0, 0, 0.3)',
                                  }}>
                             
-                            <h3>Distancia aproximada: {valueRuta.routes[0].legs[0].distance.text}</h3>
-                            <p>Duracion aproximada: {valueRuta.routes[0].legs[0].duration.text}</p>
+                            <h3>Distancia aproximada: {valueRuta && valueRuta.routes[0].legs[0].distance.text}</h3>
+                            <p>Duracion aproximada: {valueRuta && valueRuta.routes[0].legs[0].duration.text}</p>
                           </div>
                         }
                     </div>
