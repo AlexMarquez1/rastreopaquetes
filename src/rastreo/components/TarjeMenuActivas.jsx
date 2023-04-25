@@ -54,10 +54,20 @@ const TarjeMenuActivas = () => {
     <>
       <Carousel 
       renderDotsOutside={true} 
-      keyBoardControl={true}
-        autoPlaySpeed={1000} 
         infinite={true} 
-        responsive={responsive}
+        swipeable={false}
+      draggable={false}
+      showDots={true}
+      responsive={responsive}
+      autoPlay={true}
+      autoPlaySpeed={3000}
+      keyBoardControl={true}
+      customTransition="all .5"
+      transitionDuration={500}
+      containerClass="carousel-container"
+      removeArrowOnDeviceType={['tablet', 'mobile']}
+      dotListClass="custom-dot-list-style"
+      itemClass="carousel-item-padding-40-px"
       >
         <div
           className={`w-full max-w-xxl mx-auto rounded-md overflow-hidden transform transition duration-500 ease-in-out p-2 ${isHovered ? "" : "shadow-md"

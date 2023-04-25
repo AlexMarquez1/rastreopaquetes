@@ -169,8 +169,6 @@ export const MenuScreen = () => {
           Empresa: Informacion de la empresa
         </p>
       </Dialog>
-
-
     </>
   )
 }

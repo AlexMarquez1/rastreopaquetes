@@ -19,6 +19,7 @@ const styleRegistroModal = {
 
 const HistorialViajesScreen = () => {
 
+    
     const [show, setShow] = useState(null);
     const [show2, setShow2] = useState(null);
     const [show3, setShow3] = useState(null);
@@ -75,6 +76,7 @@ const [cardsData, setCardsData] = useState([
     { idViaje: '00008', estatus: 'activa', descripcion: 'Descripción de la Card 4', chofer: 'Andres Pliego Martinez', idVehiculo: '0015', vehiculoTipo: 'nissan', partida: 'CDMX', destino: 'Guadalajara'},
     { idViaje: '00009', estatus: 'activa', descripcion: 'Descripción de la Card 5', chofer: 'Andres Uribe Martinez', idVehiculo: '0009', vehiculoTipo: 'nissan', partida: 'CDMX', destino: 'Yucatan'},
   ]);
+  const [itemCount, setItemCount] = useState(cardsData.length);
 
   const handleSearch = (searchTerm) => {
     const filteredCards = cardsData.filter((card) =>
@@ -83,27 +85,44 @@ const [cardsData, setCardsData] = useState([
     setCardsData(filteredCards);
   };
 
+    // const handleItemCount = (previousSlide, currentSlide) => {
+    //   const newCount = cardsData.length - currentSlide;
+    //   setItemCount(newCount);
+    // };
+
+
   return (
     <>
-    <h1 className='pt-4 pb-4 text-5xl'>Historial de rutas</h1>
+    <h1 className='pt-4 pb-4 text-5xl'>Historial de viajes</h1>
     <div className='container'>
         <BarraBusqueda handleSearch={handleSearch} cardsData={cardsData}/>
     </div>
     <section className="section_item flex-container" style={{ paddingTop: '5%' }}>
+    <h2 className='pb-4 text-3xl text-white text-right'>Total de viajes: {itemCount}</h2>
         <div className="card form" style={styleRegistro}>
             <br />
             <h1 className="card-title">
-                <p className="fs-4">Rutas activas</p>
+                <p className="fs-4">Viajes activas: {cardsData.filter(card => card.estatus === 'activa').length}</p>
             </h1>
             <br />
             <div className='container'>
                 <div className='text-center'>
                     <Carousel 
                         renderDotsOutside={true} 
-                        keyBoardControl={true}
-                        autoPlaySpeed={1000} 
                         infinite={true} 
-                        responsive={responsive}
+                        swipeable={false}
+                      draggable={false}
+                      showDots={true}
+                      responsive={responsive}
+                      autoPlay={true}
+                      autoPlaySpeed={3000}
+                      keyBoardControl={true}
+                      customTransition="all .5"
+                      transitionDuration={500}
+                      containerClass="carousel-container"
+                      removeArrowOnDeviceType={['tablet', 'mobile']}
+                      dotListClass="custom-dot-list-style"
+                      itemClass="carousel-item-padding-40-px"                    
                     > 
                         {
                             cardsData.filter(trip => trip.estatus === 'activa').map((data, index)=> ( 
@@ -128,7 +147,7 @@ const [cardsData, setCardsData] = useState([
         <div className="card form" style={styleRegistro}>
         <br />
             <h1 className="card-title">
-                <p className="fs-4">Rutas asignadas</p>
+                <p className="fs-4">Viajes asignadas: {cardsData.filter(card => card.estatus === 'asignada').length}</p>
             </h1>
             <br />
             <div className='container'>
@@ -163,7 +182,7 @@ const [cardsData, setCardsData] = useState([
         <div className="card form" style={styleRegistro}>
         <br />
             <h1 className="card-title">
-                <p className="fs-4">Rutas completadas</p>
+                <p className="fs-4">Viajes completadas: {cardsData.filter(card => card.estatus === 'completada').length}</p>
             </h1>
             <br />
             <div className='container'>
