@@ -60,7 +60,7 @@ const TarjeMenuActivas = () => {
         responsive={responsive}
       >
         <div
-          className={`w-full max-w-xxl mx-auto rounded-md overflow-hidden transform transition duration-500 ease-in-out ${isHovered ? "" : "shadow-md"
+          className={`w-full max-w-xxl mx-auto rounded-md overflow-hidden transform transition duration-500 ease-in-out p-2 ${isHovered ? "" : "shadow-md"
             }`}
           onMouseEnter={handleHover}
           onMouseLeave={handleLeave}
@@ -126,7 +126,7 @@ const TarjeMenuActivas = () => {
           </div>
         </div>
         <div
-          className={`w-full max-w-xxl mx-auto rounded-md overflow-hidden transform transition duration-500 ease-in-out ${isHovered ? "" : "shadow-md"
+          className={`w-full max-w-xxl mx-auto rounded-md overflow-hidden transform transition duration-500 ease-in-out p-2 ${isHovered ? "" : "shadow-md"
             }`}
           onMouseEnter={handleHover}
           onMouseLeave={handleLeave}
@@ -162,7 +162,7 @@ const TarjeMenuActivas = () => {
     alt="Beach"
   /> */}
           <div className="p-4 bg-white">
-            <h2 className="font-bold text-xl mb-2">Beach Vacation</h2>
+            <h2 className="font-bold text-xl mb-2">Beach Vacation 2</h2>
             <p className="text-gray-700 text-base">
               Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce eget
               lorem eu velit ultrices dapibus ac eget mauris.

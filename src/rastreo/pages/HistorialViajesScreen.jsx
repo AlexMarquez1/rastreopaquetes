@@ -4,6 +4,8 @@ import BarraBusqueda from '../components/BarraBusqueda';
 import { Dialog } from 'primereact/dialog';
 import TarjetaMenuHistorial from '../components/TarjetaMenuHistorial';
 import TarjeMenuActivas from '../components/TarjeMenuActivas';
+import Carousel from 'react-multi-carousel';
+import "react-multi-carousel/lib/styles.css";
 
 const styleRegistro = {
     width: '85%',
@@ -20,6 +22,24 @@ const HistorialViajesScreen = () => {
     const [show, setShow] = useState(null);
     const [show2, setShow2] = useState(null);
     const [show3, setShow3] = useState(null);
+
+    const responsive = {
+        desktop: {
+          breakpoint: { max: 3000, min: 1024 },
+          items: 3,
+          slidesToSlide: 3,
+        },
+        tablet: {
+          breakpoint: { max: 1024, min: 464 },
+          items: 1,
+          slidesToSlide: 1,
+        },
+        mobile: {
+          breakpoint: { max: 464, min: 0 },
+          items: 1,
+          slidesToSlide: 1,
+        },
+      };
 
     const toggleAccordionViaje = () => {
       setShow(!show); 
@@ -50,8 +70,8 @@ const [cardsData, setCardsData] = useState([
     { idViaje: '00003', estatus: 'completada', descripcion: 'Descripción de la Card 3', chofer: 'Raul Chavarria Gudiño', idVehiculo: '0012', vehiculoTipo: 'rabon', partida: 'CDMX', destino: 'Guadalajara'},
     { idViaje: '00004', estatus: 'completada', descripcion: 'Descripción de la Card 4', chofer: 'Andres Pliego Martinez', idVehiculo: '0015', vehiculoTipo: 'nissan', partida: 'CDMX', destino: 'Guadalajara'},
     { idViaje: '00005', estatus: 'asignada', descripcion: 'Descripción de la Card 5', chofer: 'Andres Uribe Martinez', idVehiculo: '0009', vehiculoTipo: 'nissan', partida: 'CDMX', destino: 'Yucatan'},
-    { idViaje: '00006', estatus: 'asignada', descripcion: 'Descripción de la Card 4', chofer: 'Andres Pliego Martinez', idVehiculo: '0015', vehiculoTipo: 'nissan', partida: 'CDMX', destino: 'Guadalajara'},
-    { idViaje: '00007', estatus: 'asignada', descripcion: 'Descripción de la Card 5', chofer: 'Andres Uribe Martinez', idVehiculo: '0009', vehiculoTipo: 'nissan', partida: 'CDMX', destino: 'Yucatan'},
+    { idViaje: '00006', estatus: 'activa', descripcion: 'Descripción de la Card 4', chofer: 'Andres Pliego Martinez', idVehiculo: '0015', vehiculoTipo: 'nissan', partida: 'CDMX', destino: 'Guadalajara'},
+    { idViaje: '00007', estatus: 'activa', descripcion: 'Descripción de la Card 5', chofer: 'Andres Uribe Martinez', idVehiculo: '0009', vehiculoTipo: 'nissan', partida: 'CDMX', destino: 'Yucatan'},
     { idViaje: '00008', estatus: 'activa', descripcion: 'Descripción de la Card 4', chofer: 'Andres Pliego Martinez', idVehiculo: '0015', vehiculoTipo: 'nissan', partida: 'CDMX', destino: 'Guadalajara'},
     { idViaje: '00009', estatus: 'activa', descripcion: 'Descripción de la Card 5', chofer: 'Andres Uribe Martinez', idVehiculo: '0009', vehiculoTipo: 'nissan', partida: 'CDMX', destino: 'Yucatan'},
   ]);
@@ -77,21 +97,29 @@ const [cardsData, setCardsData] = useState([
             </h1>
             <br />
             <div className='container'>
-                <div className='row'>
-                    {
-                        cardsData.filter(trip => trip.estatus === 'activa').map((data, index)=> (
-                            <TarjetaRutas
-                                key={index}
-                                idViaje={data.idViaje}
-                                descripcion={data.descripcion}
-                                chofer={data.chofer}
-                                idVehiculo={data.idVehiculo}
-                                partida={data.partida}
-                                destinio={data.destino}
-                                setMensaje={setMensaje}
-                            />
-                        ))
-                    }
+                <div className='text-center'>
+                    <Carousel 
+                        renderDotsOutside={true} 
+                        keyBoardControl={true}
+                        autoPlaySpeed={1000} 
+                        infinite={true} 
+                        responsive={responsive}
+                    > 
+                        {
+                            cardsData.filter(trip => trip.estatus === 'activa').map((data, index)=> ( 
+                                <TarjetaRutas
+                                    key={index}
+                                    idViaje={data.idViaje}
+                                    descripcion={data.descripcion}
+                                    chofer={data.chofer}
+                                    idVehiculo={data.idVehiculo}
+                                    partida={data.partida}
+                                    destinio={data.destino}
+                                    setMensaje={setMensaje}
+                                /> 
+                            ))
+                        }
+                    </Carousel>   
                 </div>
             </div>
         </div>
@@ -104,8 +132,15 @@ const [cardsData, setCardsData] = useState([
             </h1>
             <br />
             <div className='container'>
-                <div className='row'>
-                    {
+                <div className='text-center'>
+                    <Carousel 
+                        renderDotsOutside={true} 
+                        keyBoardControl={true}
+                        autoPlaySpeed={1000} 
+                        infinite={true} 
+                        responsive={responsive}
+                    > 
+                        {
                         cardsData.filter(trip => trip.estatus === 'asignada').map((data, index)=> (
                             <TarjetaRutas
                                 key={index}
@@ -117,7 +152,9 @@ const [cardsData, setCardsData] = useState([
                                 destinio={data.destino}
                             />
                         ))
-                    }
+                        }
+                    </Carousel>
+                    
                 </div>
             </div>
         </div>
@@ -130,8 +167,15 @@ const [cardsData, setCardsData] = useState([
             </h1>
             <br />
             <div className='container'>
-                <div className='row'>
-                    {
+                <div className='text-center'>
+                    <Carousel 
+                        renderDotsOutside={true} 
+                        keyBoardControl={true}
+                        autoPlaySpeed={1000} 
+                        infinite={true} 
+                        responsive={responsive}
+                    >
+                        {
                         cardsData.filter(trip => trip.estatus === 'completada').map((data, index)=> (
                             <TarjetaRutas
                                 key={index}
@@ -143,7 +187,8 @@ const [cardsData, setCardsData] = useState([
                                 destino={data.destino}
                             />
                         ))
-                    }
+                        }
+                    </Carousel>
                 </div>
             </div>
         </div>

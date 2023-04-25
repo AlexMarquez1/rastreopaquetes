@@ -1,29 +1,40 @@
 import React, { useState } from 'react'
 import { GoogleMap, LoadScript, Marker } from '@react-google-maps/api';
+import Carousel from "react-multi-carousel";
+import "react-multi-carousel/lib/styles.css";
 
 const TarjetaRutas = ({idViaje, descripcion, chofer, idVehiculo, partida, destino, cardsData, setCardsData, setMensaje}) => {
 
   const [selectedLocation, setSelectedLocation] = useState(null);
-  
   const [show, setShow] = useState(null);
+
+  const responsive = {
+    desktop: {
+      breakpoint: { max: 3000, min: 1024 },
+      items: 3,
+      slidesToSlide: 3,
+    },
+    tablet: {
+      breakpoint: { max: 1024, min: 464 },
+      items: 2,
+      slidesToSlide: 2,
+    },
+    mobile: {
+      breakpoint: { max: 464, min: 0 },
+      items: 1,
+      slidesToSlide: 1,
+    },
+  };
 
   const toggleAccordion = () => {
     setShow(!show);
   };
-
-  const lib = [["places"]];
-  const colorTexto = {
-    color: 'black',
-  }
   
   return (
     <>
-    
-        <div className='col-sm-6 col-md-6 col-xl-4 pb-4'>
-        <div className="card">
+        <div className="card m-2">
           <LoadScript
-            googleMapsApiKey="AIzaSyAwXqH5JgdnOqOJy8F8_PrkvOqLtHhy60I"
-            
+            googleMapsApiKey="AIzaSyAwXqH5JgdnOqOJy8F8_PrkvOqLtHhy60I"   
           >
             <GoogleMap
               mapContainerStyle={{
@@ -74,9 +85,6 @@ const TarjetaRutas = ({idViaje, descripcion, chofer, idVehiculo, partida, destin
                 </div>
             } 
         </div>
-        </div>
-      
-    
     </>
   )
 }

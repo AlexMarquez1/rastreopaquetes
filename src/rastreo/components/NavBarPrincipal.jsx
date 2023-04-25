@@ -5,7 +5,7 @@ import '../../styles/estilos.css';
 export const NavBarPrincipal = () => {
     const navigate = useNavigate();
     return (
-        <nav className="navbar bg-body-tertiary fixed-top bg-secondary">
+        <nav className="navbar bg-purple-700 fixed-top">
             <div className="container-fluid">
                 <Link className="navbar-brand" to='/menu'>
                     <i className="pi pi-home text-light p-2 " style={{ fontSize: '2rem' }}></i>
@@ -40,8 +40,9 @@ export const NavBarPrincipal = () => {
                             </li>
                             <li className="nav-item">
                                 <Link className="nav-link" to="/viajes">
-                                <i className="pi pi-truck px-2"></i>
-                                    +Nuevo viaje </Link>
+                                    <i className="pi pi-truck px-2"></i>
+                                    +Nuevo viaje 
+                                </Link>
                                 <hr size='3' />
                             </li>
                             <li className="nav-item">
@@ -62,12 +63,12 @@ export const NavBarPrincipal = () => {
                                     Vehículos</Link>
                                 <hr size='3' />
                             </li>
-                            <li className="nav-item">
+                            {/* <li className="nav-item">
                                 <a className="nav-link" href="#">
                                     <i className="pi pi-map-marker px-2"></i>
                                     Rastreo</a>
                                 <hr size='3' />
-                            </li>
+                            </li> */}
                             <li className="nav-item">
                                 <Link className="nav-link" to='/historial'>
                                 <i className="pi pi-history px-2"></i>

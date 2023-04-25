@@ -99,7 +99,8 @@ export const MenuScreen = () => {
   return (
     <>
       <h1 className="pt-4 text-5xl">Sistema de rastreo</h1>
-        <div className="row">
+      <div className='container'>
+      <div className="row">
           <div className="col-sm-12 col-md-4 p-4">
             <div className="card" style={styleMenu}>
               <div className="card-body">
@@ -128,7 +129,7 @@ export const MenuScreen = () => {
                               className="w-full md:w-14rem"
                               required={true}
                             />
-                            <Button className='shadow-indigo-500/50' icon="pi pi-building" type='button' onClick={() => setMostrarEmpresa(true)} disabled={values.viaje.Empresa.rasonSocial === '' ? true : false} />
+                            <Button className='shadow-indigo-500/50 bg-indigo-500' icon="pi pi-building" type='button' onClick={() => setMostrarEmpresa(true)} disabled={values.viaje.Empresa.rasonSocial === '' ? true : false} />
                           </div>
                         </div>
                       </Form>
@@ -144,7 +145,7 @@ export const MenuScreen = () => {
                 <div className='text-center'>
                   <i className="pi pi-map-marker " style={{ fontSize: '3rem' }}></i>
                   <br></br>
-                  <h1 className='text-3xl'>Viajes actuales.</h1>
+                  <h1 className='text-3xl'>Viajes activos.</h1>
                 </div>
                 <div className='pt-5 m-4'>
                   <TarjeMenuActivas/>
@@ -162,6 +163,7 @@ export const MenuScreen = () => {
             </div>
           </div>
         </div>
+      </div>
       <Dialog header="Empresa" visible={mostrarEmpresa} style={{ width: '50vw' }} onHide={() => setMostrarEmpresa(false)}>
         <p className="m-0">
           Empresa: Informacion de la empresa
