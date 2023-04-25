@@ -184,6 +184,7 @@ const initialValues = {
     direccionLlegada: '',
     latLlegada: '',
     lngLlegada: '',
+    ruta: undefined
   }
 };
 
@@ -233,7 +234,9 @@ export const RegistroViajesScreen = () => {
                           className="w-full md:w-14rem"
                           required={true}
                         />
-                        <Button icon="pi pi-building" type='button' onClick={() => setMostrarEmpresa(true)} disabled={values.viaje.Empresa.rasonSocial === '' ? true : false} />
+                        <Button 
+                        className='bg-indigo-500'
+                        icon="pi pi-building" type='button' onClick={() => setMostrarEmpresa(true)} disabled={values.viaje.Empresa.rasonSocial === '' ? true : false} />
                       </div>
                     </div>
                     <div className="col">
@@ -252,12 +255,15 @@ export const RegistroViajesScreen = () => {
                           className="w-full md:w-14rem"
                           required={true}
                         />
-                        <Button icon="pi pi-user" type='button' onClick={() => setMostrarConductor(true)} disabled={values.viaje.Conductor.nombreCompleto === '' ? true : false} />
+                        <Button 
+                        className='bg-indigo-500'
+                        icon="pi pi-user" type='button' onClick={() => setMostrarConductor(true)} disabled={values.viaje.Conductor.nombreCompleto === '' ? true : false} />
                       </div>
                     </div>
                     <div className="col">
                       <div className="p-inputgroup flex-1">
                         <Field
+                        className="bg-indigo-500"
                           name="viaje.diaSalida"
                           as={Calendar}
                           value={values.viaje.diaSalida}
@@ -289,7 +295,9 @@ export const RegistroViajesScreen = () => {
                           className="w-full md:w-14rem"
                           required={true}
                         />
-                        <Button icon="pi pi-car" type='button' onClick={() => setMostrarVehiculo(true)} disabled={values.viaje.Vehiculo.tipo === '' ? true : false} />
+                        <Button 
+                        className='bg-indigo-500'
+                        icon="pi pi-car" type='button' onClick={() => setMostrarVehiculo(true)} disabled={values.viaje.Vehiculo.tipo === '' ? true : false} />
 
                       </div>
                     </div>

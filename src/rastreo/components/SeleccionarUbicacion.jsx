@@ -18,17 +18,20 @@ export const SeleccionarUbicacion = ({initialValue}) => {
     });
     const [zoom, setZoom] = useState(10);
     const [marcador, setMarcador] = useState(undefined);
-    const [mostrarInfo, setMostrarInfo] = useState(false);
+    const [mostrarInfo, setMostrarInfo] = useState(true);
     const [map, setMap] = useState(null);
     const [markerActivo, setMarkerActivo] = useState();
     const [direccionPartida, setDireccionPartida] = useState({ formatted_address: '', geometry: { location: { lat: function lat() { }, lng: function lng() { } } } });
     const [direccionLlegada, setDireccionLlegada] = useState({ formatted_address: '', geometry: { location: { lat: function lat() { }, lng: function lng() { } } } });
-    const [direccionSeleccionada, setDireccionSeleccionada] = useState();
-    const [ruta, setRuta] = useState(undefined);
+    const [direccionSeleccionada, setDireccionSeleccionada] = useState({ formatted_address: '', geometry: { location: { lat: function lat() { }, lng: function lng() { } } } });
+    // const [ruta, setRuta] = useState(undefined);
     const [ fieldPartida, metaPartida, helpersPartida ] = useField({type: "custom", name:"viaje.direccionPartida", value : initialValue});
     const [ fieldLlegada, metaLlegada, helpersLlegada ] = useField({type: "custom", name:"viaje.direccionLlegada", value : initialValue});
+    const [ fieldRuta, metaRuta, helpersRuta ] = useField({type: "custom", name:"viaje.ruta", value : initialValue});
     const { value: valuePartida } = metaPartida;
     const { setValue: setValuePartida } = helpersPartida;
+    const { value: valueRuta } = metaRuta;
+    const { setValue: setValueRuta } = helpersRuta;
     const { value: valueLlegada } = metaLlegada;
     const { setValue: setValueLlegada } = helpersLlegada;
 
@@ -97,7 +100,7 @@ export const SeleccionarUbicacion = ({initialValue}) => {
                 },
                 (result, status) => {
                     if (status === google.maps.DirectionsStatus.OK) {
-                        setRuta(result);
+                        setValueRuta(result);
                     } else {
                         console.error(`error fetching directions ${result}`);
                     }
@@ -119,8 +122,10 @@ export const SeleccionarUbicacion = ({initialValue}) => {
                                 name="viaje.direccionPartida"
                                 placeholder='Direccion de partida'
                                 value={valuePartida}
+                                disabled={true}
                             />
                             <Button
+                                className='bg-indigo-500'
                                 icon="pi pi-map-marker"
                                 type='button'
                                 disabled={direccionPartida.formatted_address === '' ? true : false}
@@ -135,8 +140,10 @@ export const SeleccionarUbicacion = ({initialValue}) => {
                                 name="viaje.direccionLlegada"
                                 placeholder='Direccion de llegada'
                                 value={valueLlegada}
+                                disabled={true}
                             />
                             <Button
+                            className='bg-indigo-500'
                                 icon="pi pi-map-marker"
                                 type='button'
                                 disabled={direccionLlegada.formatted_address === '' ? true : false}
@@ -161,7 +168,7 @@ export const SeleccionarUbicacion = ({initialValue}) => {
 
                             {
                                 //Marcador temporal
-                                marcador !== undefined ? <Marker
+                                marcador !== undefined && <Marker
 
                                     position={{
                                         lat: marcador.position.lat,
@@ -173,7 +180,11 @@ export const SeleccionarUbicacion = ({initialValue}) => {
                                 >
                                     {
                                         mostrarInfo && <InfoWindow
-                                            marker={markerActivo}
+                                            // marker={markerActivo}
+                                            position={{
+                                                lat: marcador.position.lat,
+                                                lng: marcador.position.lng,
+                                            }}
                                             onCloseClick={() => { setMostrarInfo(false) }}
 
                                         >
@@ -187,8 +198,10 @@ export const SeleccionarUbicacion = ({initialValue}) => {
                                                     <div className='row'>
                                                         <div className='col'>
                                                             <Button
+                                                                className='bg-indigo-500'
                                                                 icon="pi pi-map-marker"
                                                                 label='Punto de partida'
+                                                                type='button'
                                                                 onClick={() => {
                                                                     setValuePartida(direccionSeleccionada.formatted_address);
                                                                     // setDireccionPartida(direccionSeleccionada)
@@ -200,8 +213,10 @@ export const SeleccionarUbicacion = ({initialValue}) => {
                                                         </div>
                                                         <div className='col'>
                                                             <Button
+                                                                className='bg-indigo-500'
                                                                 icon="pi pi-map-marker"
                                                                 label='Punto de llegada'
+                                                                type='button'
                                                                 onClick={() => {
                                                                     // setDireccionLlegada(direccionSeleccionada)
                                                                     setValueLlegada(direccionSeleccionada.formatted_address);
@@ -216,10 +231,10 @@ export const SeleccionarUbicacion = ({initialValue}) => {
                                         </InfoWindow>
                                     }
 
-                                </Marker> : <></>
+                                </Marker>
                             }
 
-                            {ruta !== undefined && (<DirectionsRenderer directions={ruta} />)}
+                            {valueRuta !== undefined && (<DirectionsRenderer directions={valueRuta} />)}
 
                             <StandaloneSearchBox
                                 onLoad={(ref) => { setSearchBox(ref); }}
@@ -246,12 +261,28 @@ export const SeleccionarUbicacion = ({initialValue}) => {
                                             left: '25%',
                                         }}
                                     />
-                                    <span className="p-inputgroup-addon">
-                                        <i className="pi pi-truck"></i>
-                                    </span>
                                 </div>
                             </StandaloneSearchBox>
                         </GoogleMap>
+                        {
+                            
+                            valueRuta !== undefined &&
+                             <div style={{ 
+                                position: 'absolute', 
+                                top: '75%', 
+                                left: '20px',
+                                width: '35%', 
+                                backgroundColor: 'white', 
+                                padding: '10px',
+                                border: '1px solid transparent',
+                                borderRadius: '20px',
+                                boxShadow: '0 2px 6px rgba(0, 0, 0, 0.3)',
+                                 }}>
+                            
+                            <h3>Distancia aproximada: {valueRuta.routes[0].legs[0].distance.text}</h3>
+                            <p>Duracion aproximada: {valueRuta.routes[0].legs[0].duration.text}</p>
+                          </div>
+                        }
                     </div>
                 </div>
             </div>
@@ -259,3 +290,5 @@ export const SeleccionarUbicacion = ({initialValue}) => {
 
     ) : <></>;
 };
+
+
