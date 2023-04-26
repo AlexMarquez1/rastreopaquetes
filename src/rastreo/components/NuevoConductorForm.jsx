@@ -4,11 +4,12 @@ import { InputText } from 'primereact/inputtext';
 import { FileUpload } from 'primereact/fileupload';
 import { Dropdown } from 'primereact/dropdown';
 import { Calendar } from 'primereact/calendar';
+import { Password } from 'primereact/password';
 import { estados } from '../data/arregloEstados';
 import { municipiosPorEstado } from '../data/arregloEstados';
 import React, { useState } from 'react'
 
-const NuevoConductorForm = () => {
+const NuevoConductorForm = ({toggleNuevoConductorForm}) => {
 
     const [municipios, setMunicipios] = useState([]);
 
@@ -25,6 +26,8 @@ const NuevoConductorForm = () => {
         numeroContacto: '',
         curp: '',
         rfc: '',
+        usuario: '',
+        contrasena: '',
         foto: '',
         direccion : {
             calle: '',
@@ -150,6 +153,43 @@ const NuevoConductorForm = () => {
                                     </span>
                                 </div>
                             </div> 
+                            <div className="col-sm-6 col-md-6 col-xl-4 pb-5">
+                                <div className='p-inputgroup flex-1'>
+                                    <span className='p-float-label'>
+                                        <Field
+                                            as={InputText}
+                                            name="usuario"
+                                            onChange={handleChange}
+                                            value={values.usuario}
+                                            inputid='usuario'
+                                            required={true}
+                                        />
+                                        <span className="p-inputgroup-addon">
+                                            <i className="pi pi-desktop"></i>
+                                        </span>
+                                        <label htmlFor="usuario" className='text-body fs-6'>Usuario</label>
+                                    </span>
+                                </div>
+                            </div>
+                            <div className="col-sm-6 col-md-6 col-xl-4 pb-5">
+                                <div className='p-inputgroup flex-1'>
+                                    <span className='p-float-label'>
+                                        <Field
+                                            as={Password}
+                                            name="contrasena"
+                                            onChange={handleChange}
+                                            value={values.contrasena}
+                                            inputid='contrasena'
+                                            required={true}
+                                            toggleMask
+                                        />
+                                        <span className="p-inputgroup-addon">
+                                            <i className="pi pi-desktop"></i>
+                                        </span>
+                                        <label htmlFor="contrasena" className='text-body fs-6'>Contraseña</label>
+                                    </span>
+                                </div>
+                            </div>
                             <div className="col-sm-6 col-md-6 col-xl-4 pb-5">
                                 <div className='p-inputgroup flex-1'>
                                     <span className='p-float-label'>
@@ -415,7 +455,7 @@ const NuevoConductorForm = () => {
                             
                         </div>
                     </div>
-                    <Button type="submit" label="Submit" className='shadow-indigo-500/50 m-4'/>
+                    <Button type="submit" label="Submit" className='bg-indigo-500 hover:bg-indigo-700 m-4' onClick={toggleNuevoConductorForm}/>
                 </Form>
             )}
         </Formik>

@@ -95,14 +95,38 @@ const [cardsData, setCardsData] = useState([
     <>
     <h1 className='pt-4 pb-4 text-5xl'>Historial de viajes</h1>
     <div className='container'>
-        <BarraBusqueda handleSearch={handleSearch} cardsData={cardsData}/>
+      <div className='row'>
+        <div className='col-sm-12 col-md-6'>
+          <BarraBusqueda handleSearch={handleSearch} cardsData={cardsData}/>
+        </div>
+      <div className='col-sm-12 col-md-6'>
+        <div className="card">
+          <div className="card-body">
+            <div className='text-right'>
+              <i className="pi pi-truck" style={{ fontSize: '2rem' }}></i>
+            </div>
+            <h1 className='text-black text-left text-3xl font-semibold'>
+              Total de viajes: {itemCount}
+            </h1>
+            <h1 className='text-black text-left text-2xl'>
+              Viajes activos: <span className='font-semibold'>{cardsData.filter(card => card.estatus === 'activa').length}</span>
+            </h1>
+            <h1 className='text-black text-left text-2xl'>
+              Viajes asignados: <span className='font-semibold'>{cardsData.filter(card => card.estatus === 'asignada').length}</span>
+            </h1>
+            <h1 className='text-black text-left text-2xl'>
+              Viajes completados: <span className='font-semibold'>{cardsData.filter(card => card.estatus === 'completada').length}</span>
+            </h1>
+          </div>
+        </div>
+      </div>
+      </div>
     </div>
     <section className="section_item flex-container" style={{ paddingTop: '5%' }}>
-    <h2 className='pb-4 text-3xl text-white text-right'>Total de viajes: {itemCount}</h2>
         <div className="card form" style={styleRegistro}>
             <br />
             <h1 className="card-title">
-                <p className="fs-4">Viajes activas: {cardsData.filter(card => card.estatus === 'activa').length}</p>
+                <p className="fs-4">Viajes activos: {cardsData.filter(card => card.estatus === 'activa').length}</p>
             </h1>
             <br />
             <div className='container'>
@@ -147,17 +171,27 @@ const [cardsData, setCardsData] = useState([
         <div className="card form" style={styleRegistro}>
         <br />
             <h1 className="card-title">
-                <p className="fs-4">Viajes asignadas: {cardsData.filter(card => card.estatus === 'asignada').length}</p>
+                <p className="fs-4">Viajes asignados: {cardsData.filter(card => card.estatus === 'asignada').length}</p>
             </h1>
             <br />
             <div className='container'>
                 <div className='text-center'>
                     <Carousel 
                         renderDotsOutside={true} 
-                        keyBoardControl={true}
-                        autoPlaySpeed={1000} 
                         infinite={true} 
-                        responsive={responsive}
+                        swipeable={false}
+                      draggable={false}
+                      showDots={true}
+                      responsive={responsive}
+                      autoPlay={true}
+                      autoPlaySpeed={3000}
+                      keyBoardControl={true}
+                      customTransition="all .5"
+                      transitionDuration={500}
+                      containerClass="carousel-container"
+                      removeArrowOnDeviceType={['tablet', 'mobile']}
+                      dotListClass="custom-dot-list-style"
+                      itemClass="carousel-item-padding-40-px"
                     > 
                         {
                         cardsData.filter(trip => trip.estatus === 'asignada').map((data, index)=> (
@@ -169,6 +203,7 @@ const [cardsData, setCardsData] = useState([
                                 idVehiculo={data.idVehiculo}
                                 partida={data.partida}
                                 destinio={data.destino}
+                                setMensaje={setMensaje}
                             />
                         ))
                         }
@@ -182,17 +217,27 @@ const [cardsData, setCardsData] = useState([
         <div className="card form" style={styleRegistro}>
         <br />
             <h1 className="card-title">
-                <p className="fs-4">Viajes completadas: {cardsData.filter(card => card.estatus === 'completada').length}</p>
+                <p className="fs-4">Viajes completados: {cardsData.filter(card => card.estatus === 'completada').length}</p>
             </h1>
             <br />
             <div className='container'>
                 <div className='text-center'>
                     <Carousel 
                         renderDotsOutside={true} 
-                        keyBoardControl={true}
-                        autoPlaySpeed={1000} 
                         infinite={true} 
-                        responsive={responsive}
+                        swipeable={false}
+                      draggable={false}
+                      showDots={true}
+                      responsive={responsive}
+                      autoPlay={true}
+                      autoPlaySpeed={3000}
+                      keyBoardControl={true}
+                      customTransition="all .5"
+                      transitionDuration={500}
+                      containerClass="carousel-container"
+                      removeArrowOnDeviceType={['tablet', 'mobile']}
+                      dotListClass="custom-dot-list-style"
+                      itemClass="carousel-item-padding-40-px"
                     >
                         {
                         cardsData.filter(trip => trip.estatus === 'completada').map((data, index)=> (
@@ -204,6 +249,7 @@ const [cardsData, setCardsData] = useState([
                                 idVehiculo={data.idVehiculo}
                                 partida={data.partida}
                                 destino={data.destino}
+                                setMensaje={setMensaje}
                             />
                         ))
                         }
