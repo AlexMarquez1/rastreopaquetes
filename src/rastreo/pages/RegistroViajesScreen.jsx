@@ -188,7 +188,7 @@ const initialValues = {
       lat:0,
       lng:0,
     },
-    ruta: undefined
+    ruta: null
   }
 };
 

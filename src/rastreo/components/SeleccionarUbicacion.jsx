@@ -1,4 +1,4 @@
-import React, { useState, useCallback } from 'react';
+import React, { useState, useCallback, useRef } from 'react';
 import { GoogleMap, InfoWindow, useJsApiLoader, Marker, StandaloneSearchBox, DirectionsRenderer } from '@react-google-maps/api';
 import { InputText } from 'primereact/inputtext';
 import { InputTextarea } from 'primereact/inputtextarea';
@@ -10,7 +10,7 @@ const colorTexto = {
     color: 'black',
 }
 
-export const SeleccionarUbicacion = ({initialValue}) => {
+export const SeleccionarUbicacion = ({ initialValue }) => {
     const [searchBox, setSearchBox] = useState();
     const [center, setCenter] = useState({
         lat: 19.410757,
@@ -20,17 +20,18 @@ export const SeleccionarUbicacion = ({initialValue}) => {
     const [marcador, setMarcador] = useState(undefined);
     const [mostrarInfo, setMostrarInfo] = useState(true);
     const [map, setMap] = useState(null);
+    const mapRef = useRef(null);
     const [markerActivo, setMarkerActivo] = useState();
-    const [direccionRender, setDireccionRender] = useState(null);
+    const directionsRendererRef = useRef(null);
     const [direccionSeleccionada, setDireccionSeleccionada] = useState({ formatted_address: '', geometry: { location: { lat: function lat() { }, lng: function lng() { } } } });
     // const [ruta, setRuta] = useState(undefined);
-    const [ fieldPartida, metaPartida, helpersPartida ] = useField({type: "custom", name:"viaje.direccionPartida", value : initialValue});
-    const [ fieldLlegada, metaLlegada, helpersLlegada ] = useField({type: "custom", name:"viaje.direccionLlegada", value : initialValue});
-    const [ fieldRuta, metaRuta, helpersRuta ] = useField({type: "custom", name:"viaje.ruta", value : initialValue});
-    const [ fieldCoordenadasPartida, metaCoordenadasPartida, helpersCoordenadasPartida ] = useField({type: "custom", name:"viaje.coordenadasPartida", value : initialValue});
+    const [fieldPartida, metaPartida, helpersPartida] = useField({ type: "custom", name: "viaje.direccionPartida", value: initialValue });
+    const [fieldLlegada, metaLlegada, helpersLlegada] = useField({ type: "custom", name: "viaje.direccionLlegada", value: initialValue });
+    const [fieldRuta, metaRuta, helpersRuta] = useField({ type: "custom", name: "viaje.ruta", value: initialValue });
+    const [fieldCoordenadasPartida, metaCoordenadasPartida, helpersCoordenadasPartida] = useField({ type: "custom", name: "viaje.coordenadasPartida", value: initialValue });
     const { value: valueCoordenadasPartida } = metaCoordenadasPartida;
     const { setValue: setValueCoordenadasPartida } = helpersCoordenadasPartida;
-    const [ fieldCoordenadasLlegada, metaCoordenadasLlegada, helpersCoordenadasLlegada ] = useField({type: "custom", name:"viaje.coordenadasLlegada", value : initialValue});
+    const [fieldCoordenadasLlegada, metaCoordenadasLlegada, helpersCoordenadasLlegada] = useField({ type: "custom", name: "viaje.coordenadasLlegada", value: initialValue });
     const { value: valueCoordenadasLlegada } = metaCoordenadasLlegada;
     const { setValue: setValueCoordenadasLlegada } = helpersCoordenadasLlegada;
     const { value: valuePartida } = metaPartida;
@@ -48,11 +49,42 @@ export const SeleccionarUbicacion = ({initialValue}) => {
     const onLoad = useCallback((map) => {
         const bounds = new window.google.maps.LatLngBounds(center);
         setMap(map);
+        mapRef.current = map;
     }, []);
 
     const onUnmount = useCallback((map) => {
         setMap(null)
     }, []);
+
+    const calcularRuta = (origen, destino) => {
+        const directionsService = new window.google.maps.DirectionsService();
+
+        directionsService.route(
+            {
+                origin: origen,
+                destination: destino,
+                travelMode: google.maps.TravelMode.DRIVING
+            },
+            (result, status) => {
+                if (status === google.maps.DirectionsStatus.OK) {
+                    setValueRuta(result);
+                    if (directionsRendererRef.current) {
+                        directionsRendererRef.current.setDirections(result);
+                    } else {
+
+                        const directionsRenderer = new window.google.maps.DirectionsRenderer({
+                            directions: result,
+                            map
+                        });
+                        directionsRendererRef.current = directionsRenderer;
+                        //   setRuta(result);
+                    }
+                } else {
+                    console.error(`error fetching directions ${result}`);
+                }
+            }
+        );
+    }
 
     // Función para manejar el evento de clic en el mapa
     const handleMapClick = (event) => {
@@ -63,6 +95,7 @@ export const SeleccionarUbicacion = ({initialValue}) => {
         const geocoder = new window.google.maps.Geocoder();
         geocoder.geocode({ location: { lat, lng } }, (results, status) => {
             if (status === 'OK') {
+                console.log(results);
                 setDireccionSeleccionada(results[0]);
             } else {
                 console.log('Geocode was not successful for the following reason: ' + status);
@@ -70,14 +103,6 @@ export const SeleccionarUbicacion = ({initialValue}) => {
         });
 
     };
-
-    // const [field, meta, helpers] = useField(props.name);
-
-    // const { value } = meta;
-    // const { setValue } = helpers;
-
-    // const isSelected = v => (v === value ? 'selected' : '');
-
 
     const handlePlaceChanged = () => {
         const place = searchBox.getPlaces()[0];
@@ -93,57 +118,6 @@ export const SeleccionarUbicacion = ({initialValue}) => {
         setCenter({ lat: location.lat, lng: location.lng });
         setZoom(20);
     }
-
-    const obtenerRuta = (origin, destination) => {
-        const directionsService = new google.maps.DirectionsService();
-
-        if (origin !== null && destination !== null) {
-            directionsService.route(
-                {
-                    origin: origin,
-                    destination: destination,
-                    travelMode: google.maps.TravelMode.DRIVING
-                },
-                (result, status) => {
-                    if (status === google.maps.DirectionsStatus.OK) {
-                        handleDirectionsResponse(result);
-                    } else {
-                        console.error(`error fetching directions ${result}`);
-                    }
-                }
-            );
-        } else {
-            console.log('Please mark your destination in the map first!');
-        }
-    }
-
-    const handleDirectionsResponse = (response) => {
-        if (direccionRender) {
-          // Si ya hay un DirectionsRenderer, lo eliminamos del mapa
-          direccionRender.setMap(null);
-          
-        }
-    
-        // Creamos un nuevo DirectionsRenderer con la nueva respuesta
-        const newDirectionsRenderer = new window.google.maps.DirectionsRenderer({
-          directions: response,
-          map: map.current,
-        });
-    
-        // Lo guardamos en el estado
-        setDireccionRender(newDirectionsRenderer);
-        setValueRuta(response);
-      };
-
-      const handleClearDirections = () => {
-        if (direccionRender) {
-          // Si ya hay un DirectionsRenderer, lo eliminamos del mapa
-          direccionRender.setMap(null);
-        }
-    
-        setValueRuta(null);
-      };
-
     return isLoaded ? (
         <>
             <div className="container text-start" style={{ position: 'relative', height: '500px' }}>
@@ -176,7 +150,7 @@ export const SeleccionarUbicacion = ({initialValue}) => {
                                 disabled={true}
                             />
                             <Button
-                            className='bg-indigo-500'
+                                className='bg-indigo-500'
                                 icon="pi pi-map-marker"
                                 type='button'
                                 disabled={valueLlegada === '' ? true : false}
@@ -242,8 +216,7 @@ export const SeleccionarUbicacion = ({initialValue}) => {
                                                                         lng: direccionSeleccionada.geometry.location.lng()
                                                                     });
                                                                     if (valueLlegada !== '') {
-                                                                        handleClearDirections();
-                                                                        obtenerRuta(direccionSeleccionada.formatted_address,valueLlegada);
+                                                                        calcularRuta(direccionSeleccionada.formatted_address, valueLlegada);
                                                                     }
                                                                 }}
                                                             />
@@ -261,8 +234,7 @@ export const SeleccionarUbicacion = ({initialValue}) => {
                                                                         lng: direccionSeleccionada.geometry.location.lng()
                                                                     });
                                                                     if (valuePartida !== '') {
-                                                                        handleClearDirections();
-                                                                        obtenerRuta(valuePartida, direccionSeleccionada.formatted_address);
+                                                                        calcularRuta(valuePartida, direccionSeleccionada.formatted_address);
                                                                     }
                                                                 }} />
                                                         </div>
@@ -274,8 +246,6 @@ export const SeleccionarUbicacion = ({initialValue}) => {
 
                                 </Marker>
                             }
-
-                            {valueRuta !== undefined && (<DirectionsRenderer directions={valueRuta} />)}
 
                             <StandaloneSearchBox
                                 onLoad={(ref) => { setSearchBox(ref); }}
@@ -306,23 +276,23 @@ export const SeleccionarUbicacion = ({initialValue}) => {
                             </StandaloneSearchBox>
                         </GoogleMap>
                         {
-                            
-                            valueRuta !== undefined &&
-                             <div style={{ 
-                                position: 'absolute', 
-                                top: '75%', 
+
+                            valueRuta &&
+                            <div style={{
+                                position: 'absolute',
+                                top: '75%',
                                 left: '20px',
-                                width: '35%', 
-                                backgroundColor: 'white', 
+                                width: '35%',
+                                backgroundColor: 'white',
                                 padding: '10px',
                                 border: '1px solid transparent',
                                 borderRadius: '20px',
                                 boxShadow: '0 2px 6px rgba(0, 0, 0, 0.3)',
-                                 }}>
-                            
-                            <h3>Distancia aproximada: {valueRuta && valueRuta.routes[0].legs[0].distance.text}</h3>
-                            <p>Duracion aproximada: {valueRuta && valueRuta.routes[0].legs[0].duration.text}</p>
-                          </div>
+                            }}>
+
+                                <h3>Distancia aproximada: {valueRuta && valueRuta.routes[0].legs[0].distance.text}</h3>
+                                <p>Duracion aproximada: {valueRuta && valueRuta.routes[0].legs[0].duration.text}</p>
+                            </div>
                         }
                     </div>
                 </div>
@@ -331,5 +301,3 @@ export const SeleccionarUbicacion = ({initialValue}) => {
 
     ) : <></>;
 };
-
-
