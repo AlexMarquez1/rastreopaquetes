@@ -5,7 +5,7 @@ import '../../styles/estilos.css';
 export const NavBarPrincipal = () => {
     const navigate = useNavigate();
     return (
-        <nav className="navbar bg-purple-700 fixed-top">
+        <nav className="navbar bg-indigo-500 fixed-top">
             <div className="container-fluid">
                 <Link className="navbar-brand" to='/menu'>
                     <i className="pi pi-home text-light p-2 " style={{ fontSize: '2rem' }}></i>

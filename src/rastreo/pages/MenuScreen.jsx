@@ -159,6 +159,58 @@ export const MenuScreen = () => {
                 <i className="pi pi-truck" style={{ fontSize: '3rem' }}></i>
                 <br></br>
                 <h1 className='text-black text-3xl'>Disponibilidad de vehículos</h1>
+                <div className='container'>
+                  <div className='row justify-center'>
+                    <div className='col-sm-6 col-md-3 col-xl-2 m-3 grid justify-items-center'>
+                      <div class="bg-white rounded-full h-40 w-40 hover:bg-indigo-500 flex items-center justify-center shadow-lg relative">
+                        <span class="bg-red-500 text-white absolute top-0 right-0 rounded-full h-5 w-5 flex items-center justify-center shadow-sm border border-white">5</span>
+                        <img src="src/assets/iconos_transporte/motorcycle.png" alt="Descripción de la imagen" className='hover:animate-bounce' viewBox="0 0 20 20" fill="currentColor"/>
+                      </div>
+                      <span className='text-xl font-semibold'>Trailer</span>
+                    </div>
+                    <div className='col-sm-6 col-md-3 col-xl-2 m-3 grid justify-items-center'>
+                      <div class="bg-white rounded-full h-40 w-40 hover:bg-indigo-500 flex items-center justify-center shadow-lg relative">
+                        <span class="bg-red-500 text-white absolute top-0 right-0 rounded-full h-5 w-5 flex items-center justify-center shadow-sm border border-white">1</span>
+                        <img src="src/assets/iconos_transporte/nissan-estaquita-redilas.png" alt="Descripción de la imagen" className='hover:animate-bounce' viewBox="0 0 20 20" fill="currentColor"/>
+                      </div>
+                      <span className='text-xl font-semibold'>Nissan</span>
+                    </div>
+                    <div className='col-sm-6 col-md-3 col-xl-2 m-3 grid justify-items-center'>
+                      <div class="bg-white rounded-full h-40 w-40 hover:bg-indigo-500 flex items-center justify-center shadow-lg relative">
+                        <span class="bg-red-500 text-white absolute top-0 right-0 rounded-full h-5 w-5 flex items-center justify-center shadow-sm border border-white">1</span>
+                        <img src="src/assets/iconos_transporte/dodge-ram.png" alt="Descripción de la imagen" className='hover:animate-bounce' viewBox="0 0 20 20" fill="currentColor"/>
+                      </div>
+                      <span className='text-xl font-semibold'>Camioneta 3 1/2</span>
+                    </div>
+                    <div className='col-sm-6 col-md-3 col-xl-2 m-3 grid justify-items-center'>
+                      <div class="bg-white rounded-full h-40 w-40 hover:bg-indigo-500 flex items-center justify-center shadow-lg relative">
+                        <span class="bg-red-500 text-white absolute top-0 right-0 rounded-full h-5 w-5 flex items-center justify-center shadow-sm border border-white">1</span>
+                        <img src="src/assets/iconos_transporte/torton.png" alt="Descripción de la imagen" className='hover:animate-bounce' viewBox="0 0 20 20" fill="currentColor"/>
+                      </div>
+                      <span className='text-xl font-semibold'>Torton</span>
+                    </div>
+                    <div className='col-sm-6 col-md-3 col-xl-2 m-3 grid justify-items-center'>
+                      <div class="bg-white rounded-full h-40 w-40 hover:bg-indigo-500 flex items-center justify-center shadow-lg relative">
+                        <span class="bg-red-500 text-white absolute top-0 right-0 rounded-full h-5 w-5 flex items-center justify-center shadow-sm border border-white">3</span>
+                        <img src="src/assets/iconos_transporte/rabon.png" alt="Descripción de la imagen" className='hover:animate-bounce' viewBox="0 0 20 20" fill="currentColor"/>
+                      </div>
+                      <span className='text-xl font-semibold'>Rabon</span>
+                    </div>
+                    <div className='col-sm-6 col-md-3 col-xl-2 m-3 grid justify-items-center'>
+                      <div class="bg-white rounded-full h-40 w-40 hover:bg-indigo-500 flex items-center justify-center shadow-lg relative">
+                        <span class="bg-red-500 text-white absolute top-0 right-0 rounded-full h-5 w-5 flex items-center justify-center shadow-sm border border-white">1</span>
+                        <img src="src/assets/iconos_transporte/trailer.png" alt="Descripción de la imagen" className='hover:animate-bounce' viewBox="0 0 20 20" fill="currentColor"/>
+                      </div>
+                      <span className='text-xl font-semibold'>Trailer</span>
+                    </div>
+                    {/* <div className='col-sm-6 col-md-3 col-xl-2 m-3 grid justify-items-center '>
+                      <div class="bg-white rounded-full h-40 w-40 hover:bg-indigo-500 flex items-center justify-center shadow-lg">
+                        <img src="src/assets/iconos_transporte/trailer.png" alt="Descripción de la imagen" className='hover:animate-bounce' viewBox="0 0 20 20" fill="currentColor"/>
+                      </div>
+                      <span className='text-xl font-semibold'>Trailer</span>
+                    </div> */}
+                  </div>
+                </div>
               </div>
             </div>
           </div>
