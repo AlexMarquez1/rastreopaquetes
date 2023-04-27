@@ -15,7 +15,7 @@ export const ImagenLoader = ({src}) => {
         )}
 
         <img
-        className='list-group-item  h-7 w-7 rounded-full mx-auto'
+        className='list-group-item h-48 w-48 rounded-full mx-auto'
           src={src}
           onLoad={handleImageLoaded}
         />

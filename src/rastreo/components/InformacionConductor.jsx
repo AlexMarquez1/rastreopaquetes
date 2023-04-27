@@ -2,7 +2,7 @@ import { ImagenLoader } from "./ImagenLoader"
 
 
 export const InformacionConductor = ({ conductorSeleccionado }) => {
-
+  console.log(conductorSeleccionado);
   const abrirPdf= ()=>{
     const nuevaVentana = window.open(conductorSeleccionado.licencia, '_blank');
     nuevaVentana.opener = null;
@@ -10,7 +10,9 @@ export const InformacionConductor = ({ conductorSeleccionado }) => {
   const btnLicenciaActivo = conductorSeleccionado.licencia === undefined ? null : conductorSeleccionado.licencia === '';
 
   return (
-      <div className='container'>
+    <>
+      {conductorSeleccionado && 
+        <div className='container'>
         <div className='row'>
           <div className='col-sm-12 col-md-6 col-xl-6 p-4 text-center'>
             <ul className="list-group list-group-flush">
@@ -35,6 +37,7 @@ export const InformacionConductor = ({ conductorSeleccionado }) => {
           </div>
 
         </div>
-      </div>
+      </div>}
+    </>
   )
 }

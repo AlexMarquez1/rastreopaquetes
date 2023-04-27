@@ -95,7 +95,6 @@ export const SeleccionarUbicacion = ({ initialValue }) => {
         const geocoder = new window.google.maps.Geocoder();
         geocoder.geocode({ location: { lat, lng } }, (results, status) => {
             if (status === 'OK') {
-                console.log(results);
                 setDireccionSeleccionada(results[0]);
             } else {
                 console.log('Geocode was not successful for the following reason: ' + status);
@@ -105,16 +104,18 @@ export const SeleccionarUbicacion = ({ initialValue }) => {
     };
 
     const handlePlaceChanged = () => {
-        const place = searchBox.getPlaces()[0];
-        setDireccionSeleccionada(place);
-        const { geometry } = place;
-        const { location } = geometry;
-        setCenter({ lat: location.lat(), lng: location.lng() });
-        setZoom(15);
-        setMarcador({ position: { lat: location.lat(), lng: location.lng() } });
+        if(searchBox){
+            console.log(searchBox);
+            const place = searchBox.getPlaces()[0];
+            setDireccionSeleccionada(place);
+            const { geometry } = place;
+            const { location } = geometry;
+            setCenter({ lat: location.lat(), lng: location.lng() });
+            setZoom(15);
+            setMarcador({ position: { lat: location.lat(), lng: location.lng() } });
+        }
     }
     const handleClickLocation = (location) => {
-        console.log(location);
         setCenter({ lat: location.lat, lng: location.lng });
         setZoom(20);
     }
@@ -171,7 +172,8 @@ export const SeleccionarUbicacion = ({ initialValue }) => {
                             center={center}
                             zoom={zoom} // Nivel de zoom inicial del mapa
                             onClick={handleMapClick} // Asignamos la función de manejo de clic en el mapa
-                        >
+                            options={{streetViewControl: false, draggable: true}}
+                       >
 
                             {
                                 //Marcador temporal

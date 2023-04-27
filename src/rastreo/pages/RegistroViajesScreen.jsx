@@ -1,10 +1,11 @@
 import React, { useState } from 'react'
-import { Field, Form, Formik } from 'formik';
+import { Field, Form, Formik, useField } from 'formik';
 import { NavBarPrincipal } from '../components/NavBarPrincipal'
 import { InputText } from 'primereact/inputtext';
 import { Dropdown } from 'primereact/dropdown';
 import { Button } from 'primereact/button';
 import { Calendar } from 'primereact/calendar';
+import { InputTextarea } from 'primereact/inputtextarea';
 
 import { SeleccionarUbicacion } from '../components/SeleccionarUbicacion';
 import { Dialog } from 'primereact/dialog';
@@ -122,7 +123,7 @@ const vehiculos = [
     marca: '',
     modelo: '',
     placas: '',
-    numeroSerie: '', 
+    numeroSerie: '',
     tarjetaCirculacion: '',
     Seguro: {
       aseguradora: '',
@@ -180,13 +181,13 @@ const initialValues = {
     diaSalida: '',
     direccionPartida: '',
     coordenadasPartida: {
-      lat:0,
-      lng:0,
+      lat: 0,
+      lng: 0,
     },
     direccionLlegada: '',
     coordenadasLlegada: {
-      lat:0,
-      lng:0,
+      lat: 0,
+      lng: 0,
     },
     ruta: null
   }
@@ -198,6 +199,20 @@ export const RegistroViajesScreen = () => {
   const [mostrarEmpresa, setMostrarEmpresa] = useState(false);
   const [mostrarConductor, setMostrarConductor] = useState(false);
   const [mostrarVehiculo, setMostrarVehiculo] = useState(false);
+  const [conductorSeleccionado, setConductorSeleccionado] = useState({
+    idConductor: '',
+    nombreCompleto: '',
+    edad: '',
+    tipoDeSangre: '',
+    numeroContacto: '',
+    numeroLicencia: '',
+    tipoLicencia: '',
+    vigencia: '',
+    licencia: '',
+  });
+  // const [fieldConductor, metaConductor, helpersConductor] = useField('Conductor');
+  // const { value: valueConductor } = metaConductor;
+  // const { setValue: setValueConductor } = helpersConductor;
 
   const registrarViaje = async (e) => {
     e.preventDefault();
@@ -238,9 +253,9 @@ export const RegistroViajesScreen = () => {
                           className="w-full md:w-14rem"
                           required={true}
                         />
-                        <Button 
-                        className='bg-indigo-500'
-                        icon="pi pi-building" type='button' onClick={() => setMostrarEmpresa(true)} disabled={values.viaje.Empresa.rasonSocial === '' ? true : false} />
+                        <Button
+                          className='bg-indigo-500'
+                          icon="pi pi-building" type='button' onClick={() => setMostrarEmpresa(true)} disabled={values.viaje.Empresa.rasonSocial === '' ? true : false} />
                       </div>
                     </div>
                     <div className="col">
@@ -249,7 +264,11 @@ export const RegistroViajesScreen = () => {
                           name='viaje.Conductor'
                           as={Dropdown}
                           value={values.viaje.Conductor}
-                          onChange={handleChange}
+                          onChange={(e)=>{
+                            console.log(e.value);
+                            handleChange(e); 
+                            setConductorSeleccionado(e.value);
+                          }}
                           options={conductores}
                           optionLabel="nombreCompleto"
                           filter
@@ -259,29 +278,21 @@ export const RegistroViajesScreen = () => {
                           className="w-full md:w-14rem"
                           required={true}
                         />
-                        <Button 
-                        className='bg-indigo-500'
-                        icon="pi pi-user" type='button' onClick={() => setMostrarConductor(true)} disabled={values.viaje.Conductor.nombreCompleto === '' ? true : false} />
+                        {/* <Dropdown 
+                          value={valueConductor}
+                          onChange={(e)=>{ setValueConductor(e.target.value)}}
+                          options={conductores}
+                          optionLabel="nombreCompleto"
+                          filter
+                          filterPlaceholder='Buscar por nombre'
+                          emptyFilterMessage='Conductor no registrado'
+                          placeholder="Selecciona un conductor"
+                          className="w-full md:w-14rem" /> */}
+                        <Button
+                          className='bg-indigo-500'
+                          icon="pi pi-user" type='button' onClick={() => setMostrarConductor(true)} disabled={values.viaje.Conductor.nombreCompleto === '' ? true : false} />
                       </div>
                     </div>
-                    <div className="col">
-                      <div className="p-inputgroup flex-1">
-                        <Field
-                        className="bg-indigo-500"
-                          name="viaje.diaSalida"
-                          as={Calendar}
-                          value={values.viaje.diaSalida}
-                          onChange={handleChange}
-                          inputId='salida'
-                          showIcon
-                          placeholder="Fecha de salida"
-                          dateFormat='dd/mm/yy'
-                        />
-                      </div>
-                    </div>
-                  </div>
-
-                  <div className="row">
                     <div className="col">
                       <div className="p-inputgroup flex-1">
 
@@ -299,10 +310,28 @@ export const RegistroViajesScreen = () => {
                           className="w-full md:w-14rem"
                           required={true}
                         />
-                        <Button 
-                        className='bg-indigo-500'
-                        icon="pi pi-car" type='button' onClick={() => setMostrarVehiculo(true)} disabled={values.viaje.Vehiculo.tipo === '' ? true : false} />
+                        <Button
+                          className='bg-indigo-500'
+                          icon="pi pi-car" type='button' onClick={() => setMostrarVehiculo(true)} disabled={values.viaje.Vehiculo.tipo === '' ? true : false} />
 
+                      </div>
+                    </div>
+                  </div>
+
+                  <div className="row">
+                    <div className="col">
+                      <div className="p-inputgroup flex-1">
+                        <Field
+                          className="bg-indigo-500"
+                          name="viaje.diaSalida"
+                          as={Calendar}
+                          value={values.viaje.diaSalida}
+                          onChange={handleChange}
+                          inputId='salida'
+                          showIcon
+                          placeholder="Fecha de salida"
+                          dateFormat='dd/mm/yy'
+                        />
                       </div>
                     </div>
                     <div className='col'>
@@ -323,9 +352,19 @@ export const RegistroViajesScreen = () => {
                         </span>
                       </div>
                     </div>
-                    <div className='col'>
+                  </div>
+                  <div className='row'>
+                  <div className='col'>
                       <div className="p-inputgroup flex-1">
-                        <Button label='Agregar' />
+                      <Field
+                          name='viaje.descripcionViaje'
+                          as={InputTextarea}
+                          value={values.viaje.descripcionViaje}
+                          onChange={handleChange}
+                          placeholder="Ingresa una descripcion breve del viaje a realizar"
+                          className="w-full md:w-14rem"
+                          required={true}
+                        />
                       </div>
                     </div>
                   </div>
@@ -333,7 +372,15 @@ export const RegistroViajesScreen = () => {
                   <div className="row align-items-center">
                     <div className='col'>
                       <div className="p-inputgroup flex-1">
-                        <SeleccionarUbicacion initialValue={initialValues}/>
+                        <SeleccionarUbicacion initialValue={initialValues} />
+                      </div>
+
+                    </div>
+                  </div>
+                  <div className="row">
+                    <div className='col'>
+                      <div className="p-inputgroup flex-1">
+                        <Button label='Registrar'/>
                       </div>
 
                     </div>
@@ -350,7 +397,7 @@ export const RegistroViajesScreen = () => {
                   </p>
                 </Dialog>
                 <Dialog header="Conductor" visible={mostrarConductor} style={{ width: '50vw' }} onHide={() => setMostrarConductor(false)}>
-                  <InformacionConductor conaductorSeleccionado={values.viaje.Conductor} />
+                  <InformacionConductor conductorSeleccionado={conductorSeleccionado} />
                 </Dialog>
               </Form>
             )}
