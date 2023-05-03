@@ -35,7 +35,7 @@ export const NuevoUsuario = ({usuarioActual, setUsuarioActual}) => {
         //     contenido:'Este es el contenido del mensaje',
         //     visible: true,
         // });
-        if (nuevoUsuario.password != nuevoUsuario.confirPass) {
+        if (nuevoUsuario.contrasena != nuevoUsuario.confirPass) {
             setMensaje({
                 header: 'Error',
                 contenido: 'La contraseña que estas ingresando no coincide, favor de confirmar que este correcta',
@@ -63,13 +63,13 @@ export const NuevoUsuario = ({usuarioActual, setUsuarioActual}) => {
             if(respuesta === 'usuario guardado'){
                 e.target.reset();
                 setNuevoUsuario({
-                    idUsuario: 0,
+                    idUsuario: '',
                     usuario: '',
-                    password: '',
+                    contrasena: '',
                     confirPass: '',
                     nombre: '',
-                    telefonocontacto: '',
-                    perfil: { idPerfil: 0, perfil: '', }
+                    telefono: '',
+                    perfil: '',
                 });
                 setUsuarioActual(nuevoUsuario);
             }
@@ -99,7 +99,7 @@ export const NuevoUsuario = ({usuarioActual, setUsuarioActual}) => {
                                 <div className="col">
                                     <div className="p-inputgroup flex-1">
                                         <span className='p-float-label'>
-                                            <InputText required={true} inputid='telefono' value={nuevoUsuario.telefonoContacto} name='telefonocontacto' onChange={handleInputChange} />
+                                            <InputText required={true} inputid='telefono' value={nuevoUsuario.telefono} name='telefono' onChange={handleInputChange} />
                                             <label htmlFor="telefono">Telefono</label>
                                         </span>
                                     </div>
@@ -117,8 +117,8 @@ export const NuevoUsuario = ({usuarioActual, setUsuarioActual}) => {
                                 <div className="col">
                                     <div className="p-inputgroup flex-1">
                                         <span className='p-float-label'>
-                                            <Password required={true} toggleMask inputid='passwor' value={nuevoUsuario.password} name='password' onChange={handleInputChange} />
-                                            <label htmlFor="passwor">Contraseña</label>
+                                            <Password required={true} toggleMask inputid='contrasena' value={nuevoUsuario.contrasena} name='contrasena' onChange={handleInputChange} />
+                                            <label htmlFor="contrasena">Contraseña</label>
                                         </span>
                                     </div>
                                 </div>
@@ -132,7 +132,7 @@ export const NuevoUsuario = ({usuarioActual, setUsuarioActual}) => {
                                 </div>
                                 <div className='col'>
                                     <br />
-                                    <Button type="submit" loading={loading} className="btn btn-danger" label='Regristrar'/>
+                                    <Button type="submit" loading={loading} className="btn btn-danger bg-indigo-500" label='Regristrar'/>
 
                                 </div>
                             </div>

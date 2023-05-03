@@ -34,12 +34,8 @@ export const LoginScreen = () => {
     const ingresar = () => {
         setLoading(true);
         const nuevoUsuario = {
-            idUsuario: 0,
             usuario: inputUsuario,
-            password: inputPass,
-            nombre: '',
-            telefonoContacto: '',
-            perfil: { idPerfil: 0, perfil: '', }
+            contrasena: inputPass,
         }
         getValidation(api, nuevoUsuario).then((respuesta) => {
             if(respuesta !== undefined){

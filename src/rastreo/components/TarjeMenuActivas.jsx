@@ -59,7 +59,7 @@ const TarjeMenuActivas = () => {
       draggable={false}
       showDots={true}
       responsive={responsive}
-      autoPlay={true}
+      
       autoPlaySpeed={3000}
       keyBoardControl={true}
       customTransition="all .5"

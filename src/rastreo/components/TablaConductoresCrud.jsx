@@ -6,7 +6,7 @@ import { InputText } from 'primereact/inputtext';
 import React, { useState } from 'react'
 
 export const TablaConductoresCrud = ({ data, encabezados, id, tipoDatos = 'conductores', editar = false, eliminar = false, seleccionMultiple = false, toggleNuevoConductorForm }) => {
-
+    console.log(encabezados)
     const [globalFilter, setGlobalFilter] = useState(null);
     const [datoSeleccionado, setDatoSeleccionado] = useState()
     const [lista, setLista] = useState(data)
@@ -36,8 +36,7 @@ export const TablaConductoresCrud = ({ data, encabezados, id, tipoDatos = 'condu
             console.log('Contraseña correcta');
             const newLista = lista.filter((item) => item.idproyecto !== proyecto.idproyecto);
             setLista(newLista);
-            hideDeleteProjectDialog();
-            
+            hideDeleteProjectDialog();     
         }
     }
     
@@ -53,7 +52,6 @@ export const TablaConductoresCrud = ({ data, encabezados, id, tipoDatos = 'condu
         }
     }
 
-    
     const header = (
         <div style={{ alignItems: 'center', justifyContent: 'space-between'}}>
             <h5 className="mx-0 my-1 text-md">Lista de conductores</h5>
@@ -113,12 +111,13 @@ export const TablaConductoresCrud = ({ data, encabezados, id, tipoDatos = 'condu
                 paginatorTemplate="FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink CurrentPageReport RowsPerPageDropdown"
                 currentPageReportTemplate="Mostrando {first} y {last} de {totalRecords} registros"
                 globalFilter={globalFilter} header={header} responsiveLayout="scroll">
-                {seleccionMultiple && <Column selectionMode="multiple" headerStyle={{ width: '3rem' }} exportable={false}></Column>}
-                {encabezados.map((head, index) => (
-                    <Column key={index} field={head.field} header={head.head} sortable editor={head.field === id ? undefined : (options) => textEditor(options)} body={head.field === 'password' ? contenidoColumna : undefined} ></Column>
+                {seleccionMultiple && 
+                    <Column selectionMode="multiple" headerStyle={{ width: '3rem' }} exportable={false}></Column>}
+                        {encabezados.map((head, index) => (
+                    <Column key={index} field={head.field} header={head.head} sortable editor={head.field === id ? undefined : (options) => textEditor(options)} body={head.field === 'contrasena' ? contenidoColumna : undefined} ></Column>
                 ))}
-                <Column rowEditor headerStyle={{ width: '10%', minWidth: '8rem' }} bodyStyle={{ textAlign: 'center' }}></Column>
-                {(editar || eliminar) && <Column header='Opciones' body={actionBodyTemplate} exportable={false} style={{ minWidth: '8rem' }}></Column>}
+                    <Column rowEditor headerStyle={{ width: '10%', minWidth: '8rem' }} bodyStyle={{ textAlign: 'center' }}></Column>
+                        {(editar || eliminar) && <Column header='Opciones' body={actionBodyTemplate} exportable={false} style={{ minWidth: '8rem' }}></Column>}
             </DataTable>
 
             <Dialog visible={deleteProjectDialog} style={{ width: '450px' }} header="Confirm" modal footer={deleteProjectDialogFooter} onHide={hideDeleteProjectDialog}>

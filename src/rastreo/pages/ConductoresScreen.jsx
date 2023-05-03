@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import NuevoConductorForm from '../components/NuevoConductorForm'
 import { TablaConductoresCrud } from '../components/TablaConductoresCrud'
-import { useFetchUsers } from '../hooks/useFetchUsers';
+import { useFetchConductor } from '../hooks/useFetchConductores';
 import { Button } from 'primereact/button';
 
 const styleRegistro = {
@@ -12,26 +12,45 @@ const styleRegistro = {
 function ConductoresScreen() {
 
   const [show, setShow] = useState(null);
-  const [usuarioActual, setusuarioActual] = useState({
-    idUsuario: 0,
+  const [conductorActual, setconductorActual] = useState({
+    idConductor: '',
+    nombrecompleto: '',
+    fechanacimiento: '',
+    email: '',
+    telefono: '',
+    curp: '',
+    rfc: '',
     usuario: '',
-    password: '',
-    confirPass: '',
-    nombre: '',
-    telefonocontacto: '',
-    perfil: { idPerfil: 1, perfil: 'admin', }
+    contrasena: '',
+    calle: '',
+    numeroexterior: '',
+    numerointerior: '',
+    codigopostal: '',
+    estado: '',
+    municipio: '',
+    numerolicencia: '',
+    tipolicencia: '',
+    archivolicencia: '',
+    fechaexpediciaon: '',
+    fechavencimiento: '',
+    tiposangre: '',
+    foto: '',
+    licencia: '',
+    identificacion: '',
+    idusuario: '',
+
 });
-const { data: usuarios, loading } = useFetchUsers(usuarioActual);
+const { data: conductores, loading } = useFetchConductor(conductorActual);
 
 const columns = [
-{ field: 'idusuario', head: 'id' },
-{ field: 'nombre', head: 'Nombre conductor' },
-{ field: 'fechaNacimiento', head: 'Fecha de nacimiento' },
-{ field: 'telefonocontacto', head: 'N° telefono' },
+{ field: 'idconductor', head: 'id' },
+{ field: 'nombrecompleto', head: 'Nombre conductor' },
+{ field: 'fechanacimiento', head: 'Fecha de nacimiento' },
+{ field: 'telefono', head: 'N° telefono' },
 { field: 'curp', head: 'CURP' },
 { field: 'rfc', head: 'RFC' },
 { field: 'usuario', head: 'Usuario' },
-{ field: 'password', head: 'Contraseña' },
+{ field: 'contrasena', head: 'Contraseña' },
 ];
 
 const toggleNuevoConductorForm = () => {
@@ -45,8 +64,10 @@ const toggleNuevoConductorForm = () => {
     <h1 className='pt-4 text-5xl'>Conductores</h1>
     <div className='pt-4 '>
       <div className='col-sm-12 px-4'>
-      <TablaConductoresCrud data={usuarios} encabezados={columns} id={'idusuario'} tipoDatos={'Usuarios'} editar={false} eliminar={false} toggleNuevoConductorForm={toggleNuevoConductorForm}/>
         <div className='text-right pt-2'>
+          {!loading && 
+            <TablaConductoresCrud data={conductores} conductorActual={conductorActual} setconductorActual={setconductorActual} encabezados={columns} id={'idusuario'} tipoDatos={'Usuarios'} editar={false} eliminar={false} toggleNuevoConductorForm={toggleNuevoConductorForm}/>
+          }
         </div>
       </div>
     </div>

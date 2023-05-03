@@ -19,22 +19,23 @@ const styleRegistro = {
 export const RegistroUsuariosScreen = () => {
 
     const [usuarioActual, setusuarioActual] = useState({
-            idUsuario: 0,
-            usuario: '',
-            password: '',
-            confirPass: '',
+            idusuario: '',
             nombre: '',
-            telefonocontacto: '',
-            perfil: { idPerfil: 1, perfil: 'admin', }
+            usuario: '',
+            email: '',
+            contrasena: '',
+            confirPass: '',
+            telefono: '',
+            perfil: 'admin'
         });
     const { data: usuarios, loading } = useFetchUsers(usuarioActual);
     
     const columns = [
         { field: 'idusuario', head: 'id' },
         { field: 'nombre', head: 'Nombre Usuario' },
-        { field: 'telefonocontacto', head: 'Contacto' },
+        { field: 'telefono', head: 'Contacto' },
         { field: 'usuario', head: 'Usuario' },
-        { field: 'password', head: 'Contraseña' },
+        { field: 'contrasena', head: 'Contraseña' },
     ];
     return (
         <>

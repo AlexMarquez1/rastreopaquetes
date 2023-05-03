@@ -6,18 +6,12 @@ import { Dropdown } from 'primereact/dropdown';
 import { Calendar } from 'primereact/calendar';
 import { Password } from 'primereact/password';
 import { estados } from '../data/arregloEstados';
+import { registrarNuevoConductor } from '../helpers/getConductores';
+import { api } from "../../helpers/VariablesGlobales";
 import { municipiosPorEstado } from '../data/arregloEstados';
 import React, { useState } from 'react'
 
 const NuevoConductorForm = ({toggleNuevoConductorForm}) => {
-
-    const [municipios, setMunicipios] = useState([]);
-
-    const onEstadoChange = (e) => {
-        const selectedEstado = e.value;
-        const selectedMunicipios = municipiosPorEstado[selectedEstado];
-        setMunicipios(selectedMunicipios);
-      };
 
     const initialValues = {
         idConductor: '',
