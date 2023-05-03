@@ -17,7 +17,6 @@ export const getConductores = async (api,) =>{
         console.log('Error al ejecutar la consulta', resp);
         return undefined;
     });
-    console.log(data)
     // const resp = await fetch(url,options);
     
     // const data = await resp.json();

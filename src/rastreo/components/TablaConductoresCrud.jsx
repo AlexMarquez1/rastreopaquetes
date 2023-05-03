@@ -6,7 +6,6 @@ import { InputText } from 'primereact/inputtext';
 import React, { useState } from 'react'
 
 export const TablaConductoresCrud = ({ data, encabezados, id, tipoDatos = 'conductores', editar = false, eliminar = false, seleccionMultiple = false, toggleNuevoConductorForm }) => {
-    console.log(encabezados)
     const [globalFilter, setGlobalFilter] = useState(null);
     const [datoSeleccionado, setDatoSeleccionado] = useState()
     const [lista, setLista] = useState(data)
@@ -103,6 +102,10 @@ export const TablaConductoresCrud = ({ data, encabezados, id, tipoDatos = 'condu
         );
     };
 
+    const imageBodyTemplate = (product) => {
+        return <img src={`https://primefaces.org/cdn/primereact/images/product/${product.image}`} alt={product.image} className="w-6rem shadow-2 border-round" />;
+    };
+
     return (
         <>
             <DataTable value={data} selection={datoSeleccionado} onSelectionChange={onSelection}
@@ -114,7 +117,7 @@ export const TablaConductoresCrud = ({ data, encabezados, id, tipoDatos = 'condu
                 {seleccionMultiple && 
                     <Column selectionMode="multiple" headerStyle={{ width: '3rem' }} exportable={false}></Column>}
                         {encabezados.map((head, index) => (
-                    <Column key={index} field={head.field} header={head.head} sortable editor={head.field === id ? undefined : (options) => textEditor(options)} body={head.field === 'contrasena' ? contenidoColumna : undefined} ></Column>
+                    <Column key={index} field={head.field} header={head.head} body={imageBodyTemplate} sortable editor={head.field === id ? undefined : (options) => textEditor(options)} body={head.field === 'contrasena' ? contenidoColumna : undefined} ></Column>
                 ))}
                     <Column rowEditor headerStyle={{ width: '10%', minWidth: '8rem' }} bodyStyle={{ textAlign: 'center' }}></Column>
                         {(editar || eliminar) && <Column header='Opciones' body={actionBodyTemplate} exportable={false} style={{ minWidth: '8rem' }}></Column>}

@@ -166,7 +166,7 @@ export const MenuScreen = () => {
                         <span className="bg-red-500 text-white absolute top-0 right-0 rounded-full h-5 w-5 flex items-center justify-center shadow-sm border border-white">5</span>
                         <img src="src/assets/iconos_transporte/motorcycle.png" alt="Descripción de la imagen" className='hover:animate-bounce' viewBox="0 0 20 20" fill="currentColor"/>
                       </div>
-                      <span className='text-xl font-semibold'>Trailer</span>
+                      <span className='text-xl font-semibold'>Motocicleta</span>
                     </div>
                     <div className='col-sm-6 col-md-3 col-xl-2 m-3 grid justify-items-center'>
                       <div className="bg-white rounded-full h-40 w-40 hover:bg-indigo-500 flex items-center justify-center shadow-lg relative">

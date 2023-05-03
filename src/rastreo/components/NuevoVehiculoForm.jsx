@@ -26,12 +26,12 @@ const NuevoVehiculoForm = () => {
       };
 
     const tiposVehiculos = [
-        { label: 'Motocicleta', value: 'motocicleta' },
-        { label: 'Nissan', value: 'nissan' },
-        { label: 'Camioneta 3 1/2', value: 'camioneta' },
-        { label: 'Torton', value: 'torton' },
-        { label: 'Rabon', value: 'rabon' },
-        { label: 'Trailer', value: 'trailer' },
+        { label: 'Motocicleta', value: 'Motocicleta' },
+        { label: 'Nissan', value: 'Nissan' },
+        { label: 'Camioneta 3 1/2', value: 'Camioneta 3 1/2' },
+        { label: 'Torton', value: 'Torton' },
+        { label: 'Rabon', value: 'Rabon' },
+        { label: 'Trailer', value: 'Trailer' },
       ];
       
       const onSubmit = (values) => {

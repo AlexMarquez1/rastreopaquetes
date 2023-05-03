@@ -45,6 +45,7 @@ const { data: conductores, loading } = useFetchConductor(conductorActual);
 const columns = [
 { field: 'idconductor', head: 'id' },
 { field: 'nombrecompleto', head: 'Nombre conductor' },
+{ field: 'foto', head: 'Foto'},
 { field: 'fechanacimiento', head: 'Fecha de nacimiento' },
 { field: 'telefono', head: 'N° telefono' },
 { field: 'curp', head: 'CURP' },
