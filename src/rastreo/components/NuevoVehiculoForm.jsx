@@ -157,6 +157,8 @@ const NuevoVehiculoForm = () => {
                                     value={values.tarjetaDeCirculacion}
                                     inputid='tarjetaDeCirculacion'
                                     required={true}
+                                    customUpload={true}
+                                    className="custom-input-file"
                                 />
                                 <span className="p-inputgroup-addon">
                                     <i className="pi pi-file-pdf"></i>
@@ -292,6 +294,8 @@ const NuevoVehiculoForm = () => {
                                     value={values.poliza}
                                     inputid='poliza'
                                     required={true}
+                                    className="custom-input"
+                                    style={{color: "#BE0F34"}}
                                 />
                                 <span className="p-inputgroup-addon">
                                     <i className="pi pi-file-pdf"></i>
@@ -301,7 +305,7 @@ const NuevoVehiculoForm = () => {
                     </div>
                 </div>     
             </div>
-            <Button type="submit" label="Submit" className='m-4'/>
+            <button type="submit" label="Submit" className='mt-4 mb-4 bg-[#FFF] text-[#BE0F34] border border-[#BE0F34] hover:bg-[#BE0F34] hover:text-[#FFF] font-bold py-2 px-4 rounded shadow-md'>Registra</button>
           </Form>
         )}
       </Formik>

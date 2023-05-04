@@ -70,7 +70,7 @@ const TarjeMenuActivas = () => {
       itemClass="carousel-item-padding-40-px"
       >
         <div
-          className={`w-full max-w-xxl mx-auto rounded-md overflow-hidden transform transition duration-500 ease-in-out p-2 ${isHovered ? "" : "shadow-md"
+          className={`bg-[#dfdfdf] w-full max-w-xxl mx-auto rounded-md overflow-hidden transform transition duration-500 ease-in-out p-2 ${isHovered ? "" : "shadow-md"
             }`}
           onMouseEnter={handleHover}
           onMouseLeave={handleLeave}
@@ -105,14 +105,14 @@ const TarjeMenuActivas = () => {
     src="https://source.unsplash.com/random/800x600"
     alt="Beach"
   /> */}
-          <div className="p-4 bg-white">
+          <div className="p-4 bg-[#dfdfdf]">
             <h2 className="font-bold text-xl mb-2">Beach Vacation</h2>
             <p className="text-gray-700 text-base">
               Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce eget
               lorem eu velit ultrices dapibus ac eget mauris.
             </p>
             <button
-              className={`mt-4 bg-green-400 hover:bg-green-400 text-white font-bold py-2 px-4 rounded ${isHovered && "opacity-80 hover:bg-green-600"
+              className={`mt-4 bg-[#FFF] text-[#BE0F34] font-bold py-2 px-4 rounded ${isHovered && "hover:bg-[#BE0F34] hover:text-[#FFF]"
                 }`}
               onClick={handleToggle}
             >
@@ -171,7 +171,7 @@ const TarjeMenuActivas = () => {
     src="https://source.unsplash.com/random/800x600"
     alt="Beach"
   /> */}
-          <div className="p-4 bg-white">
+          <div className="p-4 #dfdfdf">
             <h2 className="font-bold text-xl mb-2">Beach Vacation 2</h2>
             <p className="text-gray-700 text-base">
               Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce eget
@@ -187,8 +187,8 @@ const TarjeMenuActivas = () => {
             </button>
             {isOpen && (
               <>
-                <div className="absolute top-0 left-0 w-full h-full bg-gray-900 bg-opacity-50 items-center justify-center">
-                  <div className="bg-white rounded-md p-4 m-3">
+                <div className="absolute top-0 left-0 w-full h-full items-center justify-center">
+                  <div className="rounded-md p-4 m-3">
                     <button
                       className="bg-white hover:bg-red-700 text-gray-700 hover:text-white font-bold px-2 rounded-full mr-auto"
                       onClick={handleToggle}

@@ -98,11 +98,11 @@ export const MenuScreen = () => {
 
   return (
     <>
-      <h1 className="pt-4 text-5xl">Sistema de rastreo</h1>
-      <div className='container'>
+      <h1 className="pt-6 px-6 text-5xl font-bold">Sistema de rastreo</h1>
+      <div className='md:container md:mx-auto'>
       <div className="row">
-          <div className="col-sm-12 col-md-4 p-4">
-            <div className="card" style={styleMenu}>
+          <div className="col-sm-12 col-md-4 py-6 p-4">
+            <div className="card drop-shadow-md bg-[#FFF]">
               <div className="card-body">
                 <div className='text-center'>
                   <i className="pi  pi-building " style={{ fontSize: '3rem' }}></i>
@@ -126,10 +126,11 @@ export const MenuScreen = () => {
                               filterPlaceholder='Buscar por nombre'
                               emptyFilterMessage='Empresa no registrada'
                               placeholder="Selecciona una empresa"
-                              className="w-full md:w-14rem"
+                              className="w-full md:w-14rem p-inputtext"
                               required={true}
+                              
                             />
-                            <Button className='shadow-indigo-500/50 bg-indigo-500' icon="pi pi-building" type='button' onClick={() => setMostrarEmpresa(true)} disabled={values.viaje.Empresa.rasonSocial === '' ? true : false} />
+                            <Button className='bg-[#BE0F34] botones-estilo' icon="pi pi-building" type='button' onClick={() => setMostrarEmpresa(true)} disabled={values.viaje.Empresa.rasonSocial === '' ? true : false} />
                           </div>
                         </div>
                       </Form>
@@ -140,7 +141,7 @@ export const MenuScreen = () => {
             </div>
           </div>
           <div className="col-sm-12 col-md-8 p-4">
-            <div className="card" style={styleMenu}>
+            <div className="card drop-shadow-md bg-[#FFF]">
               <div className="card-body">
                 <div className='text-center'>
                   <i className="pi pi-map-marker " style={{ fontSize: '3rem' }}></i>
@@ -153,8 +154,8 @@ export const MenuScreen = () => {
               </div>
             </div>
           </div>
-          <div className="col-sm-12 p-4">
-            <div className="card">
+          <div className="col-sm-12 p-4 bg-[#FFF]">
+            <div className="card drop-shadow-md">
               <div className="card-body text-center">
                 <i className="pi pi-truck" style={{ fontSize: '3rem' }}></i>
                 <br></br>

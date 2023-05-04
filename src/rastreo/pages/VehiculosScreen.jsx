@@ -5,7 +5,6 @@ import { DisponibilidadVehiculo } from '../components/DisponibilidadVehiculo';
 
 const styleRegistro = {
     width: '85%',
-    background: 'rgba(143, 216, 227, 0.316)',
 }
 
 const VehiculosScreen = () => {
@@ -30,19 +29,22 @@ const columns = [
 ];
   return (
     <>
-    <h1 className='pt-4 text-5xl'>Mis vehículos</h1>
+    <h1 className='pt-6 px-6 text-5xl font-bold'>Mis vehículos</h1>
     <div>
-        {!loading ? <DisponibilidadVehiculo data={vehiculos} vehiculoActual={vehiculoActual} setVehiculoActual={setVehiculoActual}/> : <div>cargando</div>} 
+        {!loading ? <DisponibilidadVehiculo data={vehiculos} vehiculoActual={vehiculoActual} setVehiculoActual={setVehiculoActual}/> : <div className='text-center pt-4'><i className="pi pi-spin pi-spinner" style={{ fontSize: '4rem' }}></i></div>} 
     </div>
-    <section className="section_item flex-container" style={{ paddingTop: '5%' }}>
-        <div className="card form" style={styleRegistro}>
+    <div className='bg-white'>
+    <section className="section_item flex-container py-6 drop-shadow-md">
+        <div className="card form drop-shadow-md" style={styleRegistro}>
             <br />
-            <h1 className="card-title pb-2">
-                <p className="fs-4">Registrar un nuevo vehículo</p>
+            <h1 className="text-black text-3xl pb-4">
+                Registrar un nuevo vehículo
             </h1>
             <NuevoVehiculoForm />
         </div>
     </section>
+    </div>
+    
     </>
   )
 }

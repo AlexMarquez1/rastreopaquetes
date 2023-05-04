@@ -3,7 +3,7 @@ import React, { useState } from 'react'
 export const DisponibilidadVehiculo = ({data}) => {
 
   const [dataVehiculos, setdataVehiculos] = useState(data)
-  const [isOpen, setIsOpen] = useState(true);
+  const [isOpen, setIsOpen] = useState(false);
 
   const handleToggle = () => {
     setIsOpen(!isOpen);
@@ -16,47 +16,47 @@ export const DisponibilidadVehiculo = ({data}) => {
               <div className="card-body text-center">
                 <i className="pi pi-truck" style={{ fontSize: '3rem' }}></i>
                 <br></br>
-                <h1 className='text-black text-3xl'>Disponibilidad de vehículos</h1>
+                <h1 className='text-black text-3xl pb-4'>Disponibilidad de vehículos</h1>
                 <div className='container'>
                   <div className='row justify-center'>
                     <div className='col-sm-6 col-md-3 col-xl-2 m-3 grid justify-items-center cursor-pointer' onClick={handleToggle}>
-                      <div className="bg-white rounded-full h-40 w-40 hover:bg-indigo-500 flex items-center justify-center shadow-lg relative">
-                        <span className="bg-red-500 text-white absolute top-0 right-0 rounded-full h-5 w-5 flex items-center justify-center shadow-sm border border-white">{dataVehiculos.filter(item => item.tipovehiculo === 'Motocicleta').length}</span>
+                      <div className="bg-white rounded-full h-40 w-40 hover:bg-red-600 border border-red-700 flex items-center justify-center shadow-lg relative">
+                        <span className="bg-red-500 text-white absolute top-0 right-0 rounded-full h-5 w-5 flex items-center justify-center shadow-sm border-2 border-white">{dataVehiculos.filter(item => item.tipovehiculo === 'Motocicleta').length}</span>
                         <img src="src/assets/iconos_transporte/motorcycle.png" alt="Descripción de la imagen" className='hover:animate-bounce' viewBox="0 0 20 20" fill="currentColor"/>
                       </div>
                       <span className='text-xl font-semibold'>Motocicleta</span>
                     </div>
                     <div className='col-sm-6 col-md-3 col-xl-2 m-3 grid justify-items-center cursor-pointer' onClick={handleToggle}>
-                      <div className="bg-white rounded-full h-40 w-40 hover:bg-indigo-500 flex items-center justify-center shadow-lg relative">
-                        <span className="bg-red-500 text-white absolute top-0 right-0 rounded-full h-5 w-5 flex items-center justify-center shadow-sm border border-white">{dataVehiculos.filter(item => item.tipovehiculo === 'Nissan').length}</span>
+                      <div className="bg-white rounded-full h-40 w-40 hover:bg-red-600 border border-red-700 flex items-center justify-center shadow-lg relative">
+                        <span className="bg-red-500 text-white absolute top-0 right-0 rounded-full h-5 w-5 flex items-center justify-center shadow-sm border-2 border-white">{dataVehiculos.filter(item => item.tipovehiculo === 'Nissan').length}</span>
                         <img src="src/assets/iconos_transporte/nissan-estaquita-redilas.png" alt="Descripción de la imagen" className='hover:animate-bounce' viewBox="0 0 20 20" fill="currentColor"/>
                       </div>
                       <span className='text-xl font-semibold'>Nissan</span>
                     </div>
                     <div className='col-sm-6 col-md-3 col-xl-2 m-3 grid justify-items-center cursor-pointer' onClick={handleToggle}>
-                      <div className="bg-white rounded-full h-40 w-40 hover:bg-indigo-500 flex items-center justify-center shadow-lg relative">
-                        <span className="bg-red-500 text-white absolute top-0 right-0 rounded-full h-5 w-5 flex items-center justify-center shadow-sm border border-white">{dataVehiculos.filter(item => item.tipovehiculo === 'Camioneta 3 1/2').length}</span>
+                      <div className="bg-white rounded-full h-40 w-40 hover:bg-red-600 border border-red-700 flex items-center justify-center shadow-lg relative">
+                        <span className="bg-red-500 text-white absolute top-0 right-0 rounded-full h-5 w-5 flex items-center justify-center shadow-sm border-2 border-white">{dataVehiculos.filter(item => item.tipovehiculo === 'Camioneta 3 1/2').length}</span>
                         <img src="src/assets/iconos_transporte/dodge-ram.png" alt="Descripción de la imagen" className='hover:animate-bounce' viewBox="0 0 20 20" fill="currentColor"/>
                       </div>
                       <span className='text-xl font-semibold'>Camioneta 3 1/2</span>
                     </div>
                     <div className='col-sm-6 col-md-3 col-xl-2 m-3 grid justify-items-center cursor-pointer' onClick={handleToggle}>
-                      <div className="bg-white rounded-full h-40 w-40 hover:bg-indigo-500 flex items-center justify-center shadow-lg relative">
-                        <span className="bg-red-500 text-white absolute top-0 right-0 rounded-full h-5 w-5 flex items-center justify-center shadow-sm border border-white">{dataVehiculos.filter(item => item.tipovehiculo === 'Torton').length}</span>
+                      <div className="bg-white rounded-full h-40 w-40 hover:bg-red-600 border border-red-700 flex items-center justify-center shadow-lg relative">
+                        <span className="bg-red-500 text-white absolute top-0 right-0 rounded-full h-5 w-5 flex items-center justify-center shadow-sm border-2 border-white">{dataVehiculos.filter(item => item.tipovehiculo === 'Torton').length}</span>
                         <img src="src/assets/iconos_transporte/torton.png" alt="Descripción de la imagen" className='hover:animate-bounce' viewBox="0 0 20 20" fill="currentColor"/>
                       </div>
                       <span className='text-xl font-semibold'>Torton</span>
                     </div>
                     <div className='col-sm-6 col-md-3 col-xl-2 m-3 grid justify-items-center cursor-pointer' onClick={handleToggle}>
-                      <div className="bg-white rounded-full h-40 w-40 hover:bg-indigo-500 flex items-center justify-center shadow-lg relative">
-                        <span className="bg-red-500 text-white absolute top-0 right-0 rounded-full h-5 w-5 flex items-center justify-center shadow-sm border border-white">{dataVehiculos.filter(item => item.tipovehiculo === 'Rabon').length}</span>
+                      <div className="bg-white rounded-full h-40 w-40 hover:bg-red-600 border border-red-700 flex items-center justify-center shadow-lg relative">
+                        <span className="bg-red-500 text-white absolute top-0 right-0 rounded-full h-5 w-5 flex items-center justify-center shadow-sm border-2 border-white">{dataVehiculos.filter(item => item.tipovehiculo === 'Rabon').length}</span>
                         <img src="src/assets/iconos_transporte/rabon.png" alt="Descripción de la imagen" className='hover:animate-bounce' viewBox="0 0 20 20" fill="currentColor"/>
                       </div>
                       <span className='text-xl font-semibold'>Rabon</span>
                     </div>
                     <div className='col-sm-6 col-md-3 col-xl-2 m-3 grid justify-items-center cursor-pointer' onClick={handleToggle}>
-                      <div className="bg-white rounded-full h-40 w-40 hover:bg-indigo-500 flex items-center justify-center shadow-lg hover:shadow-indigo-500/50 relative">
-                        <span className="bg-red-500 text-white absolute top-0 right-0 rounded-full h-5 w-5 flex items-center justify-center shadow-sm border border-white">{dataVehiculos.filter(item => item.tipovehiculo === 'Trailer').length}</span>
+                      <div className="bg-white rounded-full h-40 w-40 hover:bg-red-600 border border-red-700 flex items-center justify-center shadow-lg hover:shadow-indigo-500/50 relative">
+                        <span className="bg-red-500 text-white absolute top-0 right-0 rounded-full h-5 w-5 flex items-center justify-center shadow-sm border-2 border-white">{dataVehiculos.filter(item => item.tipovehiculo === 'Trailer').length}</span>
                         <img src="src/assets/iconos_transporte/trailer.png" alt="Descripción de la imagen" className='hover:animate-bounce' viewBox="0 0 20 20" fill="currentColor"/>
                       </div>
                       <span className='text-xl font-semibold'>Trailer</span>

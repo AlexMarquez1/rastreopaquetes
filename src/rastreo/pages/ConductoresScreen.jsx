@@ -6,7 +6,6 @@ import { Button } from 'primereact/button';
 
 const styleRegistro = {
     width: '85%',
-    background: 'rgba(143, 216, 227, 0.316)',
 }
 
 function ConductoresScreen() {
@@ -62,7 +61,7 @@ const toggleNuevoConductorForm = () => {
 
   return (
     <>
-    <h1 className='pt-4 text-5xl'>Conductores</h1>
+    <h1 className='pt-6 px-6 text-5xl font-bold'>Conductores</h1>
     <div className='pt-4 '>
       <div className='col-sm-12 px-4'>
         <div className='text-right pt-2'>

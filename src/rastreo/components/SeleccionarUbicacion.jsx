@@ -133,7 +133,7 @@ export const SeleccionarUbicacion = ({ initialValue }) => {
                                 disabled={true}
                             />
                             <Button
-                                className='bg-indigo-500'
+                                className='bg-[#BE0F34] text-white'
                                 icon="pi pi-map-marker"
                                 type='button'
                                 disabled={valuePartida === '' ? true : false}
@@ -151,7 +151,7 @@ export const SeleccionarUbicacion = ({ initialValue }) => {
                                 disabled={true}
                             />
                             <Button
-                                className='bg-indigo-500'
+                                className='bg-[#BE0F34] text-white'
                                 icon="pi pi-map-marker"
                                 type='button'
                                 disabled={valueLlegada === '' ? true : false}

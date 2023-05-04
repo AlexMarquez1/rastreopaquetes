@@ -32,7 +32,7 @@ const TarjetaRutas = ({idViaje, descripcion, chofer, idVehiculo, partida, destin
   
   return (
     <>
-        <div className="card m-2">
+        <div className="card m-2 mb-6 drop-shadow-md bg-[#dfdfdf]">
           <LoadScript
             googleMapsApiKey="AIzaSyAwXqH5JgdnOqOJy8F8_PrkvOqLtHhy60I"   
           >

@@ -9,7 +9,6 @@ import "react-multi-carousel/lib/styles.css";
 
 const styleRegistro = {
     width: '85%',
-    background: 'rgba(143, 216, 227, 0.316)',
 }
 
 const styleRegistroModal = {
@@ -113,8 +112,8 @@ const [cardsData, setCardsData] = useState([
 
   return (
     <>
-    <h1 className='pt-4 pb-4 text-5xl'>Historial de viajes</h1>
-    <div className='container'>
+    <h1 className='pt-6 px-6 text-5xl font-bold'>Historial de viajes</h1>
+    <div className='container py-4'>
       <div className='row'>
         <div className='col-sm-12 col-md-6'>
           <BarraBusqueda handleSearch={handleSearch} cardsData={cardsData}/>
@@ -142,8 +141,9 @@ const [cardsData, setCardsData] = useState([
       </div>
       </div>
     </div>
-    <section className="section_item flex-container" style={{ paddingTop: '5%' }}>
-        <div className="card form" style={styleRegistro}>
+    <div className='bg-white border-2 border-t-red-600'>
+    <section className="section_item flex-container py-6 drop-shadow-md">
+        <div className="card form drop-shadow-md"style={styleRegistro}>
             <br />
             <h1 className="card-title">
                 <p className="fs-4">Viajes activos: {cardsData.filter(card => card.estatus === 'activa').length}</p>
@@ -187,7 +187,10 @@ const [cardsData, setCardsData] = useState([
             </div>
         </div>
     </section>
-    <section className="section_item flex-container" style={{ paddingTop: '5%' }}>
+    </div>
+    
+    <div className='border-2 border-t-red-600'>
+    <section className="section_item flex-container py-6 drop-shadow-md">
         <div className="card form" style={styleRegistro}>
         <br />
             <h1 className="card-title">
@@ -232,9 +235,13 @@ const [cardsData, setCardsData] = useState([
                 </div>
             </div>
         </div>
-    </section> 
-    <section className="section_item flex-container" style={{ paddingTop: '5%' }}>
-        <div className="card form" style={styleRegistro}>
+    </section>
+    </div>
+    
+
+    <div className='bg-white border-2 border-t-red-600'>
+    <section className="section_item flex-container py-6 drop-shadow-md">
+        <div className="card form drop-shadow-md" style={styleRegistro}>
         <br />
             <h1 className="card-title">
                 <p className="fs-4">Viajes completados: {cardsData.filter(card => card.estatus === 'completada').length}</p>
@@ -278,6 +285,8 @@ const [cardsData, setCardsData] = useState([
             </div>
         </div>
     </section> 
+    </div> 
+     
     {/* MODAL */}
     <Dialog header="Detalles de viaje" visible={mensaje} style={{ width: '90vw' }} onHide={() => setMensaje(false)}>
         <section className="section_item flex-container" style={{ paddingTop: '5%' }}>

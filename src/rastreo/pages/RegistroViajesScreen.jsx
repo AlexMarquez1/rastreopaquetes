@@ -13,8 +13,7 @@ import { InformacionConductor } from '../components/InformacionConductor';
 import { addScaleCorrector } from 'framer-motion';
 
 const styleRegistro = {
-  width: '85%',
-  background: 'rgba(143, 216, 227, 0.316)',
+  width: '85%'
 }
 
 const colorTexto = {
@@ -226,11 +225,12 @@ export const RegistroViajesScreen = () => {
 
   return (
     <>
-      <section className="section_item flex-container" >
-        <div className="card form" style={styleRegistro}>
+    <h1 className="pt-6 px-6 text-5xl font-bold">Nuevo viaje</h1>
+      <section className="section_item flex-container py-6" >
+        <div className="card form drop-shadow-md bg-[#FFF]" style={styleRegistro}>
           <br />
           <h1 className="card-title">
-            <p className="fs-4">Nuevo Viaje</p>
+            <p className="fs-4">Registra un nuevo viaje</p>
           </h1>
           <Formik initialValues={initialValues} onSubmit={onSubmit}>
             {({ values, handleChange, handleSubmit }) => (
@@ -254,7 +254,7 @@ export const RegistroViajesScreen = () => {
                           required={true}
                         />
                         <Button
-                          className='bg-indigo-500'
+                          className='bg-[#BE0F34]'
                           icon="pi pi-building" type='button' onClick={() => setMostrarEmpresa(true)} disabled={values.viaje.Empresa.rasonSocial === '' ? true : false} />
                       </div>
                     </div>
@@ -289,7 +289,7 @@ export const RegistroViajesScreen = () => {
                           placeholder="Selecciona un conductor"
                           className="w-full md:w-14rem" /> */}
                         <Button
-                          className='bg-indigo-500'
+                          className='bg-[#BE0F34]'
                           icon="pi pi-user" type='button' onClick={() => setMostrarConductor(true)} disabled={values.viaje.Conductor.nombreCompleto === '' ? true : false} />
                       </div>
                     </div>
@@ -311,7 +311,7 @@ export const RegistroViajesScreen = () => {
                           required={true}
                         />
                         <Button
-                          className='bg-indigo-500'
+                          className='bg-[#BE0F34]'
                           icon="pi pi-car" type='button' onClick={() => setMostrarVehiculo(true)} disabled={values.viaje.Vehiculo.tipo === '' ? true : false} />
 
                       </div>
@@ -322,7 +322,7 @@ export const RegistroViajesScreen = () => {
                     <div className="col">
                       <div className="p-inputgroup flex-1">
                         <Field
-                          className="bg-indigo-500"
+                          className="bg-[#BE0F34]"
                           name="viaje.diaSalida"
                           as={Calendar}
                           value={values.viaje.diaSalida}
@@ -344,10 +344,10 @@ export const RegistroViajesScreen = () => {
                           options={[{ tipo: 'Consolidado', codigo: 'CONS' }, { tipo: 'Completo', codigo: 'COM' }]}
                           optionLabel="tipo"
                           placeholder="Selecciona un tipo de servicio"
-                          className="w-full md:w-14rem"
+                          className="w-full md:w-14rem "
                           required={true}
                         />
-                        <span className="p-inputgroup-addon">
+                        <span className="p-inputgroup-addon bg-[#BE0F34] text-white">
                           <i className="pi pi-truck"></i>
                         </span>
                       </div>
@@ -380,7 +380,7 @@ export const RegistroViajesScreen = () => {
                   <div className="row">
                     <div className='col'>
                       <div className="p-inputgroup flex-1">
-                        <Button label='Registrar'/>
+                        <button className='mt-4 bg-[#FFF] text-[#BE0F34] border border-[#BE0F34] hover:bg-[#BE0F34] hover:text-[#FFF] font-bold py-2 px-4 rounded shadow-md'>Registra</button>
                       </div>
 
                     </div>
