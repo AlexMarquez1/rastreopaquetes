@@ -1,92 +1,74 @@
-import { useState } from 'react'
-import { InputText } from 'primereact/inputtext';
-import { Password } from 'primereact/password';
-import { Button } from 'primereact/button';
-import '../../styles/estilos.css'
-import { getValidation } from '../../helpers/getUsers';
-import { api } from "../../helpers/VariablesGlobales";
-import { Dialog } from 'primereact/dialog';
-import { useNavigate } from 'react-router-dom';
+import React from 'react'
+import { FormularioLogin } from '../components/FormularioLogin'
 
 export const LoginScreen = () => {
-    const navigate = useNavigate();
-    // const [nuevoUsuario, setNuevoUsuario] = useState({
-    //     idUsuario: 0,
-    //     usuario: '',
-    //     password: '',
-    //     nombre: '',
-    //     telefonoContacto: '',
-    //     perfil: { idPerfil: 0, perfil: '', }
-    // });
-    const [inputUsuario, setInputUsuario] = useState('');
-    const [inputPass, setInputPass] = useState('');
-    const [loading, setLoading] = useState(false);
-    const [mensaje, setMensaje] = useState(false);
-
-    const onInputUserChange = ({ target }) => {
-        setInputUsuario(target.value);
-    }
-
-    const onInputPassChange = ({ target }) => {
-        setInputPass(target.value);
-    }
-
-    const ingresar = () => {
-        setLoading(true);
-        const nuevoUsuario = {
-            usuario: inputUsuario,
-            contrasena: inputPass,
-        }
-        getValidation(api, nuevoUsuario).then((respuesta) => {
-            if(respuesta !== undefined){
-                navigate('/menu');
-            }else{
-                setMensaje(true);
-            }
-            setLoading(false);
-        });
-    }
-
-
-    return (
-        <>
-            <div className='fondo2'>
-                <section className="section_item flex-container ">
-                    <div className="card form" style={{ width: '30rem', background: 'rgba(244, 145, 53, 0.045)', marginTop: '10%' }}>
-
-                        <h1 className="card-title">Inicia Sesión</h1>
-                        <div className="card-body w-75 p-3" style={{ marginLeft: '12%' }}>
-                            <div className="mb-3">
-                                <div className="p-inputgroup flex-1">
-                                    <span className='p-float-label'>
-                                        <InputText inputid='usuario' value={inputUsuario} onChange={onInputUserChange} />
-                                        <label htmlFor="usuario">Usuario</label>
-                                    </span>
-                                </div>
-                                <br />
-                                <div className="p-inputgroup flex-1">
-                                    <span className='p-float-label'>
-                                        <Password inputid='password' feedback={false} toggleMask value={inputPass} onChange={onInputPassChange}/>
-                                        <label htmlFor="password">Contraseña</label>
-                                    </span>
-                                </div>
-                                <br />
-                                {/* <p className="card-title texto">¿Olvidaste tu contraseña?</p> */}
-
-                            </div>
-                                <Button label='INGRESAR' loading={loading} onClick={ingresar} style={{backgroundColor:  'rgb(244 53 53)', borderColor: 'rgb(255 0 0)'}} />
-                        </div>
+  return (
+    <>
+    <div className='flex w-full h-screen'>
+      <div className='bg-[#E2E2E2] flex w-full items-center justify-center lg:w-1/2'>
+        <FormularioLogin />
+      </div>
+      <div className='hidden lg:flex h-full w-3/4 bg-[#BE0F34]'>
+        <div className='w-auto h-auto'>
+        {/* <img className="" src="src/assets/isae.png" alt="Your Company"/> */}
+        <h1 className='pt-6 px-6 text-5xl font-bold text-white'>Rastreo app</h1>
+        </div>
+      </div> 
+    </div>
+    <div className=''>
+        <div className='col bg-[#BE0F34]'>
+        
+            
+              <div className="card-body text-center">
+                <h1 className='text-black text-3xl py-4 text-white'>Gestiona tus:</h1>
+                <div className='container'>
+                  <div className='row justify-center'>
+                    <div className='col-sm-6 col-md-3 col-xl-2 m-3 grid justify-items-center'>
+                      <div className="bg-white rounded-full h-40 w-40 flex items-center justify-center shadow-lg relative drop-shadow-md transition duration-500 ease-in-out transform hover:-translate-y-5 hover:shadow-2xl">
+                        
+                        <img src="src/assets/destino.png" alt="Descripción de la imagen" className='' viewBox="0 0 20 20" fill="currentColor"/>
+                      </div>
+                      <span className='text-xl font-semibold text-white p-2'>Viajes</span>
                     </div>
-                </section>
-            </div>
-
-            <Dialog header="Error" visible={mensaje} style={{ width: '50vw' }} onHide={() => setMensaje(false)}>
-                <p className="m-0">
-                   Usuario o contraseña incorrectos
-                </p>
-            </Dialog>
-        </>
-
-
-    )
+                    <div className='col-sm-6 col-md-3 col-xl-2 m-3 grid justify-items-center'>
+                      <div className="bg-white rounded-full h-40 w-40 flex items-center justify-center shadow-lg relative drop-shadow-md transition duration-500 ease-in-out transform hover:-translate-y-5 hover:shadow-2xl">
+                        
+                        <img src="src/assets/telefono-inteligente.png" alt="Descripción de la imagen" className='' viewBox="0 0 20 20" fill="currentColor"/>
+                      </div>
+                      <span className='text-xl font-semibold text-white p-2'>Seguimiento en tiempo real</span>
+                    </div>
+                    <div className='col-sm-6 col-md-3 col-xl-2 m-3 grid justify-items-center'>
+                      <div className="bg-white rounded-full h-40 w-40 flex items-center justify-center shadow-lg relative drop-shadow-md transition duration-500 ease-in-out transform hover:-translate-y-5 hover:shadow-2xl">
+                        <img src="src/assets/conductor.png" alt="Descripción de la imagen" className='' viewBox="0 0 20 20" fill="currentColor"/>
+                      </div>
+                      <span className='text-xl font-semibold text-white p-2'>Conductores</span>
+                    </div>
+                    <div className='col-sm-6 col-md-3 col-xl-2 m-3 grid justify-items-center'>
+                      <div className="bg-white rounded-full h-40 w-40 flex items-center justify-center shadow-lg relative drop-shadow-md transition duration-500 ease-in-out transform hover:-translate-y-5 hover:shadow-2xl">
+                        <img src="src/assets/camiones.png" alt="Descripción de la imagen" className='' viewBox="0 0 20 20" fill="currentColor"/>
+                      </div>
+                      <span className='text-xl font-semibold text-white p-2'>Vehículos</span>
+                    </div>
+                    <div className='col-sm-6 col-md-3 col-xl-2 m-3 grid justify-items-center'>
+                      <div className="bg-white rounded-full h-40 w-40 flex items-center justify-center shadow-lg relative drop-shadow-md transition duration-500 ease-in-out transform hover:-translate-y-5 hover:shadow-2xl">
+                        <img src="src/assets/empresa.png" alt="Descripción de la imagen" className='' viewBox="0 0 20 20" fill="currentColor"/>
+                      </div>
+                      <span className='text-xl font-semibold text-white p-2'>Empresas</span>
+                    </div>
+                    {/* <div className='col-sm-6 col-md-3 col-xl-2 m-3 grid justify-items-center '>
+                      <div class="bg-white rounded-full h-40 w-40 hover:bg-indigo-500 flex items-center justify-center shadow-lg">
+                        <img src="src/assets/iconos_transporte/trailer.png" alt="Descripción de la imagen" className='hover:animate-bounce' viewBox="0 0 20 20" fill="currentColor"/>
+                      </div>
+                      <span className='text-xl font-semibold'>Trailer</span>
+                    </div> */}
+                  </div>
+                </div>
+              </div>
+            
+          
+        </div>
+    </div>
+    
+    </>
+  )
 }

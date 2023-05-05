@@ -90,7 +90,7 @@ const TarjetaMenuHistorial = () => {
       </div>
     </div> */}
 
-    {/* <div className="relative w-full max-w-md rounded overflow-hidden shadow-lg bg-white">
+    <div className="relative w-full max-w-md rounded overflow-hidden shadow-lg bg-white">
       <img className="w-full h-64 object-cover transform transition duration-500 ease-in-out hover:scale-110" src="https://source.unsplash.com/random/800x600" alt="Random image" />
       <div className="absolute bottom-0 w-full bg-white bg-opacity-75 py-3 px-6">
         <div className="text-xl font-medium mb-2">Card Title</div>
@@ -99,7 +99,7 @@ const TarjetaMenuHistorial = () => {
           Click Me
         </button>
       </div>
-    </div> */}
+    </div>
 
     {/* <div className="w-full max-w-xs rounded overflow-hidden shadow-lg bg-white hover:shadow-xl transition duration-500 ease-in-out transform hover:-translate-y-1 hover:scale-105">
       <img className="w-full h-48 object-cover" src="https://source.unsplash.com/random/800x600" alt="Random image" />

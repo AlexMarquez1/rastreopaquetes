@@ -53,13 +53,15 @@ export const TablaConductoresCrud = ({ data, encabezados, id, tipoDatos = 'condu
 
     const header = (
         <div style={{ alignItems: 'center', justifyContent: 'space-between'}}>
-            <h5 className="mx-0 my-1 text-md">Lista de conductores</h5>
+            <h1 className="card-title pb-4 text-3xl text-left text-[#BE0F34]">
+              Lista de conductores
+          </h1>
             
             <span className="p-input-icon-left m-2">
                 <i className="pi pi-search" />
                 <InputText type="search" onInput={(e) => setGlobalFilter(e.target.value)} placeholder="Buscar..." />
             </span>
-            <Button type="submit" icon='pi pi-user-plus' label="Agregar conductor" className='bg-indigo-500 hover:bg-indigo-700 m-2' onClick={toggleNuevoConductorForm}/>
+            <Button type="submit" icon='pi pi-user-plus' label="Agregar conductor" className='text-[#BE0F34] m-2' onClick={toggleNuevoConductorForm}/>
         </div>
     );
     const actionBodyTemplate = (rowData) => {

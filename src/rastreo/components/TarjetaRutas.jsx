@@ -32,7 +32,7 @@ const TarjetaRutas = ({idViaje, descripcion, chofer, idVehiculo, partida, destin
   
   return (
     <>
-        <div className="card m-2 mb-6 drop-shadow-md bg-[#dfdfdf]">
+        <div className="card m-2 mb-6 drop-shadow-md bg-[#dfdfdf] transition duration-500 ease-in-out transform hover:-translate-y-3 hover:shadow-2xl">
           <LoadScript
             googleMapsApiKey="AIzaSyAwXqH5JgdnOqOJy8F8_PrkvOqLtHhy60I"   
           >
@@ -63,23 +63,23 @@ const TarjetaRutas = ({idViaje, descripcion, chofer, idVehiculo, partida, destin
             {/* <img src="" className="card-img-top" alt="..." style={{ width: "200px", height: "auto" }}/> */}
             {/* <ion-icon name="chevron-down-circle float-right"></ion-icon> */}
             <div onClick={toggleAccordion} className="card-body">
-              <div style={{float: 'right'}}>
-                <i className="pi pi-angle-down"></i>
+              <div style={{float: 'right'}} className='cursor-pointer'>
+                <i className="pi pi-angle-down text-xl"></i>
               </div>
-                <h5 className="card-title">Id viaje: {idViaje}</h5>
+                <h5 className="card-title font-bold text-xl">Id viaje: {idViaje}</h5>
                 <p className="card-text">{descripcion}</p>
             </div>
             {
               show &&
                 <div>
                   <ul className="list-group list-group-flush">
-                    <li className="list-group-item">Chofer: {chofer}</li>
-                    <li className="list-group-item">Id_Vehículo: {idVehiculo}</li>
-                    <li className="list-group-item">Traslado: {partida} - {destino}</li>
+                    <li className="list-group-item"><span className='font-bold text-lg'>Chofer:</span> {chofer}</li>
+                    <li className="list-group-item"><span className='font-bold text-lg'>Id vehículo:</span> {idVehiculo}</li>
+                    <li className="list-group-item"><span className='font-bold text-lg'>Traslado:</span> {partida} - {destino}</li>
                   </ul>
                   <div className="card-body">
-                    <a href="#" className="card-link text-indigo-600 hover:text-indigo-400 text-lg"> <i className="pi pi-map-marker text-indigo-600 hover:text-indigo-400"></i> Seguimiento</a>
-                    <a href="#" className="card-link text-indigo-600 hover:text-indigo-400 text-lg" onClick={() => {setMensaje(true)}}><i className="pi pi-external-link text-indigo-600 hover:text-indigo-400"></i> Ver más 
+                    <a href="#" className="card-link text-[#BE0F34] hover:text-rose-500 text-lg"> <i className="pi pi-map-marker text-[#BE0F34] hover:text-opacity-75"></i> Seguimiento</a>
+                    <a href="#" className="card-link text-[#BE0F34] hover:text-rose-500 text-lg" onClick={() => {setMensaje(true)}}><i className="pi pi-external-link text-[#BE0F34] hover:text-opacity-75"></i> Ver más 
                     </a>
                   </div>
                 </div>

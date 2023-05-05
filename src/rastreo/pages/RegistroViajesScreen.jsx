@@ -229,8 +229,8 @@ export const RegistroViajesScreen = () => {
       <section className="section_item flex-container py-6" >
         <div className="card form drop-shadow-md bg-[#FFF]" style={styleRegistro}>
           <br />
-          <h1 className="card-title">
-            <p className="fs-4">Registra un nuevo viaje</p>
+          <h1 className="card-title card-title pb-4 card-title pb-4 text-3xl text-[#BE0F34]">
+            Registra un nuevo viaje
           </h1>
           <Formik initialValues={initialValues} onSubmit={onSubmit}>
             {({ values, handleChange, handleSubmit }) => (
@@ -377,14 +377,9 @@ export const RegistroViajesScreen = () => {
 
                     </div>
                   </div>
-                  <div className="row">
-                    <div className='col'>
-                      <div className="p-inputgroup flex-1">
-                        <button className='mt-4 bg-[#FFF] text-[#BE0F34] border border-[#BE0F34] hover:bg-[#BE0F34] hover:text-[#FFF] font-bold py-2 px-4 rounded shadow-md'>Registra</button>
-                      </div>
-
+                    <div className="p-inputgroup flex-1 items-center">
+                      <Button type="submit" label='Registrar' className='text-[#BE0F34] m-4'/>
                     </div>
-                  </div>
                 </div>
                 <Dialog header="Empresa" visible={mostrarEmpresa} style={{ width: '50vw' }} onHide={() => setMostrarEmpresa(false)}>
                   <p className="m-0">

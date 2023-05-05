@@ -99,7 +99,7 @@ export const MenuScreen = () => {
   return (
     <>
       <h1 className="pt-6 px-6 text-5xl font-bold">Sistema de rastreo</h1>
-      <div className='md:container md:mx-auto'>
+      <div className='container'>
       <div className="row">
           <div className="col-sm-12 col-md-4 py-6 p-4">
             <div className="card drop-shadow-md bg-[#FFF]">

@@ -449,7 +449,7 @@ const NuevoConductorForm = ({toggleNuevoConductorForm}) => {
                             
                         </div>
                     </div>
-                    <Button type="submit" label="Submit" className='bg-indigo-500 hover:bg-indigo-700 m-4' onClick={toggleNuevoConductorForm}/>
+                    <Button type="submit" label="Registrar" className='text-[#BE0F34] m-4' onClick={toggleNuevoConductorForm}/>
                 </Form>
             )}
         </Formik>

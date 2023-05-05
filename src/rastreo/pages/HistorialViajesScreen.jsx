@@ -13,7 +13,7 @@ const styleRegistro = {
 
 const styleRegistroModal = {
     width: '95%',
-    background: 'rgb(194,103,72)',
+    background: 'rgb(190,15,52)',
 }
 
 const HistorialViajesScreen = () => {
@@ -121,9 +121,7 @@ const [cardsData, setCardsData] = useState([
       <div className='col-sm-12 col-md-6'>
         <div className="card">
           <div className="card-body">
-            <div className='text-right'>
-              <i className="pi pi-truck" style={{ fontSize: '2rem' }}></i>
-            </div>
+            
             <h1 className='text-black text-left text-3xl font-semibold'>
               Total de viajes: {itemCount}
             </h1>
@@ -189,7 +187,7 @@ const [cardsData, setCardsData] = useState([
     </section>
     </div>
     
-    <div className='border-2 border-t-red-600'>
+    <div className='border-double border-2 border-t-red-600'>
     <section className="section_item flex-container py-6 drop-shadow-md">
         <div className="card form" style={styleRegistro}>
         <br />
@@ -293,15 +291,15 @@ const [cardsData, setCardsData] = useState([
             <div className="card" style={styleRegistroModal} onClick={toggleAccordionViaje}>
             <br />
             <h1 className="card-title">
-                <div style={{float: 'right'}} className='px-4'>
+                <div style={{float: 'right'}} className='px-4 text-white'>
                     <i className="pi pi-angle-down"></i>
                 </div>
-                <p className="fs-4">Detalles del viaje</p>
+                <p className="fs-4 text-white">Detalles del viaje</p>
             </h1>   
             </div>
             {
                 show &&
-                <div className='container'>
+                <div className='container bg-[#dfdfdf]'>
                 <div className='row'>
                     <div className='col-sm-6 col-md-6 col-xl-4 p-4'>
                       <ul className="list-group list-group-flush">
@@ -334,15 +332,15 @@ const [cardsData, setCardsData] = useState([
             <div className="card" style={styleRegistroModal} onClick={toggleAccordionConductor}>
             <br />
             <h1 className="card-title">
-                <div style={{float: 'right'}} className='px-4'>
+                <div style={{float: 'right'}} className='px-4 text-white'>
                     <i className="pi pi-angle-down"></i>
                 </div>
-                <p className="fs-4">Detalles del Conductor</p>
+                <p className="fs-4 text-white">Detalles del Conductor</p>
             </h1>   
             </div>
             {
                 show2 &&
-                <div className='container'>
+                <div className='container bg-[#dfdfdf]'>
                     <div className='row'>
                         <div className='col-sm-6 col-md-6 col-xl-4 p-4'>
                           <ul className="list-group list-group-flush">
@@ -375,15 +373,15 @@ const [cardsData, setCardsData] = useState([
             <div className="card" style={styleRegistroModal} onClick={toggleAccordionVehiculo}>
             <br />
             <h1 className="card-title">
-                <div style={{float: 'right'}} className='px-4'>
+                <div style={{float: 'right'}} className='px-4 text-white'>
                     <i className="pi pi-angle-down"></i>
                 </div>
-                <p className="fs-4">Detalles del vehiculo</p>
+                <p className="fs-4 text-white">Detalles del vehiculo</p>
             </h1>   
             </div>
             {
                 show3 &&
-                <div className='container'>
+                <div className='container bg-[#dfdfdf]'>
                     <div className='row'>
                         <div className='col-sm-6 col-md-6 col-xl-4 p-4'>
                           <ul className="list-group list-group-flush">

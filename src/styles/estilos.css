@@ -7,10 +7,8 @@ body {
   background-position: center center;
   background-repeat: no-repeat;
 }
-html,
-body {
-  min-height: 100%;
-}
+
+
 
 .section_item {
     height: auto;
@@ -44,13 +42,13 @@ body {
   }
   .fondo {
     height:665px;
-    background-image: url("../assets/Fondo.jpg");
+    background-image: url("../assets/fondo_rojogris.jpg");
     background-size: 90rem;
     
   }
   .fondo2 {
     height: 60rem;
-    background-image: url("../assets/pai.jpeg");
+    background-color: #dfdfdf;
     background-size: 100rem;
     
   }
@@ -62,10 +60,7 @@ body {
 
   }
 
-  img{
-    width: 90rem;
-    position: relative;
-  }
+  
   
   .div1 .div2 {
     position: absolute;  

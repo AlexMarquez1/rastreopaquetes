@@ -140,7 +140,7 @@ const NuevaEmpresasForm = () => {
                                 </div>
                             </div>
                            
-                            <Button type="submit" label="Submit" className='m-4'/>
+                            <Button type="submit" label="Submit" className='text-[#BE0F34] m-4'/>
                         </Form>
                     )}
                 </Formik>
