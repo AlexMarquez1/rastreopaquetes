@@ -20,6 +20,5 @@ export const getVehiculos = async (api,) =>{
     // const resp = await fetch(url,options);
     
     // const data = await resp.json();
-    console.log(data)
     return data;
 }

@@ -7,6 +7,7 @@ import { getValidation } from '../../helpers/getUsers';
 import { api } from "../../helpers/VariablesGlobales";
 import { Dialog } from 'primereact/dialog';
 import { useNavigate } from 'react-router-dom';
+import useAuth from '../../hooks/useAuth';
 
 export const FormularioLogin = () => {
     const navigate = useNavigate();
@@ -22,6 +23,8 @@ export const FormularioLogin = () => {
     const [inputPass, setInputPass] = useState('');
     const [loading, setLoading] = useState(false);
     const [mensaje, setMensaje] = useState(false);
+
+    const { userAuth, setUserAuth } = useAuth();
 
     const onInputUserChange = ({ target }) => {
         setInputUsuario(target.value);
@@ -44,10 +47,13 @@ export const FormularioLogin = () => {
                 setMensaje(true);
             }
             setLoading(false);
+            
+            setUserAuth(respuesta);
+            
         });
     }
 
-
+    
     return (
         <>
         {/* <div className="flex flex-col items-center justify-center h-screen">
