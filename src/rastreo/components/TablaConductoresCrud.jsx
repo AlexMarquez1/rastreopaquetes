@@ -4,8 +4,9 @@ import { DataTable } from 'primereact/datatable'
 import { Dialog } from 'primereact/dialog';
 import { InputText } from 'primereact/inputtext';
 import React, { useState } from 'react'
+import useAuth from '../../hooks/useAuth';
 
-export const TablaConductoresCrud = ({ data, encabezados, id, tipoDatos = 'conductores', editar = false, eliminar = false, seleccionMultiple = false, toggleNuevoConductorForm }) => {
+export const TablaConductoresCrud = ({ data, encabezados, id, editar = false, eliminar = false, seleccionMultiple = false, toggleNuevoConductorForm }) => {
     const [globalFilter, setGlobalFilter] = useState(null);
     const [datoSeleccionado, setDatoSeleccionado] = useState()
     const [lista, setLista] = useState(data)
@@ -14,7 +15,10 @@ export const TablaConductoresCrud = ({ data, encabezados, id, tipoDatos = 'condu
     const [passwordConfirnacion, setPasswordConfirnacion] = useState('');
     const [errorPassword, setErrorPassword] = useState(false);
 
-    
+    const { userAuth } = useAuth();
+
+    const conductorFiltrado = lista.filter(item => item.us.idusuario === userAuth.idusuario);
+
     const confirmDeleteProduct = (proyecto) => {
         console.log(proyecto);
         setProyecto(proyecto);
@@ -104,13 +108,9 @@ export const TablaConductoresCrud = ({ data, encabezados, id, tipoDatos = 'condu
         );
     };
 
-    const imageBodyTemplate = (product) => {
-        return <img src={`https://primefaces.org/cdn/primereact/images/product/${product.image}`} alt={product.image} className="w-6rem shadow-2 border-round" />;
-    };
-
     return (
         <>
-            <DataTable value={data} selection={datoSeleccionado} onSelectionChange={onSelection}
+            <DataTable value={conductorFiltrado} selection={datoSeleccionado} onSelectionChange={onSelection}
                 onRowEditComplete={onRowEditComplete} editMode="row"
                 dataKey={id} paginator rows={10} rowsPerPageOptions={[5, 10, 25]} className="p-datatable-striped"
                 paginatorTemplate="FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink CurrentPageReport RowsPerPageDropdown"
@@ -119,7 +119,7 @@ export const TablaConductoresCrud = ({ data, encabezados, id, tipoDatos = 'condu
                 {seleccionMultiple && 
                     <Column selectionMode="multiple" headerStyle={{ width: '3rem' }} exportable={false}></Column>}
                         {encabezados.map((head, index) => (
-                    <Column key={index} field={head.field} header={head.head} body={imageBodyTemplate} sortable editor={head.field === id ? undefined : (options) => textEditor(options)} body={head.field === 'contrasena' ? contenidoColumna : undefined} ></Column>
+                    <Column key={index} field={head.field} header={head.head} sortable editor={head.field === id ? undefined : (options) => textEditor(options)} body={head.field === 'contrasena' ? contenidoColumna : undefined} ></Column>
                 ))}
                     <Column rowEditor headerStyle={{ width: '10%', minWidth: '8rem' }} bodyStyle={{ textAlign: 'center' }}></Column>
                         {(editar || eliminar) && <Column header='Opciones' body={actionBodyTemplate} exportable={false} style={{ minWidth: '8rem' }}></Column>}

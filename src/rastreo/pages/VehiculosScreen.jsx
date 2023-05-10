@@ -20,18 +20,11 @@ const VehiculosScreen = () => {
     });
 const { data: vehiculos, loading } = useFetchVehiculo(vehiculoActual);
 
-const columns = [
-    { field: 'idusuario', head: 'id' },
-    { field: 'nombre', head: 'Nombre Usuario' },
-    { field: 'telefonocontacto', head: 'Contacto' },
-    { field: 'usuario', head: 'Usuario' },
-    { field: 'password', head: 'Contraseña' },
-];
   return (
     <>
     <h1 className='pt-6 px-6 text-5xl font-bold'>Mis vehículos</h1>
     <div>
-        {!loading ? <DisponibilidadVehiculo data={vehiculos} vehiculoActual={vehiculoActual} setVehiculoActual={setVehiculoActual}/> : <div className='text-center pt-4'><i className="pi pi-spin pi-spinner" style={{ fontSize: '4rem' }}></i></div>} 
+        {!loading ? <DisponibilidadVehiculo data={vehiculos}/> : <div className='text-center pt-4'><i className="pi pi-spin pi-spinner" style={{ fontSize: '4rem' }}></i></div>} 
     </div>
     <div className='bg-white'>
     <section className="section_item flex-container py-6 drop-shadow-md">
