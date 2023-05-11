@@ -1,14 +1,28 @@
-import React, { useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import NuevoConductorForm from '../components/NuevoConductorForm'
 import { TablaConductoresCrud } from '../components/TablaConductoresCrud'
 import { useFetchConductor } from '../hooks/useFetchConductores';
 import { Button } from 'primereact/button';
+
+import { ApiContext } from '../context/ApiProvider';
 
 const styleRegistro = {
     width: '85%',
 }
 
 function ConductoresScreen() {
+
+  const { dataConductor, setDataConductor } = useContext(ApiContext);
+
+  useEffect(() => {
+      // Llamada a la API y actualización de los datos en el estado
+      fetch('http://192.168.0.6:8080/consultar/conductores')
+        .then(response => response.json())
+        .then(apiData => setDataConductor(apiData))
+        .catch(error => console.log(error));
+    }, []);
+
+    console.log(dataConductor)
 
   const [show, setShow] = useState(null);
   const [conductorActual, setconductorActual] = useState({

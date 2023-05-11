@@ -10,7 +10,7 @@ const styleRegistro = {
 
 const EmpresaScreen = () => {
 
-  const { userAuth } = useAuth();
+  // const { userAuth } = useAuth();
   
   const [empresaActual, setEmpresaActual] = useState({
     idempresa: '',

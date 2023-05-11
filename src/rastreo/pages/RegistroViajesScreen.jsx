@@ -12,6 +12,11 @@ import { Dialog } from 'primereact/dialog';
 import { InformacionConductor } from '../components/InformacionConductor';
 import { addScaleCorrector } from 'framer-motion';
 
+import { useFetchEmpresas } from '../hooks/useFetchEmpresas';
+import { useFetchConductor } from '../hooks/useFetchConductores';
+
+import useAuth from '../../hooks/useAuth';
+
 const styleRegistro = {
   width: '85%'
 }
@@ -20,32 +25,32 @@ const colorTexto = {
   color: 'black',
 }
 
-const empresas = [
-  {
-    rasonSocial: 'Empresa 1',
-    direccion: '',
-    rfc: 'EPLDH213',
-    telefono: '',
-    correo: '',
-    giroEmpresa: '',
-  },
-  {
-    rasonSocial: 'Empresa 2',
-    direccion: '',
-    rfc: 'DHAIUVDN243',
-    telefono: '',
-    correo: '',
-    giroEmpresa: '',
-  },
-  {
-    rasonSocial: 'Empresa 3',
-    direccion: '',
-    rfc: 'JHOPAJBW1231',
-    telefono: '',
-    correo: '',
-    giroEmpresa: '',
-  },
-];
+// const empresas = [
+//   {
+//     rasonSocial: 'Empresa 1',
+//     direccion: '',
+//     rfc: 'EPLDH213',
+//     telefono: '',
+//     correo: '',
+//     giroEmpresa: '',
+//   },
+//   {
+//     rasonSocial: 'Empresa 2',
+//     direccion: '',
+//     rfc: 'DHAIUVDN243',
+//     telefono: '',
+//     correo: '',
+//     giroEmpresa: '',
+//   },
+//   {
+//     rasonSocial: 'Empresa 3',
+//     direccion: '',
+//     rfc: 'JHOPAJBW1231',
+//     telefono: '',
+//     correo: '',
+//     giroEmpresa: '',
+//   },
+// ];
 const conductores = [
   {
     idConductor: 'C2',
@@ -139,7 +144,7 @@ const vehiculos = [
 const initialValues = {
   viaje: {
     Empresa: {
-      rasonSocial: '',
+      rasonsocial: '',
       direccion: '',
       rfc: '',
       telefono: '',
@@ -194,7 +199,7 @@ const initialValues = {
 
 export const RegistroViajesScreen = () => {
 
-  const [loading, setLoading] = useState(false);
+  // const [loading, setLoading] = useState(false);
   const [mostrarEmpresa, setMostrarEmpresa] = useState(false);
   const [mostrarConductor, setMostrarConductor] = useState(false);
   const [mostrarVehiculo, setMostrarVehiculo] = useState(false);
@@ -212,6 +217,52 @@ export const RegistroViajesScreen = () => {
   // const [fieldConductor, metaConductor, helpersConductor] = useField('Conductor');
   // const { value: valueConductor } = metaConductor;
   // const { setValue: setValueConductor } = helpersConductor;
+
+   const [empresaActual, setEmpresaActual] = useState({
+     idempresa: '',
+     razonsocial: '',
+     direccion: '',
+     rfc: '',
+     telefono: '',
+     email: '',
+     giro: '',
+     idusuario: '',
+ });
+
+ const [conductorActual, setconductorActual] = useState({
+  idConductor: '',
+  nombrecompleto: '',
+  fechanacimiento: '',
+  email: '',
+  telefono: '',
+  curp: '',
+  rfc: '',
+  usuario: '',
+  contrasena: '',
+  calle: '',
+  numeroexterior: '',
+  numerointerior: '',
+  codigopostal: '',
+  estado: '',
+  municipio: '',
+  numerolicencia: '',
+  tipolicencia: '',
+  archivolicencia: '',
+  fechaexpediciaon: '',
+  fechavencimiento: '',
+  tiposangre: '',
+  foto: '',
+  licencia: '',
+  identificacion: '',
+  idusuario: '',
+});
+
+const { userAuth } = useAuth();
+
+  const { data: empresasData, loadingEmpresa } = useFetchEmpresas(empresaActual);
+  const { data: conductoresData, loadingConductor } = useFetchConductor(conductorActual);
+
+  // const empresasFiltradas = empresasData.filter(item => item.razonsocial && item.usuario.idusuario === userAuth.idusuario);
 
   const registrarViaje = async (e) => {
     e.preventDefault();
@@ -239,20 +290,21 @@ export const RegistroViajesScreen = () => {
                   <div className="row">
                     <div className="col">
                       <div className="p-inputgroup flex-1">
-                        <Field
+
+                          <Field
                           name='viaje.Empresa'
                           as={Dropdown}
                           value={values.viaje.Empresa}
                           onChange={handleChange}
-                          options={empresas}
-                          optionLabel="rasonSocial"
+                          options={empresasData}
+                          optionLabel="razonsocial"
                           filter
                           filterPlaceholder='Buscar por nombre'
                           emptyFilterMessage='Empresa no registrada'
                           placeholder="Selecciona una empresa"
                           className="w-full md:w-14rem"
-                          required={true}
-                        />
+                        /> 
+                        
                         <Button
                           className='bg-[#BE0F34]'
                           icon="pi pi-building" type='button' onClick={() => setMostrarEmpresa(true)} disabled={values.viaje.Empresa.rasonSocial === '' ? true : false} />
@@ -260,7 +312,8 @@ export const RegistroViajesScreen = () => {
                     </div>
                     <div className="col">
                       <div className="p-inputgroup flex-1">
-                        <Field
+                        
+                          <Field
                           name='viaje.Conductor'
                           as={Dropdown}
                           value={values.viaje.Conductor}
@@ -269,8 +322,8 @@ export const RegistroViajesScreen = () => {
                             handleChange(e); 
                             setConductorSeleccionado(e.value);
                           }}
-                          options={conductores}
-                          optionLabel="nombreCompleto"
+                          options={conductoresData}
+                          optionLabel="nombrecompleto"
                           filter
                           filterPlaceholder='Buscar por nombre'
                           emptyFilterMessage='Conductor no registrado'
@@ -278,6 +331,8 @@ export const RegistroViajesScreen = () => {
                           className="w-full md:w-14rem"
                           required={true}
                         />
+                       
+                        
                         {/* <Dropdown 
                           value={valueConductor}
                           onChange={(e)=>{ setValueConductor(e.target.value)}}

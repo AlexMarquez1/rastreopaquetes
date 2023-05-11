@@ -1,7 +1,9 @@
-import React, { useState } from 'react'
+import React, { useContext, useState } from 'react'
 import NuevoVehiculoForm from '../components/NuevoVehiculoForm'
 import { useFetchVehiculo } from '../hooks/useFetchVehiculos';
 import { DisponibilidadVehiculo } from '../components/DisponibilidadVehiculo';
+
+import { ApiContext } from '../context/ApiProvider';
 
 const styleRegistro = {
     width: '85%',

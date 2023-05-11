@@ -201,7 +201,6 @@ const TarjeMenuActivas = () => {
             )}
           </div>
         </div>
-
       </Carousel>
 
     </>

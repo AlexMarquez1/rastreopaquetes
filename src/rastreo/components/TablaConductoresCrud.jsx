@@ -15,6 +15,8 @@ export const TablaConductoresCrud = ({ data, encabezados, id, editar = false, el
     const [passwordConfirnacion, setPasswordConfirnacion] = useState('');
     const [errorPassword, setErrorPassword] = useState(false);
 
+    console.log(data)
+
     const { userAuth } = useAuth();
 
     const conductorFiltrado = lista.filter(item => item.us.idusuario === userAuth.idusuario);

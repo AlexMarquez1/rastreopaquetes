@@ -105,7 +105,7 @@ export const SeleccionarUbicacion = ({ initialValue }) => {
 
     const handlePlaceChanged = () => {
         if(searchBox){
-            console.log(searchBox);
+            // console.log(searchBox);
             const place = searchBox.getPlaces()[0];
             setDireccionSeleccionada(place);
             const { geometry } = place;
