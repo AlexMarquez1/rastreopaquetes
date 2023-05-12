@@ -8,21 +8,20 @@ import { Calendar } from 'primereact/calendar';
 const NuevoVehiculoForm = () => {
 
     const initialValues = {
-        tipoVehiculo: '',
+        idvehiculo: '',
+        tipovehiculo: '',
         marca: '',
         modelo: '',
-        placa: '',
-        poliza: '',
-        tarjetaDeCirculacion: '',
+        placas: '',
         numeroserie: '',
-        nombreaseguradora: '',
+        nombreseguro: '',
         numeropoliza: '',
+        telefonoaseguradora: '',
+        webaseguradora: '',
         fechaaltaseguro: '',
         fechavencimientoseguro: '',
-        horaaltaseguro: '',
-        horavencimientoseguro: '',
-        telefonoaseguradora: '',
-        sitiowebaseguradora: '' 
+        archivotarjetacirculacion: '',
+        archivopolizaseguro: '',  
       };
 
     const tiposVehiculos = [
@@ -34,9 +33,23 @@ const NuevoVehiculoForm = () => {
         { label: 'Trailer', value: 'Trailer' },
       ];
       
-      const onSubmit = (values) => {
-        console.log(values);
-        resetForm();
+      const onSubmit = (values, { resetForm }) => {
+        fetch('URL_DE_TU_API', {
+            method: 'POST', // O 'PUT' según el tipo de solicitud que desees realizar
+            headers: {
+              'Content-Type': 'application/json' // Asegúrate de establecer el tipo de contenido adecuado
+            },
+            body: JSON.stringify(values) // Convierte los valores a JSON antes de enviarlos
+          })
+            .then(response => response.json())
+            .then(responseData => {
+              // Lógica adicional después de enviar los datos a la API
+              // ...
+              console.log('Respuesta de la API:', responseData);
+            })
+            .catch(error => console.log(error));
+            
+            resetForm();
       };
 
   return (
