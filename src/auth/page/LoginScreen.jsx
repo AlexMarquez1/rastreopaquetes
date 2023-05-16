@@ -1,6 +1,8 @@
 import React from 'react'
 import { FormularioLogin } from '../components/FormularioLogin'
 
+import { Player } from '@lottiefiles/react-lottie-player';
+
 export const LoginScreen = () => {
   return (
     <>
@@ -8,10 +10,17 @@ export const LoginScreen = () => {
       <div className='bg-[#E2E2E2] flex w-full items-center justify-center lg:w-1/2'>
         <FormularioLogin />
       </div>
-      <div className='hidden lg:flex h-full w-3/4 bg-[#BE0F34]'>
+      <div className='hidden lg:flex h-full w-3/4 bg-[#BE0F34] items-center justify-center'>
         <div className='w-auto h-auto'>
-        {/* <img className="" src="src/assets/isae.png" alt="Your Company"/> */}
-        <h1 className='pt-6 px-6 text-5xl font-bold text-white'>Rastreo app</h1>
+        <div className='text-center items-center justify-center'>
+          <h1 className=' text-5xl font-bold text-white'>Rastreo app</h1>
+          <Player src='https://assets9.lottiefiles.com/packages/lf20_mli39gjg.json'
+            className="player"
+            loop
+            autoplay
+            style={{ height: '600px', width: '600px' }}
+          />
+        </div>
         </div>
       </div> 
     </div>

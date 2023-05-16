@@ -3,6 +3,7 @@ import NuevaEmpresasForm from '../components/NuevaEmpresasForm'
 import { useFetchEmpresas } from '../hooks/useFetchEmpresas';
 import useAuth from '../../hooks/useAuth';
 import { TarjetaEmpresa } from '../components/TarjetaEmpresa';
+import { Player } from '@lottiefiles/react-lottie-player';
 
 const styleRegistro = {
     width: '85%',
@@ -33,7 +34,13 @@ const { data: empresas, loading } = useFetchEmpresas(empresaActual);
     <> 
     <h1 className="pt-6 px-6 text-5xl font-bold">Empresas relacionadas</h1>
     {!loading ? 
-    <TarjetaEmpresa data={empresas}/> : <div className='text-center pt-4'><i className="pi pi-spin pi-spinner" style={{ fontSize: '4rem' }}></i></div>
+    <TarjetaEmpresa data={empresas}/> : 
+    <Player src='https://assets10.lottiefiles.com/packages/lf20_bxuyrltk.json'
+            className="player"
+            loop
+            autoplay
+            style={{ height: '300px', width: '300px' }}
+          />
     }
     
 

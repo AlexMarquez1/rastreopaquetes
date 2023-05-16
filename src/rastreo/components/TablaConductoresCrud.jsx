@@ -15,8 +15,6 @@ export const TablaConductoresCrud = ({ data, encabezados, id, editar = false, el
     const [passwordConfirnacion, setPasswordConfirnacion] = useState('');
     const [errorPassword, setErrorPassword] = useState(false);
 
-    console.log(data)
-
     const { userAuth } = useAuth();
 
     const conductorFiltrado = lista.filter(item => item.us.idusuario === userAuth.idusuario);
@@ -31,7 +29,6 @@ export const TablaConductoresCrud = ({ data, encabezados, id, editar = false, el
         setPasswordConfirnacion('');
         setDeleteProyectDialog(false);
     }
-    
     
     const handleAceptarEliminar = ()=>{
         if (passwordConfirnacion === '') {
@@ -62,7 +59,6 @@ export const TablaConductoresCrud = ({ data, encabezados, id, editar = false, el
             <h1 className="card-title pb-4 text-3xl text-left text-[#BE0F34]">
               Lista de conductores
           </h1>
-            
             <span className="p-input-icon-left m-2">
                 <i className="pi pi-search" />
                 <InputText type="search" onInput={(e) => setGlobalFilter(e.target.value)} placeholder="Buscar..." />

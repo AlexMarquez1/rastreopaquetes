@@ -77,6 +77,8 @@ const TarjeMenuActivas = () => {
         >
           <LoadScript
             googleMapsApiKey="AIzaSyAwXqH5JgdnOqOJy8F8_PrkvOqLtHhy60I"
+            
+      libraries={["places"]} // Agrega esta línea para cargar la biblioteca "places"
           >
             <GoogleMap
               mapContainerStyle={{

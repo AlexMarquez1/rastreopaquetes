@@ -1,7 +1,5 @@
 import React, { useState } from 'react'
-import { Field, Form, Formik, useField } from 'formik';
-import { NavBarPrincipal } from '../components/NavBarPrincipal'
-import { InputText } from 'primereact/inputtext';
+import { Field, Form, Formik } from 'formik';
 import { Dropdown } from 'primereact/dropdown';
 import { Button } from 'primereact/button';
 import { Calendar } from 'primereact/calendar';
@@ -16,130 +14,12 @@ import { useFetchEmpresas } from '../hooks/useFetchEmpresas';
 import { useFetchConductor } from '../hooks/useFetchConductores';
 
 import useAuth from '../../hooks/useAuth';
+import { useFetchVehiculo } from '../hooks/useFetchVehiculos';
+import { Player } from '@lottiefiles/react-lottie-player';
 
 const styleRegistro = {
   width: '85%'
 }
-
-const colorTexto = {
-  color: 'black',
-}
-
-// const empresas = [
-//   {
-//     rasonSocial: 'Empresa 1',
-//     direccion: '',
-//     rfc: 'EPLDH213',
-//     telefono: '',
-//     correo: '',
-//     giroEmpresa: '',
-//   },
-//   {
-//     rasonSocial: 'Empresa 2',
-//     direccion: '',
-//     rfc: 'DHAIUVDN243',
-//     telefono: '',
-//     correo: '',
-//     giroEmpresa: '',
-//   },
-//   {
-//     rasonSocial: 'Empresa 3',
-//     direccion: '',
-//     rfc: 'JHOPAJBW1231',
-//     telefono: '',
-//     correo: '',
-//     giroEmpresa: '',
-//   },
-// ];
-const conductores = [
-  {
-    idConductor: 'C2',
-    foto: 'https://firebasestorage.googleapis.com/v0/b/isae-de6da.appspot.com/o/Sesion%2FUsuarios%2Falondra.santiago%2F7904-alondra.santiago.png?alt=media&token=7904-alondra.santiago.png.png',
-    nombreCompleto: 'Alondra Santiago Bernabe',
-    edad: '54',
-    tipoDeSangre: 'O+',
-    numeroContacto: '123456789',
-    numeroLicencia: '98736541232',
-    tipoLicencia: 'A',
-    vigencia: '12/03/26',
-    licencia: 'https://firebasestorage.googleapis.com/v0/b/isae-de6da.appspot.com/o/Proyectos%2F66-FIRMAS%2F72-FIRMA%2FEvidencias%2F72-FIRMA?alt=media&token=.pdf',
-  },
-  {
-    idConductor: 'C3',
-    foto: 'https://firebasestorage.googleapis.com/v0/b/isae-de6da.appspot.com/o/Sesion%2FUsuarios%2Fc.alejandromarquez%2F5803-c.alejandromarquez.png?alt=media&token=5803-c.alejandromarquez.png.png',
-    nombreCompleto: 'Carlos Alejandro Marquez Martinez',
-    edad: '76',
-    tipoDeSangre: 'A',
-    numeroContacto: '123456789',
-    numeroLicencia: '98736541232',
-    tipoLicencia: 'A',
-    vigencia: '12/03/26',
-    licencia: 'https://firebasestorage.googleapis.com/v0/b/isae-de6da.appspot.com/o/Proyectos%2F66-FIRMAS%2F72-FIRMA%2FEvidencias%2F72-FIRMA?alt=media&token=.pdf',
-  },
-  {
-    idConductor: 'C4',
-    foto: 'https://firebasestorage.googleapis.com/v0/b/isae-de6da.appspot.com/o/Sesion%2FUsuarios%2Fgeovani.rubio%2F4737-geovani.rubio.png?alt=media&token=4737-geovani.rubio.png.png',
-    nombreCompleto: 'Geovanni Rubio',
-    edad: '64',
-    tipoDeSangre: 'A',
-    numeroContacto: '123456789',
-    numeroLicencia: '98736541232',
-    tipoLicencia: 'A',
-    vigencia: '12/03/26',
-    licencia: 'https://firebasestorage.googleapis.com/v0/b/isae-de6da.appspot.com/o/Proyectos%2F66-FIRMAS%2F72-FIRMA%2FEvidencias%2F72-FIRMA?alt=media&token=.pdf',
-  },
-  {
-    idConductor: 'C5',
-    foto: 'https://firebasestorage.googleapis.com/v0/b/isae-de6da.appspot.com/o/Sesion%2FUsuarios%2Fgerardo.felman%2F8552-gerardo.felman.png?alt=media&token=8552-gerardo.felman.png.png',
-    nombreCompleto: 'Gerardo Gonzales Felman',
-    edad: '32',
-    tipoDeSangre: 'A',
-    numeroContacto: '123456789',
-    numeroLicencia: '98736541232',
-    tipoLicencia: 'A',
-    vigencia: '12/03/26',
-    licencia: '',
-  },
-];
-
-const vehiculos = [
-  {
-    idVeiculo: '',
-    tipo: 'Motocicleta',
-    marca: '',
-    modelo: '',
-    placas: '',
-    numeroSerie: '',
-    tarjetaCirculacion: '',
-    Seguro: {
-      aseguradora: '',
-      numeroPolisa: '',
-      telefono: '',
-      web: '',
-      fechaAlta: '',
-      fechaVencimiento: '',
-      poliza: '',
-    }
-  },
-  {
-    idVeiculo: '',
-    tipo: 'Camion',
-    marca: '',
-    modelo: '',
-    placas: '',
-    numeroSerie: '',
-    tarjetaCirculacion: '',
-    Seguro: {
-      aseguradora: '',
-      numeroPolisa: '',
-      telefono: '',
-      web: '',
-      fechaAlta: '',
-      fechaVencimiento: '',
-      poliza: '',
-    }
-  }
-];
 
 const initialValues = {
   viaje: {
@@ -199,7 +79,6 @@ const initialValues = {
 
 export const RegistroViajesScreen = () => {
 
-  // const [loading, setLoading] = useState(false);
   const [mostrarEmpresa, setMostrarEmpresa] = useState(false);
   const [mostrarConductor, setMostrarConductor] = useState(false);
   const [mostrarVehiculo, setMostrarVehiculo] = useState(false);
@@ -214,9 +93,6 @@ export const RegistroViajesScreen = () => {
     vigencia: '',
     licencia: '',
   });
-  // const [fieldConductor, metaConductor, helpersConductor] = useField('Conductor');
-  // const { value: valueConductor } = metaConductor;
-  // const { setValue: setValueConductor } = helpersConductor;
 
    const [empresaActual, setEmpresaActual] = useState({
      idempresa: '',
@@ -237,7 +113,7 @@ export const RegistroViajesScreen = () => {
   telefono: '',
   curp: '',
   rfc: '',
-  usuario: '',
+  usuarioconductor: '',
   contrasena: '',
   calle: '',
   numeroexterior: '',
@@ -257,21 +133,36 @@ export const RegistroViajesScreen = () => {
   idusuario: '',
 });
 
+const [vehiculoActual, setVehiculoActual] = useState({
+  idvehiculo: '',
+  tipovehiculo: '',
+  marca: '',
+  modelo: '',
+  placas: '',
+  numeroserie: '',
+  nombreseguro: '',
+  numeropoliza: '',
+  telefonoaseguradora: '',
+  webaseguradora: '',
+  fechaaltaseguro: '',
+  fechavencimientoseguro: '',
+  archivotarjetacirculacion: '',
+  archivopolizaseguro: '',
+});
+
 const { userAuth } = useAuth();
 
-  const { data: empresasData, loadingEmpresa } = useFetchEmpresas(empresaActual);
-  const { data: conductoresData, loadingConductor } = useFetchConductor(conductorActual);
+  const { data: empresasData, loading: loadingEmpresa } = useFetchEmpresas(empresaActual);
+  const { data: conductoresData, loading: loadingConductor } = useFetchConductor(conductorActual);
+  const { data: vehiculosData, loading: loadingVehiculo } = useFetchVehiculo(vehiculoActual);
+  
+  const empresasFiltradas = empresasData.filter(item => item.razonsocial && item.usuario.idusuario === userAuth.idusuario);
+  const conductoresFiltrados = conductoresData.filter(item => item.nombrecompleto && item.us.idusuario === userAuth.idusuario);
+  const vehiculosFiltrados = vehiculosData.filter(item => item.marca && item.usuario.idusuario === userAuth.idusuario);
 
-  // const empresasFiltradas = empresasData.filter(item => item.razonsocial && item.usuario.idusuario === userAuth.idusuario);
-
-  const registrarViaje = async (e) => {
-    e.preventDefault();
-
-  };
-
-  const onSubmit = (values) => {
+  const onSubmit = (values, {resetForm}) => {
     console.log(values);
-    // resetForm();
+    resetForm();
   };
 
   return (
@@ -290,20 +181,29 @@ const { userAuth } = useAuth();
                   <div className="row">
                     <div className="col">
                       <div className="p-inputgroup flex-1">
-
+                        {
+                          !loadingEmpresa?
                           <Field
                           name='viaje.Empresa'
                           as={Dropdown}
                           value={values.viaje.Empresa}
                           onChange={handleChange}
-                          options={empresasData}
+                          options={empresasFiltradas}
                           optionLabel="razonsocial"
                           filter
                           filterPlaceholder='Buscar por nombre'
                           emptyFilterMessage='Empresa no registrada'
                           placeholder="Selecciona una empresa"
                           className="w-full md:w-14rem"
-                        /> 
+                        /> :
+                        <Player src='https://lottie.host/dd2750b1-c089-4c4a-bf24-1dfb2d704326/suCIibC1KW.json'
+                        className="player"
+                        loop
+                        autoplay
+                        style={{ height: '70px', width: '70px' }}
+                        />
+                        }
+                    
                         
                         <Button
                           className='bg-[#BE0F34]'
@@ -312,7 +212,8 @@ const { userAuth } = useAuth();
                     </div>
                     <div className="col">
                       <div className="p-inputgroup flex-1">
-                        
+                        {
+                          !loadingConductor ?
                           <Field
                           name='viaje.Conductor'
                           as={Dropdown}
@@ -322,7 +223,7 @@ const { userAuth } = useAuth();
                             handleChange(e); 
                             setConductorSeleccionado(e.value);
                           }}
-                          options={conductoresData}
+                          options={conductoresFiltrados}
                           optionLabel="nombrecompleto"
                           filter
                           filterPlaceholder='Buscar por nombre'
@@ -330,7 +231,16 @@ const { userAuth } = useAuth();
                           placeholder="Selecciona un conductor"
                           className="w-full md:w-14rem"
                           required={true}
+                        /> : 
+                        <Player src='https://lottie.host/dd2750b1-c089-4c4a-bf24-1dfb2d704326/suCIibC1KW.json'
+                        className="player"
+                        loop
+                        autoplay
+                        style={{ height: '70px', width: '70px' }}
                         />
+                        }
+                        
+                          
                        
                         
                         {/* <Dropdown 
@@ -350,14 +260,15 @@ const { userAuth } = useAuth();
                     </div>
                     <div className="col">
                       <div className="p-inputgroup flex-1">
-
-                        <Field
+                        {
+                          !loadingVehiculo ?
+                          <Field
                           name='viaje.Vehiculo'
                           as={Dropdown}
                           value={values.viaje.Vehiculo}
                           onChange={handleChange}
-                          options={vehiculos}
-                          optionLabel="tipo"
+                          options={vehiculosFiltrados}
+                          optionLabel="marca"
                           filter
                           filterPlaceholder='Buscar por tipo'
                           emptyFilterMessage='Vehiculo no registrado'
@@ -365,6 +276,15 @@ const { userAuth } = useAuth();
                           className="w-full md:w-14rem"
                           required={true}
                         />
+                        : 
+                        <Player src='https://lottie.host/dd2750b1-c089-4c4a-bf24-1dfb2d704326/suCIibC1KW.json'
+                        className="player"
+                        loop
+                        autoplay
+                        style={{ height: '70px', width: '70px' }}
+                        />
+                        }
+                        
                         <Button
                           className='bg-[#BE0F34]'
                           icon="pi pi-car" type='button' onClick={() => setMostrarVehiculo(true)} disabled={values.viaje.Vehiculo.tipo === '' ? true : false} />

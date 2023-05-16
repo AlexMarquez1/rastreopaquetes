@@ -1,4 +1,4 @@
-import { Field, Form, Formik } from 'formik';
+import { Field, Form, Formik, useFormik  } from 'formik';
 import { Button } from 'primereact/button';
 import { InputText } from 'primereact/inputtext';
 import { FileUpload } from 'primereact/fileupload';
@@ -11,41 +11,82 @@ import { api } from "../../helpers/VariablesGlobales";
 import { municipiosPorEstado } from '../data/arregloEstados';
 import React, { useState } from 'react'
 
+import useAuth from '../../hooks/useAuth';
+
+export const tiposSangre = [
+    { label: "A+", value: "A+" },
+    { label: "A-", value: "A-" },
+    { label: "B+", value: "B+" },
+    { label: "B-", value: "B-" },
+    { label: "AB+", value: "AB+" },
+    { label: "AB-", value: "AB-" },
+    { label: "O+", value: "O+" },
+    { label: "O-", value: "O-" }
+  ];
+
+export const tiposLicencia = [
+  { label: "A (Motocicletas y triciclos)", value: "A" },
+  { label: "B (Automóviles, pick ups, y vans de hasta 3.5 toneladas)", value: "B" },
+  { label: "C (Vehículos de carga de más de 3.5 toneladas)", value: "C" },
+  { label: "D (Autobuses)", value: "D" },
+  { label: "E (Maquinaria pesada)", value: "E" },
+  { label: "F (Taxis)", value: "F" },
+  { label: "G (Vehículos de emergencia)", value: "G" },
+  { label: "H (Remolques y semirremolques)", value: "H" }
+];
+  
+
 const NuevoConductorForm = ({toggleNuevoConductorForm}) => {
 
+    const { userAuth } = useAuth();
+    const usuario = userAuth;
+
     const initialValues = {
-        idConductor: '',
-        nombreCompleto: '',
-        fechaNacimiento: '',
-        numeroContacto: '',
+        nombrecompleto: '',
+        fechanacimiento: '',
+        email: '',
+        telefono: '',
         curp: '',
         rfc: '',
-        usuario: '',
+        usuarioconductor: '',
         contrasena: '',
         foto: '',
-        direccion : {
-            calle: '',
-            numeroExterior: '',
-            numeroInterior: '',
-            codigoPostal: '',
-            estado: '',
-            delegacion: '',
-            municipio: ''
-        },
-        licenciaConducir: {
-            numeroLicencia: '',
-            tipoLicencia: '',
-            fechaExpedicion: '',
-            fechaVencimiento: '',
-            tipoDeSangre: '',
-            archivoLicencia: '' 
-        }  
+        calle: '',
+        numeroexterior: '',
+        numerointerior: '',
+        codigopostal: '',
+        estado: '',
+        municipio: '',
+        numerolicencia: '',
+        tipolicencia: '',
+        archivolicencia: '',
+        fechaexpedicion: '',
+        fechavencimiento: '',
+        tiposangre: '',
+        identificacion: '', 
     };
 
-    const onSubmit = (values) => {
-        console.log(values);
-        resetForm();
-      };
+      const onSubmit = (values, { resetForm }) => {
+        const conductor = {...values, usuario}
+        console.log(values)
+
+         fetch('http://192.168.0.6:8080/nuevo/conductor', {
+           method: 'POST', // O 'PUT' según el tipo de solicitud que desees realizar
+           headers: {
+             'Content-Type': 'application/json' // Asegúrate de establecer el tipo de contenido adecuado
+           },
+           body: JSON.stringify(conductor) // Convierte los valores a JSON antes de enviarlos
+         })
+           .then(response => response.json())
+           .then(responseData => {
+             // Lógica adicional después de enviar los datos a la API
+             // ...
+             console.log('Respuesta de la API:', responseData);
+           })
+           .catch(error => console.log(error));
+      
+        //  resetForm();
+      }; 
          
   return (
     <div className="p-d-flex p-flex-column p-jc-center p-ai-center">
@@ -60,16 +101,16 @@ const NuevoConductorForm = ({toggleNuevoConductorForm}) => {
                                     <span className='p-float-label'>
                                         <Field
                                             as={InputText}
-                                            name="nombreCompleto"
+                                            name="nombrecompleto"
                                             onChange={handleChange}
-                                            value={values.nombreCompleto}
-                                            inputid='nombreCompleto'
+                                            value={values.nombrecompleto}
+                                            inputid='nombrecompleto'
                                             required={true}
                                         />
                                         <span className="p-inputgroup-addon">
                                             <i className="pi pi-user-edit"></i>
                                         </span>
-                                        <label htmlFor="nombreCompleto" className='text-body fs-6'>Nombre completo</label>
+                                        <label htmlFor="nombrecompleto" className='text-body fs-6'>Nombre completo</label>
                                     </span>
                                 </div>
                             </div>
@@ -78,16 +119,16 @@ const NuevoConductorForm = ({toggleNuevoConductorForm}) => {
                                     <span className='p-float-label'>
                                         <Field
                                             as={Calendar}
-                                            name="fechaNacimiento"
+                                            name="fechanacimiento"
                                             onChange={handleChange}
-                                            value={values.fechaNacimiento}
-                                            inputid='fechaNacimiento'
+                                            value={values.fechanacimiento}
+                                            inputid='fechanacimiento'
                                             required={true}
                                         />
                                         <span className="p-inputgroup-addon">
                                             <i className="pi pi-calendar-plus"></i>
                                         </span>
-                                        <label htmlFor="fechaNacimiento" className='text-body fs-6'>Fecha de nacimiento</label>
+                                        <label htmlFor="fechanacimiento" className='text-body fs-6'>Fecha de nacimiento</label>
                                     </span>
                                 </div>    
                             </div>
@@ -96,18 +137,18 @@ const NuevoConductorForm = ({toggleNuevoConductorForm}) => {
                             <span className='p-float-label'>
                                 <Field
                                     as={InputText}
-                                    name="numeroContacto"
+                                    name="telefono"
                                     keyfilter="pnum"
                                     maxLength="10"
                                     onChange={handleChange}
-                                    value={values.numeroContacto}
-                                    inputid='numeroContacto'
+                                    value={values.telefono}
+                                    inputid='telefono'
                                     required={true}
                                 />
                                 <span className="p-inputgroup-addon">
                                     <i className="pi pi-phone"></i>
                                 </span>
-                                <label htmlFor="numeroContacto" className='text-body fs-6'>Número telefónico</label>
+                                <label htmlFor="telefono" className='text-body fs-6'>Número telefónico</label>
                             </span>
                         </div> 
                         </div>
@@ -118,9 +159,13 @@ const NuevoConductorForm = ({toggleNuevoConductorForm}) => {
                                             as={InputText}
                                             name="curp"
                                             onChange={handleChange}
+                                            onInput={(e) => {
+                                                e.target.value = e.target.value.toUpperCase();
+                                              }}
                                             value={values.curp}
                                             inputid='curp'
                                             required={true}
+                                            style={{ textTransform: 'uppercase' }}
                                         />
                                         <span className="p-inputgroup-addon">
                                             <i className="pi pi-desktop"></i>
@@ -136,6 +181,9 @@ const NuevoConductorForm = ({toggleNuevoConductorForm}) => {
                                             as={InputText}
                                             name="rfc"
                                             onChange={handleChange}
+                                            onInput={(e) => {
+                                                e.target.value = e.target.value.toUpperCase();
+                                              }}
                                             value={values.rfc}
                                             inputid='rfc'
                                             required={true}
@@ -152,16 +200,34 @@ const NuevoConductorForm = ({toggleNuevoConductorForm}) => {
                                     <span className='p-float-label'>
                                         <Field
                                             as={InputText}
-                                            name="usuario"
+                                            name="email"
                                             onChange={handleChange}
-                                            value={values.usuario}
-                                            inputid='usuario'
+                                            value={values.email}
+                                            inputid='email'
                                             required={true}
                                         />
                                         <span className="p-inputgroup-addon">
-                                            <i className="pi pi-desktop"></i>
+                                            <i className="pi pi-at"></i>
                                         </span>
-                                        <label htmlFor="usuario" className='text-body fs-6'>Usuario</label>
+                                        <label htmlFor="email" className='text-body fs-6'>E-mail</label>
+                                    </span>
+                                </div>
+                            </div>
+                            <div className="col-sm-6 col-md-6 col-xl-4 pb-5">
+                                <div className='p-inputgroup flex-1'>
+                                    <span className='p-float-label'>
+                                        <Field
+                                            as={InputText}
+                                            name="usuarioconductor"
+                                            onChange={handleChange}
+                                            value={values.usuarioconductor}
+                                            inputid='usuarioconductor'
+                                            required={true}
+                                        />
+                                        <span className="p-inputgroup-addon">
+                                            <i className="pi pi-user"></i>
+                                        </span>
+                                        <label htmlFor="usuarioconductor" className='text-body fs-6'>Usuario</label>
                                     </span>
                                 </div>
                             </div>
@@ -178,7 +244,7 @@ const NuevoConductorForm = ({toggleNuevoConductorForm}) => {
                                             toggleMask
                                         />
                                         <span className="p-inputgroup-addon">
-                                            <i className="pi pi-desktop"></i>
+                                            <i className="pi pi-lock"></i>
                                         </span>
                                         <label htmlFor="contrasena" className='text-body fs-6'>Contraseña</label>
                                     </span>
@@ -212,9 +278,9 @@ const NuevoConductorForm = ({toggleNuevoConductorForm}) => {
                                     <span className='p-float-label'>
                                         <Field
                                             as={InputText}
-                                            name="direccion.calle"
+                                            name="calle"
                                             onChange={handleChange}
-                                            value={values.direccion.calle}
+                                            value={values.calle}
                                             inputid='direccion.calle'
                                             required={true}
                                         />
@@ -230,10 +296,10 @@ const NuevoConductorForm = ({toggleNuevoConductorForm}) => {
                                     <span className='p-float-label'>
                                         <Field
                                             as={InputText}
-                                            name="direccion.numeroExterior"
+                                            name="numeroexterior"
                                             onChange={handleChange}
-                                            value={values.direccion.numeroExterior}
-                                            inputid='direccion.numeroExterior'
+                                            value={values.numeroexterior}
+                                            inputid='direccion.numeroexterior'
                                             required={true}
                                             keyfilter="pnum"
                                             maxLength="6"
@@ -241,7 +307,7 @@ const NuevoConductorForm = ({toggleNuevoConductorForm}) => {
                                         <span className="p-inputgroup-addon">
                                             <i className="pi pi-desktop"></i>
                                         </span>
-                                        <label htmlFor="numeroExterior" className='text-body fs-6'>Número exterior</label>
+                                        <label htmlFor="numeroexterior" className='text-body fs-6'>Número exterior</label>
                                     </span>
                                 </div>
                             </div>
@@ -250,10 +316,10 @@ const NuevoConductorForm = ({toggleNuevoConductorForm}) => {
                                     <span className='p-float-label'>
                                         <Field
                                             as={InputText}
-                                            name="direccion.numeroInterior"
+                                            name="numerointerior"
                                             onChange={handleChange}
-                                            value={values.direccion.numeroInterior}
-                                            inputid='direccion.numeroInterior'
+                                            value={values.numerointerior}
+                                            inputid='direccion.numerointerior'
                                             required={true}
                                             keyfilter="pnum"
                                             maxLength="6"
@@ -261,7 +327,7 @@ const NuevoConductorForm = ({toggleNuevoConductorForm}) => {
                                         <span className="p-inputgroup-addon">
                                             <i className="pi pi-desktop"></i>
                                         </span>
-                                        <label htmlFor="numeroInterior" className='text-body fs-6'>Número Interior</label>
+                                        <label htmlFor="numerointerior" className='text-body fs-6'>Número Interior</label>
                                     </span>
                                 </div>
                             </div> 
@@ -270,10 +336,10 @@ const NuevoConductorForm = ({toggleNuevoConductorForm}) => {
                                     <span className='p-float-label'>
                                         <Field
                                             as={InputText}
-                                            name="direccion.codigoPostal"
+                                            name="codigopostal"
                                             onChange={handleChange}
-                                            value={values.direccion.codigoPostal}
-                                            inputid='direccion.codigoPostal'
+                                            value={values.codigopostal}
+                                            inputid='direccion.codigopostal'
                                             required={true}
                                             keyfilter="pnum"
                                             maxLength="5"
@@ -281,7 +347,7 @@ const NuevoConductorForm = ({toggleNuevoConductorForm}) => {
                                         <span className="p-inputgroup-addon">
                                             <i className="pi pi-desktop"></i>
                                         </span>
-                                        <label htmlFor="codigoPostal" className='text-body fs-6'>Codigo postal</label>
+                                        <label htmlFor="codigopostal" className='text-body fs-6'>Codigo postal</label>
                                     </span>
                                 </div>
                             </div>
@@ -291,9 +357,9 @@ const NuevoConductorForm = ({toggleNuevoConductorForm}) => {
                                         <Field
                                             as={Dropdown}
                                             options={estados}
-                                            name="direccion.estado"
+                                            name="estado"
                                             onChange={handleChange}
-                                            value={values.direccion.estado}
+                                            value={values.estado}
                                             inputid='direccion.estado'
                                             required={true}
                                         />
@@ -334,10 +400,10 @@ const NuevoConductorForm = ({toggleNuevoConductorForm}) => {
                                     <span className='p-float-label'>
                                         <Field
                                             as={InputText}
-                                            name="licenciaConducir.numeroLicencia"
+                                            name="numerolicencia"
                                             onChange={handleChange}
-                                            value={values.licenciaConducir.numeroLicencia}
-                                            inputid='numeroLicencia'
+                                            value={values.numerolicencia}
+                                            inputid='numerolicencia'
                                             required={true}
                                             keyfilter="pnum"
                                             maxLength="5"
@@ -345,7 +411,7 @@ const NuevoConductorForm = ({toggleNuevoConductorForm}) => {
                                         <span className="p-inputgroup-addon">
                                             <i className="pi pi-desktop"></i>
                                         </span>
-                                        <label htmlFor="numeroLicencia" className='text-body fs-6'>N° de licencia</label>
+                                        <label htmlFor="numerolicencia" className='text-body fs-6'>N° de licencia</label>
                                     </span>
                                 </div>
                             </div>
@@ -353,19 +419,17 @@ const NuevoConductorForm = ({toggleNuevoConductorForm}) => {
                                 <div className='p-inputgroup flex-1'>
                                     <span className='p-float-label'>
                                         <Field
-                                            as={InputText}
-                                            name="licenciaConducir.tipoLicencia"
+                                            as={Dropdown}
+                                            name="tipolicencia"
                                             onChange={handleChange}
-                                            value={values.licenciaConducir.tipoLicencia}
-                                            inputid='tipoLicencia'
-                                            required={true}
-                                            keyfilter="pnum"
-                                            maxLength="5"
+                                            value={values.tipolicencia}
+                                            inputid='tipolicencia'
+                                            options={tiposLicencia}
                                         />
                                         <span className="p-inputgroup-addon">
                                             <i className="pi pi-desktop"></i>
                                         </span>
-                                        <label htmlFor="tipoLicencia" className='text-body fs-6'>Tipo de licencia</label>
+                                        <label htmlFor="tipolicencia" className='text-body fs-6'>Tipo de licencia</label>
                                     </span>
                                 </div>
                             </div>
@@ -374,16 +438,16 @@ const NuevoConductorForm = ({toggleNuevoConductorForm}) => {
                                     <span className='p-float-label'>
                                         <Field
                                             as={Calendar}
-                                            name="licenciaConducir.fechaExpedicion"
+                                            name="fechaexpedicion"
                                             onChange={handleChange}
-                                            value={values.licenciaConducir.fechaExpedicion}
-                                            inputid='fechaExpedicion'
+                                            value={values.fechaexpedicion}
+                                            inputid='fechaexpedicion'
                                             required={true}
                                         />
                                         <span className="p-inputgroup-addon">
                                             <i className="pi pi-calendar-plus"></i>
                                         </span>
-                                        <label htmlFor="fechaExpedicion" className='text-body fs-6'>Fecha de expedición</label>
+                                        <label htmlFor="fechaexpedicion" className='text-body fs-6'>Fecha de expedición</label>
                                     </span>
                                 </div>    
                             </div>
@@ -392,16 +456,16 @@ const NuevoConductorForm = ({toggleNuevoConductorForm}) => {
                                     <span className='p-float-label'>
                                         <Field
                                             as={Calendar}
-                                            name="licenciaConducir.fechaVencimiento"
+                                            name="fechavencimiento"
                                             onChange={handleChange}
-                                            value={values.licenciaConducir.fechaVencimiento}
-                                            inputid='fechaVencimiento'
+                                            value={values.fechavencimiento}
+                                            inputid='fechavencimiento'
                                             required={true}
                                         />
                                         <span className="p-inputgroup-addon">
                                             <i className="pi pi-calendar-plus"></i>
                                         </span>
-                                        <label htmlFor="fechaVencimiento" className='text-body fs-6'>Fecha de vencimiento</label>
+                                        <label htmlFor="fechavencimiento" className='text-body fs-6'>Fecha de vencimiento</label>
                                     </span>
                                 </div>    
                             </div>
@@ -410,17 +474,16 @@ const NuevoConductorForm = ({toggleNuevoConductorForm}) => {
                                     <span className='p-float-label'>
                                         <Field
                                             as={Dropdown}
-                                            options={estados}
-                                            name="licenciaConducir.tipoDeSangre"
+                                            options={tiposSangre}
+                                            name="tiposangre"
                                             onChange={handleChange}
-                                            value={values.licenciaConducir.tipoDeSangre}
-                                            inputid='licenciaConducir.tipoDeSangre'
-                                            required={true}
+                                            value={values.tiposangre}
+                                            inputid='licenciaConducir.tiposangre'
                                         />
                                         <span className="p-inputgroup-addon">
                                             <i className="pi pi-desktop"></i>
                                         </span>
-                                        <label htmlFor="tipoDeSangre" className='text-body fs-6'>Tipo de sangre</label>
+                                        <label htmlFor="tiposangre" className='text-body fs-6'>Tipo de sangre</label>
                                     </span>
                                 </div>
                             </div>
@@ -434,11 +497,10 @@ const NuevoConductorForm = ({toggleNuevoConductorForm}) => {
                                             url="/api/upload" 
                                             accept=".pdf" 
                                             maxFileSize={1000000}
-                                            name="licenciaConducir.archivoLicencia"
+                                            name="licenciaConducir.archivolicencia"
                                             onChange={handleChange}
-                                            value={values.licenciaConducir.archivoLicencia}
-                                            inputid='licenciaConducir.archivoLicencia'
-                                            required={true}
+                                            value={values.archivolicencia}
+                                            inputid='licenciaConducir.archivolicencia'
                                         />
                                         <span className="p-inputgroup-addon">
                                             <i className="pi pi-image"></i>

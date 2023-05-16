@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 
 export const useFetchVehiculo = (vehiculo)=>{
     const [state, setState] = useState({
-        data: {},
+        data: [],
         loading: true,
     });
 
@@ -18,7 +18,8 @@ export const useFetchVehiculo = (vehiculo)=>{
                 loading: false,
             })
         });
-    }, []);
+    }, [vehiculo]);
+
     return state;
   
 }

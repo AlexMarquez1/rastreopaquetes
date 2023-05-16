@@ -9,6 +9,8 @@ import { Dialog } from 'primereact/dialog';
 import { useNavigate } from 'react-router-dom';
 import useAuth from '../../hooks/useAuth';
 
+import { Player } from '@lottiefiles/react-lottie-player';
+
 export const FormularioLogin = () => {
     const navigate = useNavigate();
     // const [nuevoUsuario, setNuevoUsuario] = useState({
@@ -83,6 +85,12 @@ export const FormularioLogin = () => {
             <div className="card-body">
                 <div className='text-center'>
                     <h1 className="card-title pb-4 card-title pb-4 text-3xl text-[#BE0F34]">Inicia Sesión</h1>
+                    <Player src='https://assets3.lottiefiles.com/packages/lf20_u8yeomaa.json'
+        className="player"
+        loop
+        autoplay
+        style={{ height: '150px', width: '150px' }}
+      />
                     <div className="p-inputgroup flex-1 pb-6">
                         <span className='p-float-label'>
                             <InputText inputid='usuario' value={inputUsuario} onChange={onInputUserChange} />
@@ -95,6 +103,8 @@ export const FormularioLogin = () => {
                             <label htmlFor="password">Contraseña</label>
                         </span>
                     </div>
+
+      
                     <Button type='submit' label='INGRESAR' loading={loading} onClick={ingresar} className='text-[#BE0F34] m-4' />
                 </div>
             </div>

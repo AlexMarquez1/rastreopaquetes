@@ -5,7 +5,19 @@ import { FileUpload } from 'primereact/fileupload';
 import { Dropdown } from 'primereact/dropdown';
 import { Calendar } from 'primereact/calendar';
 
+import useAuth from '../../hooks/useAuth';
+import { useState } from 'react';
+
 const NuevoVehiculoForm = () => {
+
+    const [selectedFile, setSelectedFile] = useState(null);
+
+    const handleFileSelect = (event) => {
+        setSelectedFile(event.files[0]);
+    };
+
+    const { userAuth } = useAuth();
+    const usuario = userAuth;
 
     const initialValues = {
         idvehiculo: '',
@@ -34,12 +46,14 @@ const NuevoVehiculoForm = () => {
       ];
       
       const onSubmit = (values, { resetForm }) => {
-        fetch('URL_DE_TU_API', {
+        const vehiculo = {...values, usuario}
+        
+        fetch('http://192.168.0.6:8080/nuevo/vehiculo', {
             method: 'POST', // O 'PUT' según el tipo de solicitud que desees realizar
             headers: {
               'Content-Type': 'application/json' // Asegúrate de establecer el tipo de contenido adecuado
             },
-            body: JSON.stringify(values) // Convierte los valores a JSON antes de enviarlos
+            body: JSON.stringify(vehiculo) // Convierte los valores a JSON antes de enviarlos
           })
             .then(response => response.json())
             .then(responseData => {
@@ -51,6 +65,15 @@ const NuevoVehiculoForm = () => {
             
             resetForm();
       };
+
+      const invoiceUploadHandler = ({files}) => {
+        const [file] = files;
+        const fileReader = new FileReader();
+        fileReader.onload = (e) => {
+            uploadInvoice(e.target.result);
+        };
+        fileReader.readAsDataURL(file);
+    };
 
   return (
     <>
@@ -67,16 +90,16 @@ const NuevoVehiculoForm = () => {
                                 <Field
                                     as={Dropdown}
                                     options={tiposVehiculos}
-                                    name="tipoVehiculo"
+                                    name="tipovehiculo"
                                     onChange={handleChange}
-                                    value={values.tipoVehiculo}
-                                    inputid='tipoVehiculo'
+                                    value={values.tipovehiculo}
+                                    inputid='tipovehiculo'
                                     required={true}
                                 />
                                 <span className="p-inputgroup-addon">
                                     <i className="pi pi-truck"></i>
                                 </span>
-                                <label htmlFor="tipoVehiculo" className='text-body'>Tipo de vehículo</label>
+                                <label htmlFor="tipovehiculo" className='text-body'>Tipo de vehículo</label>
                             </span>
                         </div>
                     </div>
@@ -123,16 +146,16 @@ const NuevoVehiculoForm = () => {
                             <span className='p-float-label'>
                                 <Field
                                     as={InputText}
-                                    name="placa"
+                                    name="placas"
                                     onChange={handleChange}
-                                    value={values.placa}
-                                    inputid='placa'
+                                    value={values.placas}
+                                    inputid='placas'
                                     required={true}
                                 />
                                 <span className="p-inputgroup-addon">
                                     <i className="pi pi-truck"></i>
                                 </span>
-                                <label htmlFor="placa" className='text-body'>Placas del vehículo</label>
+                                <label htmlFor="placas" className='text-body'>Placas del vehículo</label>
                             </span>
                         </div>
                     </div>
@@ -159,19 +182,23 @@ const NuevoVehiculoForm = () => {
                         <div className='p-inputgroup flex-1'>
                             <span className='p-float-label'>
                                 <Field
-                                    as={FileUpload}
-                                    mode="basic"
-                                    chooseLabel="Subir tarjeta de sirculación" 
-                                    url="/api/upload" 
-                                    accept=".pdf" 
-                                    maxFileSize={1000000}
-                                    name="tarjetaDeCirculacion"
-                                    onChange={handleChange}
-                                    value={values.tarjetaDeCirculacion}
-                                    inputid='tarjetaDeCirculacion'
-                                    required={true}
-                                    customUpload={true}
-                                    className="custom-input-file"
+                                  as={FileUpload}
+                                  type="file"
+                                  mode="basic"
+                                  chooseLabel="Subir tarjeta de circulación" 
+                                  url="//upload" 
+                                  accept=".pdf" 
+                                  maxFileSize={1000000}
+                                  id="archivotarjetacirculacion"
+                                  name="archivotarjetacirculacion[]"
+                                  onChange={handleChange}
+                                  value={values.archivotarjetacirculacion}
+                                  inputid='archivotarjetacirculacion' // Cambié inputid a inputId
+                                  required={true}
+                                  customUpload={true}
+                                  className="custom-input-file"
+                                  uploadHandler={invoiceUploadHandler}
+                                  onSelect={handleFileSelect}
                                 />
                                 <span className="p-inputgroup-addon">
                                     <i className="pi pi-file-pdf"></i>
@@ -187,16 +214,16 @@ const NuevoVehiculoForm = () => {
                             <span className='p-float-label'>
                                 <Field
                                     as={InputText}
-                                    name="nombreaseguradora"
+                                    name="nombreseguro"
                                     onChange={handleChange}
-                                    value={values.nombreaseguradora}
-                                    inputid='nombreaseguradora'
+                                    value={values.nombreseguro}
+                                    inputid='nombreseguro'
                                     required={true}
                                 />
                                 <span className="p-inputgroup-addon">
                                     <i className="pi pi-building"></i>
                                 </span>
-                                <label htmlFor="nombreaseguradora" className='text-body'>Nombre de la aseguradora</label>
+                                <label htmlFor="nombreseguro" className='text-body'>Nombre de la aseguradora</label>
                             </span>
                         </div>    
                     </div>
@@ -243,16 +270,16 @@ const NuevoVehiculoForm = () => {
                             <span className='p-float-label'>
                                 <Field
                                     as={InputText}
-                                    name="sitiowebaseguradora"
+                                    name="webaseguradora"
                                     onChange={handleChange}
-                                    value={values.sitiowebaseguradora}
-                                    inputid='sitiowebaseguradora'
+                                    value={values.webaseguradora}
+                                    inputid='webaseguradora'
                                     required={true}
                                 />
                                 <span className="p-inputgroup-addon">
                                     <i className="pi pi-globe"></i>
                                 </span>
-                                <label htmlFor="sitiowebaseguradora" className='text-body'>Sitio web de la aseguradora</label>
+                                <label htmlFor="webaseguradora" className='text-body'>Sitio web de la aseguradora</label>
                             </span>
                         </div>    
                     </div>
@@ -302,13 +329,13 @@ const NuevoVehiculoForm = () => {
                                     url="/api/upload" 
                                     accept=".pdf" 
                                     maxFileSize={1000000}
-                                    name="poliza"
+                                    id="archivopolizaseguro"
+                                    name="archivopolizaseguro"
                                     onChange={handleChange}
-                                    value={values.poliza}
-                                    inputid='poliza'
+                                    value={values.archivopolizaseguro}
+                                    inputid='archivopolizaseguro'
                                     required={true}
                                     className="custom-input"
-                                    style={{color: "#BE0F34"}}
                                 />
                                 <span className="p-inputgroup-addon">
                                     <i className="pi pi-file-pdf"></i>
@@ -318,7 +345,7 @@ const NuevoVehiculoForm = () => {
                     </div>
                 </div>     
             </div>
-            <button type="submit" label="Submit" className='mt-4 mb-4 bg-[#FFF] text-[#BE0F34] border border-[#BE0F34] hover:bg-[#BE0F34] hover:text-[#FFF] font-bold py-2 px-4 rounded shadow-md'>Registra</button>
+            <Button type="submit" label="Registrar" className='text-[#BE0F34] m-4'/>
           </Form>
         )}
       </Formik>

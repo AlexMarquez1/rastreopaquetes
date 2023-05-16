@@ -5,6 +5,7 @@ import { useFetchConductor } from '../hooks/useFetchConductores';
 import { Button } from 'primereact/button';
 
 import { ApiContext } from '../context/ApiProvider';
+import { Player } from '@lottiefiles/react-lottie-player';
 
 const styleRegistro = {
     width: '85%',
@@ -21,8 +22,6 @@ function ConductoresScreen() {
         .then(apiData => setDataConductor(apiData))
         .catch(error => console.log(error));
     }, []);
-
-    console.log(dataConductor)
 
   const [show, setShow] = useState(null);
   const [conductorActual, setconductorActual] = useState({
@@ -79,8 +78,15 @@ const toggleNuevoConductorForm = () => {
     <div className='pt-4 '>
       <div className='col-sm-12 px-4'>
         <div className='text-right pt-2'>
-          {!loading && 
+          {!loading ? 
             <TablaConductoresCrud data={conductores} conductorActual={conductorActual} setconductorActual={setconductorActual} encabezados={columns} id={'idusuario'} tipoDatos={'Usuarios'} editar={false} eliminar={false} toggleNuevoConductorForm={toggleNuevoConductorForm}/>
+            :
+            <Player src='https://assets10.lottiefiles.com/packages/lf20_bxuyrltk.json'
+            className="player"
+            loop
+            autoplay
+            style={{ height: '300px', width: '300px' }}
+          />
           }
         </div>
       </div>

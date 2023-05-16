@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 
 export const useFetchConductor = (conductor)=>{
     const [state, setState] = useState({
-        data: {},
+        data: [],
         loading: true,
     });
 
@@ -14,11 +14,11 @@ export const useFetchConductor = (conductor)=>{
             conductor
         ).then(conductor =>{
             setState({
-                data: conductor,
+                data: [...conductor],
                 loading: false,
             })
         });
-    }, []);
+    }, [conductor]);
     return state;
   
 }

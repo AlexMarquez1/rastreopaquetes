@@ -4,21 +4,20 @@ import { useEffect, useState } from "react";
 
 export const useFetchEmpresas = (empresa)=>{
     const [state, setState] = useState({
-        data: {},
+        data: [],
         loading: true,
     });
 
     useEffect(() => {
         getEmpresas(
-            api,
-            empresa
+            api
         ).then(empresa =>{
             setState({
-                data: empresa,
+                data: [...empresa],
                 loading: false,
             })
         });
-    }, []);
+    }, [empresa]);
     return state;
   
 }

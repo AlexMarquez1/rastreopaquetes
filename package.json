@@ -12,6 +12,7 @@
     "@chakra-ui/react": "^2.4.9",
     "@emotion/react": "^11.10.6",
     "@emotion/styled": "^11.10.5",
+    "@lottiefiles/react-lottie-player": "^3.5.3",
     "@react-google-maps/api": "^2.18.1",
     "cors": "^2.8.5",
     "express": "^4.18.2",
