@@ -14,7 +14,7 @@ export const LoginScreen = () => {
         <div className='w-auto h-auto'>
         <div className='text-center items-center justify-center'>
           <h1 className=' text-5xl font-bold text-white'>Rastreo app</h1>
-          <Player src='https://assets9.lottiefiles.com/packages/lf20_mli39gjg.json'
+          <Player src='https://lottie.host/e1ddb718-71bd-4f86-867a-186f78d680f6/PgcsqPRRSV.json'
             className="player"
             loop
             autoplay

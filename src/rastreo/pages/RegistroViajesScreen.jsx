@@ -22,47 +22,59 @@ const styleRegistro = {
 }
 
 const initialValues = {
-  viaje: {
-    Empresa: {
-      rasonsocial: '',
+  viajes: {
+    empresas: {
+      razonsocial: '',
       direccion: '',
       rfc: '',
       telefono: '',
-      correo: '',
-      giroEmpresa: '',
+      email: '',
+      giro: '',
     },
-    Conductor: {
-      idConductor: '',
-      nombreCompleto: '',
-      edad: '',
-      tipoDeSangre: '',
-      numeroContacto: '',
-      numeroLicencia: '',
-      tipoLicencia: '',
-      vigencia: '',
-      licencia: '',
+    conductores: {
+      idconductor: '',
+      nombrecompleto: '',
+      fechanacimiento: '',
+      email: '',
+      telefono: '',
+      curp: '',
+      rfc: '',
+      usuarioconductor: '',
+      contrasena: '',
+      calle: '',
+      numeroexterior: '',
+      numerointerior: '',
+      codigopostal: '',
+      estado: '',
+      municipio: '',
+      numerolicencia: '',
+      tipolicencia: '',
+      archivolicencia: '',
+      fechaexpedicion: '',
+      fechavencimiento: '',
+      tiposangre: '',
     },
-    Vehiculo: {
-      idVeiculo: '',
-      tipo: '',
+    vehiculos: {
+      idveiculo: '',
+      tipovehiculo: '',
       marca: '',
       modelo: '',
       placas: '',
-      numeroSerie: '',
-      tarjetaCirculacion: '',
+      numeroserie: '',
+      archivotarjetacirculacion: '',
       Seguro: {
-        aseguradora: '',
-        numeroPolisa: '',
-        telefono: '',
-        web: '',
-        fechaAlta: '',
-        fechaVencimiento: '',
-        poliza: '',
+        nombreseguro: '',
+        numeropoliza: '',
+        telefonoaseguradora: '',
+        webaseguradora: '',
+        fechaaltaseguro: '',
+        fechavencimientoseguro: '',
+        archivopolizaseguro: '',
       }
     },
-    descripcionViaje: '',
-    tipoServicio: '',
-    diaSalida: '',
+    descripcionviaje: '',
+    tiposervicio: '',
+    fechasalida: '',
     direccionPartida: '',
     coordenadasPartida: {
       lat: 0,
@@ -184,9 +196,9 @@ const { userAuth } = useAuth();
                         {
                           !loadingEmpresa?
                           <Field
-                          name='viaje.Empresa'
+                          name='viajes.empresas'
                           as={Dropdown}
-                          value={values.viaje.Empresa}
+                          value={values.viajes.empresas}
                           onChange={handleChange}
                           options={empresasFiltradas}
                           optionLabel="razonsocial"
@@ -207,7 +219,7 @@ const { userAuth } = useAuth();
                         
                         <Button
                           className='bg-[#BE0F34]'
-                          icon="pi pi-building" type='button' onClick={() => setMostrarEmpresa(true)} disabled={values.viaje.Empresa.rasonSocial === '' ? true : false} />
+                          icon="pi pi-building" type='button' onClick={() => setMostrarEmpresa(true)} disabled={values.viajes.empresas.razonsocial === '' ? true : false} />
                       </div>
                     </div>
                     <div className="col">
@@ -215,9 +227,9 @@ const { userAuth } = useAuth();
                         {
                           !loadingConductor ?
                           <Field
-                          name='viaje.Conductor'
+                          name='viajes.conductores'
                           as={Dropdown}
-                          value={values.viaje.Conductor}
+                          value={values.viajes.conductores}
                           onChange={(e)=>{
                             console.log(e.value);
                             handleChange(e); 
@@ -255,7 +267,7 @@ const { userAuth } = useAuth();
                           className="w-full md:w-14rem" /> */}
                         <Button
                           className='bg-[#BE0F34]'
-                          icon="pi pi-user" type='button' onClick={() => setMostrarConductor(true)} disabled={values.viaje.Conductor.nombreCompleto === '' ? true : false} />
+                          icon="pi pi-user" type='button' onClick={() => setMostrarConductor(true)} disabled={values.viajes.conductores.nombrecompleto === '' ? true : false} />
                       </div>
                     </div>
                     <div className="col">
@@ -263,9 +275,9 @@ const { userAuth } = useAuth();
                         {
                           !loadingVehiculo ?
                           <Field
-                          name='viaje.Vehiculo'
+                          name='viajes.vehiculos'
                           as={Dropdown}
-                          value={values.viaje.Vehiculo}
+                          value={values.viajes.vehiculos}
                           onChange={handleChange}
                           options={vehiculosFiltrados}
                           optionLabel="marca"
@@ -287,7 +299,7 @@ const { userAuth } = useAuth();
                         
                         <Button
                           className='bg-[#BE0F34]'
-                          icon="pi pi-car" type='button' onClick={() => setMostrarVehiculo(true)} disabled={values.viaje.Vehiculo.tipo === '' ? true : false} />
+                          icon="pi pi-car" type='button' onClick={() => setMostrarVehiculo(true)} disabled={values.viajes.vehiculos.tipo === '' ? true : false} />
 
                       </div>
                     </div>
@@ -298,9 +310,9 @@ const { userAuth } = useAuth();
                       <div className="p-inputgroup flex-1">
                         <Field
                           className="bg-[#BE0F34]"
-                          name="viaje.diaSalida"
+                          name="viajes.fechasalida"
                           as={Calendar}
-                          value={values.viaje.diaSalida}
+                          value={values.viajes.fechasalida}
                           onChange={handleChange}
                           inputId='salida'
                           showIcon
@@ -312,9 +324,9 @@ const { userAuth } = useAuth();
                     <div className='col'>
                       <div className="p-inputgroup flex-1">
                         <Field
-                          name='viaje.tipoServicio'
+                          name='viajes.tiposervicio'
                           as={Dropdown}
-                          value={values.viaje.tipoServicio}
+                          value={values.viajes.tiposervicio}
                           onChange={handleChange}
                           options={[{ tipo: 'Consolidado', codigo: 'CONS' }, { tipo: 'Completo', codigo: 'COM' }]}
                           optionLabel="tipo"
@@ -332,9 +344,9 @@ const { userAuth } = useAuth();
                   <div className='col'>
                       <div className="p-inputgroup flex-1">
                       <Field
-                          name='viaje.descripcionViaje'
+                          name='viajes.descripcionviaje'
                           as={InputTextarea}
-                          value={values.viaje.descripcionViaje}
+                          value={values.viajes.descripcionviaje}
                           onChange={handleChange}
                           placeholder="Ingresa una descripcion breve del viaje a realizar"
                           className="w-full md:w-14rem"
