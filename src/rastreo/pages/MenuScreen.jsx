@@ -8,9 +8,10 @@ import { Dialog } from 'primereact/dialog';
 import { DisponibilidadVehiculo } from '../components/DisponibilidadVehiculo';
 import { useFetchVehiculo } from '../hooks/useFetchVehiculos';
 
-const styleMenu = {
-  background: 'rgba(143, 216, 227, 0.316)',
-}
+import { useFetchEmpresas } from '../hooks/useFetchEmpresas';
+
+import useAuth from '../../hooks/useAuth';
+import { useNavigate } from 'react-router-dom';
 
 const empresas = [
   {
@@ -38,6 +39,14 @@ const empresas = [
     giroEmpresa: '',
   },
 ];
+
+
+
+const valorInicial = {
+  empresas: {
+    razonsocial: ''
+  }
+}
 
 const initialValues = {
   viaje: {
@@ -92,6 +101,27 @@ const initialValues = {
 
 export const MenuScreen = () => {
 
+  const navigate = useNavigate();
+
+    const cerrarSesion = () => {
+        navigate('/login', {
+            replace: true
+        });
+    }
+
+  const { userAuth } = useAuth();
+
+  const [empresaActual, setEmpresaActual] = useState({
+    idempresa: '',
+    razonsocial: '',
+    direccion: '',
+    rfc: '',
+    telefono: '',
+    email: '',
+    giro: '',
+    idusuario: '',
+  });
+
   const [vehiculoActual, setVehiculoActual] = useState({
     idUsuario: '',
     usuario: '',
@@ -102,7 +132,12 @@ export const MenuScreen = () => {
     perfil: { idPerfil: 1, perfil: 'admin', }
 });
 
-const { data: vehiculos, loading } = useFetchVehiculo(vehiculoActual);
+const { data: vehiculos, loading: loadingVehiculo } = useFetchVehiculo(vehiculoActual);
+const { data: empresasData, loading: loadingEmpresa } = useFetchEmpresas(empresaActual);
+
+console.log(empresasData)
+
+const empresasFiltradas = empresasData.filter(item => item.razonsocial && item.usuario.idusuario === userAuth.idusuario);
 
   const [mostrarEmpresa, setMostrarEmpresa] = useState(false);
 
@@ -113,6 +148,9 @@ const { data: vehiculos, loading } = useFetchVehiculo(vehiculoActual);
   return (
     <>
       <h1 className="pt-6 px-6 text-5xl font-bold">Sistema de rastreo</h1>
+      {/* <button onClick={cerrarSesion}>
+        cerrar sesion
+      </button> */}
       <div className='container'>
       <div className="row">
           <div className="col-sm-12 col-md-4 py-6 p-4">
@@ -124,27 +162,31 @@ const { data: vehiculos, loading } = useFetchVehiculo(vehiculoActual);
                   <h1 className='text-3xl'>Empresas</h1>
                 </div>
                 <div className='col-sm-12 pt-4'>
-                  <Formik initialValues={initialValues} onSubmit={onSubmit}>
+                  <Formik initialValues={valorInicial} onSubmit={onSubmit}>
                     {({ values, handleChange, handleSubmit }) => (
                       <Form onSubmit={handleSubmit}>
                         <div className="col">
                           <div className="p-inputgroup flex-1">
-                            <Field
-                              name='viaje.Empresa'
+                            {
+                              !loadingEmpresa ?
+                              <Field
+                              name='values.empresas'
                               as={Dropdown}
-                              value={values.viaje.Empresa}
+                              value={values.empresas}
                               onChange={handleChange}
-                              options={empresas}
-                              optionLabel="rasonSocial"
+                              options={empresasFiltradas}
+                              optionLabel="razonsocial"
                               filter
                               filterPlaceholder='Buscar por nombre'
                               emptyFilterMessage='Empresa no registrada'
                               placeholder="Selecciona una empresa"
                               className="w-full md:w-14rem p-inputtext"
-                              required={true}
-                              
-                            />
-                            <Button className='bg-[#BE0F34] botones-estilo' icon="pi pi-building" type='button' onClick={() => setMostrarEmpresa(true)} disabled={values.viaje.Empresa.rasonSocial === '' ? true : false} />
+                              required={true}  
+                            /> :
+                            <></>
+                            }
+                            
+                            <Button className='bg-[#BE0F34] botones-estilo' icon="pi pi-building" type='button' onClick={() => setMostrarEmpresa(true)} disabled={values.empresas.razonsocial === '' ? true : false} />
                           </div>
                         </div>
                       </Form>

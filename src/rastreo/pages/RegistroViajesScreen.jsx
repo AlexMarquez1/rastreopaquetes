@@ -8,13 +8,12 @@ import { InputTextarea } from 'primereact/inputtextarea';
 import { SeleccionarUbicacion } from '../components/SeleccionarUbicacion';
 import { Dialog } from 'primereact/dialog';
 import { InformacionConductor } from '../components/InformacionConductor';
-import { addScaleCorrector } from 'framer-motion';
 
 import { useFetchEmpresas } from '../hooks/useFetchEmpresas';
 import { useFetchConductor } from '../hooks/useFetchConductores';
+import { useFetchVehiculo } from '../hooks/useFetchVehiculos';
 
 import useAuth from '../../hooks/useAuth';
-import { useFetchVehiculo } from '../hooks/useFetchVehiculos';
 import { Player } from '@lottiefiles/react-lottie-player';
 
 const styleRegistro = {

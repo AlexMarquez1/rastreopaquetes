@@ -7,6 +7,8 @@ import TarjeMenuActivas from '../components/TarjeMenuActivas';
 import Carousel from 'react-multi-carousel';
 import "react-multi-carousel/lib/styles.css";
 
+import { useFetchViajes } from '../hooks/useFetchViajes';
+
 const styleRegistro = {
     width: '85%',
 }
@@ -18,7 +20,8 @@ const styleRegistroModal = {
 
 const HistorialViajesScreen = () => {
 
-    
+  // const { data: viajeData, loading: loadingViaje } = useFetchViajes([]);
+
     const [show, setShow] = useState(null);
     const [show2, setShow2] = useState(null);
     const [show3, setShow3] = useState(null);
@@ -53,47 +56,12 @@ const HistorialViajesScreen = () => {
         setShow3(!show3); 
     };
 
-//     const [data, setData] = useState([]);
-
-//   useEffect(() => {
-//     fetch("https://jsonplaceholder.typicode.com/posts")
-//       .then((response) => response.json())
-//       .then((json) => setData(json));
-//   }, []);
-
-//   console.log(data)
-
 const [mensaje, setMensaje] = useState(false);
 const [cardsData, setCardsData] = useState([
     { idViaje: '00001', estatus: 'completada', descripcion: 'Descripción de la Card 1', chofer: 'Andres Uribe Martinez', idVehiculo: '0001', vehiculoTipo: 'Motocicleta', partida: 'CDMX', destino: 'Durango'},
     { idViaje: '00002', estatus: 'completada', descripcion: 'Descripción de la Card 2', chofer: 'Jorge Ramirez Santana', idVehiculo: '0008', vehiculoTipo: 'torton', partida: 'CDMX', destino: 'Monterrey'},
     { idViaje: '00003', estatus: 'completada', descripcion: 'Descripción de la Card 3', chofer: 'Raul Chavarria Gudiño', idVehiculo: '0012', vehiculoTipo: 'rabon', partida: 'CDMX', destino: 'Guadalajara'},
     { idViaje: '00004', estatus: 'completada', descripcion: 'Descripción de la Card 4', chofer: 'Andres Pliego Martinez', idVehiculo: '0015', vehiculoTipo: 'nissan', partida: 'CDMX', destino: 'Guadalajara'},
-    { idViaje: '00001', estatus: 'completada', descripcion: 'Descripción de la Card 1', chofer: 'Andres Uribe Martinez', idVehiculo: '0001', vehiculoTipo: 'Motocicleta', partida: 'CDMX', destino: 'Durango'},
-    { idViaje: '00002', estatus: 'completada', descripcion: 'Descripción de la Card 2', chofer: 'Jorge Ramirez Santana', idVehiculo: '0008', vehiculoTipo: 'torton', partida: 'CDMX', destino: 'Monterrey'},
-    { idViaje: '00003', estatus: 'completada', descripcion: 'Descripción de la Card 3', chofer: 'Raul Chavarria Gudiño', idVehiculo: '0012', vehiculoTipo: 'rabon', partida: 'CDMX', destino: 'Guadalajara'},
-    { idViaje: '00004', estatus: 'completada', descripcion: 'Descripción de la Card 4', chofer: 'Andres Pliego Martinez', idVehiculo: '0015', vehiculoTipo: 'nissan', partida: 'CDMX', destino: 'Guadalajara'},
-    { idViaje: '00001', estatus: 'completada', descripcion: 'Descripción de la Card 1', chofer: 'Andres Uribe Martinez', idVehiculo: '0001', vehiculoTipo: 'Motocicleta', partida: 'CDMX', destino: 'Durango'},
-    { idViaje: '00002', estatus: 'completada', descripcion: 'Descripción de la Card 2', chofer: 'Jorge Ramirez Santana', idVehiculo: '0008', vehiculoTipo: 'torton', partida: 'CDMX', destino: 'Monterrey'},
-    { idViaje: '00003', estatus: 'completada', descripcion: 'Descripción de la Card 3', chofer: 'Raul Chavarria Gudiño', idVehiculo: '0012', vehiculoTipo: 'rabon', partida: 'CDMX', destino: 'Guadalajara'},
-    { idViaje: '00004', estatus: 'completada', descripcion: 'Descripción de la Card 4', chofer: 'Andres Pliego Martinez', idVehiculo: '0015', vehiculoTipo: 'nissan', partida: 'CDMX', destino: 'Guadalajara'},
-    { idViaje: '00001', estatus: 'completada', descripcion: 'Descripción de la Card 1', chofer: 'Andres Uribe Martinez', idVehiculo: '0001', vehiculoTipo: 'Motocicleta', partida: 'CDMX', destino: 'Durango'},
-    { idViaje: '00002', estatus: 'completada', descripcion: 'Descripción de la Card 2', chofer: 'Jorge Ramirez Santana', idVehiculo: '0008', vehiculoTipo: 'torton', partida: 'CDMX', destino: 'Monterrey'},
-    { idViaje: '00003', estatus: 'completada', descripcion: 'Descripción de la Card 3', chofer: 'Raul Chavarria Gudiño', idVehiculo: '0012', vehiculoTipo: 'rabon', partida: 'CDMX', destino: 'Guadalajara'},
-    { idViaje: '00004', estatus: 'completada', descripcion: 'Descripción de la Card 4', chofer: 'Andres Pliego Martinez', idVehiculo: '0015', vehiculoTipo: 'nissan', partida: 'CDMX', destino: 'Guadalajara'},
-    { idViaje: '00001', estatus: 'completada', descripcion: 'Descripción de la Card 1', chofer: 'Andres Uribe Martinez', idVehiculo: '0001', vehiculoTipo: 'Motocicleta', partida: 'CDMX', destino: 'Durango'},
-    { idViaje: '00002', estatus: 'completada', descripcion: 'Descripción de la Card 2', chofer: 'Jorge Ramirez Santana', idVehiculo: '0008', vehiculoTipo: 'torton', partida: 'CDMX', destino: 'Monterrey'},
-    { idViaje: '00003', estatus: 'completada', descripcion: 'Descripción de la Card 3', chofer: 'Raul Chavarria Gudiño', idVehiculo: '0012', vehiculoTipo: 'rabon', partida: 'CDMX', destino: 'Guadalajara'},
-    { idViaje: '00004', estatus: 'completada', descripcion: 'Descripción de la Card 4', chofer: 'Andres Pliego Martinez', idVehiculo: '0015', vehiculoTipo: 'nissan', partida: 'CDMX', destino: 'Guadalajara'},
-    { idViaje: '00001', estatus: 'completada', descripcion: 'Descripción de la Card 1', chofer: 'Andres Uribe Martinez', idVehiculo: '0001', vehiculoTipo: 'Motocicleta', partida: 'CDMX', destino: 'Durango'},
-    { idViaje: '00002', estatus: 'completada', descripcion: 'Descripción de la Card 2', chofer: 'Jorge Ramirez Santana', idVehiculo: '0008', vehiculoTipo: 'torton', partida: 'CDMX', destino: 'Monterrey'},
-    { idViaje: '00003', estatus: 'completada', descripcion: 'Descripción de la Card 3', chofer: 'Raul Chavarria Gudiño', idVehiculo: '0012', vehiculoTipo: 'rabon', partida: 'CDMX', destino: 'Guadalajara'},
-    { idViaje: '00004', estatus: 'completada', descripcion: 'Descripción de la Card 4', chofer: 'Andres Pliego Martinez', idVehiculo: '0015', vehiculoTipo: 'nissan', partida: 'CDMX', destino: 'Guadalajara'},
-    { idViaje: '00005', estatus: 'asignada', descripcion: 'Descripción de la Card 5', chofer: 'Andres Uribe Martinez', idVehiculo: '0009', vehiculoTipo: 'nissan', partida: 'CDMX', destino: 'Yucatan'},
-    { idViaje: '00006', estatus: 'activa', descripcion: 'Descripción de la Card 4', chofer: 'Andres Pliego Martinez', idVehiculo: '0015', vehiculoTipo: 'nissan', partida: 'CDMX', destino: 'Guadalajara'},
-    { idViaje: '00007', estatus: 'activa', descripcion: 'Descripción de la Card 5', chofer: 'Andres Uribe Martinez', idVehiculo: '0009', vehiculoTipo: 'nissan', partida: 'CDMX', destino: 'Yucatan'},
-    { idViaje: '00008', estatus: 'activa', descripcion: 'Descripción de la Card 4', chofer: 'Andres Pliego Martinez', idVehiculo: '0015', vehiculoTipo: 'nissan', partida: 'CDMX', destino: 'Guadalajara'},
-    { idViaje: '00009', estatus: 'activa', descripcion: 'Descripción de la Card 5', chofer: 'Andres Uribe Martinez', idVehiculo: '0009', vehiculoTipo: 'nissan', partida: 'CDMX', destino: 'Yucatan'},
   ]);
   const [itemCount, setItemCount] = useState(cardsData.length);
 
@@ -120,8 +88,7 @@ const [cardsData, setCardsData] = useState([
         </div>
       <div className='col-sm-12 col-md-6'>
         <div className="card">
-          <div className="card-body">
-            
+          <div className="card-body">  
             <h1 className='text-black text-left text-3xl font-semibold'>
               Total de viajes: {itemCount}
             </h1>
@@ -150,9 +117,9 @@ const [cardsData, setCardsData] = useState([
             <div className='container'>
                 <div className='text-center'>
                     <Carousel 
-                        renderDotsOutside={true} 
-                        infinite={true} 
-                        swipeable={true}
+                      renderDotsOutside={true} 
+                      infinite={true} 
+                      swipeable={true}
                       draggable={false}
                       showDots={true}
                       responsive={responsive}

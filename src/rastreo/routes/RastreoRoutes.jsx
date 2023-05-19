@@ -10,11 +10,13 @@ import EmpresaScreen from '../pages/EmpresaScreen'
 import { Mapa } from '../../components/Mapa/Mapa'
 import { NavBarPrincipal } from '../components/NavBarPrincipal'
 import { Navigate, Route, Routes } from 'react-router-dom'
+import { Navbar } from '../components/NavBar'
 
 const RastreoRoutes = () => {
   return (
     <>
-    <NavBarPrincipal/>
+    <Navbar/>
+    {/* <NavBarPrincipal/> */}
     <div className="pt-7">
         <Routes>
             <Route path="menu" element={<MenuScreen/>}/>
