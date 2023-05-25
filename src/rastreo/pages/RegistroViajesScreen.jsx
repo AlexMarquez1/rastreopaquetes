@@ -21,7 +21,6 @@ const styleRegistro = {
 }
 
 const initialValues = {
-  viajes: {
     empresas: {
       razonsocial: '',
       direccion: '',
@@ -85,7 +84,6 @@ const initialValues = {
       lng: 0,
     },
     ruta: null
-  }
 };
 
 export const RegistroViajesScreen = () => {
@@ -171,9 +169,28 @@ const { userAuth } = useAuth();
   const conductoresFiltrados = conductoresData.filter(item => item.nombrecompleto && item.usuario.idusuario === userAuth.idusuario);
   const vehiculosFiltrados = vehiculosData.filter(item => item.marca && item.usuario.idusuario === userAuth.idusuario);
 
-  const onSubmit = (values, {resetForm}) => {
-    console.log(values);
-    resetForm();
+  const onSubmit = async (values, {resetForm}) => {
+    const viajes = {
+      empresa: values.empresas,
+      conductor: values.conductores,
+      vahiculo: values.vehiculos,
+      tiposervicio: values.tiposervicio.tipo,
+      descripcion: values.descripcionviaje,
+      fechasalida: values.fechasalida,
+      direccionpartida: values.direccionPartida,
+      direccionllegada: values.direccionLlegada,
+      latpartida: values.coordenadasPartida.lat,
+      lngpartida: values.coordenadasPartida.lng,
+      latllegada: values.coordenadasLlegada.lat,
+      lngllegada: values.coordenadasLlegada.lng,
+      distanciaaprox: values.ruta.routes[0].legs[0].distance.text,
+      estatus: 'programado',
+      usuario: userAuth
+    }
+
+    console.log(viajes);
+
+    // resetForm();
   };
 
   return (
@@ -195,9 +212,9 @@ const { userAuth } = useAuth();
                         {
                           !loadingEmpresa?
                           <Field
-                          name='viajes.empresas'
+                          name='empresas'
                           as={Dropdown}
-                          value={values.viajes.empresas}
+                          value={values.empresas}
                           onChange={handleChange}
                           options={empresasFiltradas}
                           optionLabel="razonsocial"
@@ -218,7 +235,7 @@ const { userAuth } = useAuth();
                         
                         <Button
                           className='bg-[#BE0F34]'
-                          icon="pi pi-building" type='button' onClick={() => setMostrarEmpresa(true)} disabled={values.viajes.empresas.razonsocial === '' ? true : false} />
+                          icon="pi pi-building" type='button' onClick={() => setMostrarEmpresa(true)} disabled={values.empresas.razonsocial === '' ? true : false} />
                       </div>
                     </div>
                     <div className="col">
@@ -226,9 +243,9 @@ const { userAuth } = useAuth();
                         {
                           !loadingConductor ?
                           <Field
-                          name='viajes.conductores'
+                          name='conductores'
                           as={Dropdown}
-                          value={values.viajes.conductores}
+                          value={values.conductores}
                           onChange={(e)=>{
                             console.log(e.value);
                             handleChange(e); 
@@ -266,7 +283,7 @@ const { userAuth } = useAuth();
                           className="w-full md:w-14rem" /> */}
                         <Button
                           className='bg-[#BE0F34]'
-                          icon="pi pi-user" type='button' onClick={() => setMostrarConductor(true)} disabled={values.viajes.conductores.nombrecompleto === '' ? true : false} />
+                          icon="pi pi-user" type='button' onClick={() => setMostrarConductor(true)} disabled={values.conductores.nombrecompleto === '' ? true : false} />
                       </div>
                     </div>
                     <div className="col">
@@ -274,9 +291,9 @@ const { userAuth } = useAuth();
                         {
                           !loadingVehiculo ?
                           <Field
-                          name='viajes.vehiculos'
+                          name='vehiculos'
                           as={Dropdown}
-                          value={values.viajes.vehiculos}
+                          value={values.vehiculos}
                           onChange={handleChange}
                           options={vehiculosFiltrados}
                           optionLabel="marca"
@@ -298,7 +315,7 @@ const { userAuth } = useAuth();
                         
                         <Button
                           className='bg-[#BE0F34]'
-                          icon="pi pi-car" type='button' onClick={() => setMostrarVehiculo(true)} disabled={values.viajes.vehiculos.tipo === '' ? true : false} />
+                          icon="pi pi-car" type='button' onClick={() => setMostrarVehiculo(true)} disabled={values.vehiculos.tipo === '' ? true : false} />
 
                       </div>
                     </div>
@@ -309,9 +326,9 @@ const { userAuth } = useAuth();
                       <div className="p-inputgroup flex-1">
                         <Field
                           className="bg-[#BE0F34]"
-                          name="viajes.fechasalida"
+                          name="fechasalida"
                           as={Calendar}
-                          value={values.viajes.fechasalida}
+                          value={values.fechasalida}
                           onChange={handleChange}
                           inputId='salida'
                           showIcon
@@ -323,9 +340,9 @@ const { userAuth } = useAuth();
                     <div className='col'>
                       <div className="p-inputgroup flex-1">
                         <Field
-                          name='viajes.tiposervicio'
+                          name='tiposervicio'
                           as={Dropdown}
-                          value={values.viajes.tiposervicio}
+                          value={values.tiposervicio}
                           onChange={handleChange}
                           options={[{ tipo: 'Consolidado', codigo: 'CONS' }, { tipo: 'Completo', codigo: 'COM' }]}
                           optionLabel="tipo"
@@ -343,9 +360,9 @@ const { userAuth } = useAuth();
                   <div className='col'>
                       <div className="p-inputgroup flex-1">
                       <Field
-                          name='viajes.descripcionviaje'
+                          name='descripcionviaje'
                           as={InputTextarea}
-                          value={values.viajes.descripcionviaje}
+                          value={values.descripcionviaje}
                           onChange={handleChange}
                           placeholder="Ingresa una descripcion breve del viaje a realizar"
                           className="w-full md:w-14rem"

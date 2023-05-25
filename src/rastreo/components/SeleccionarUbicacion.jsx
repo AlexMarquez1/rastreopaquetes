@@ -25,13 +25,13 @@ export const SeleccionarUbicacion = ({ initialValue }) => {
     const directionsRendererRef = useRef(null);
     const [direccionSeleccionada, setDireccionSeleccionada] = useState({ formatted_address: '', geometry: { location: { lat: function lat() { }, lng: function lng() { } } } });
     // const [ruta, setRuta] = useState(undefined);
-    const [fieldPartida, metaPartida, helpersPartida] = useField({ type: "custom", name: "viaje.direccionPartida", value: initialValue });
-    const [fieldLlegada, metaLlegada, helpersLlegada] = useField({ type: "custom", name: "viaje.direccionLlegada", value: initialValue });
-    const [fieldRuta, metaRuta, helpersRuta] = useField({ type: "custom", name: "viaje.ruta", value: initialValue });
-    const [fieldCoordenadasPartida, metaCoordenadasPartida, helpersCoordenadasPartida] = useField({ type: "custom", name: "viaje.coordenadasPartida", value: initialValue });
+    const [fieldPartida, metaPartida, helpersPartida] = useField({ type: "custom", name: "direccionPartida", value: initialValue });
+    const [fieldLlegada, metaLlegada, helpersLlegada] = useField({ type: "custom", name: "direccionLlegada", value: initialValue });
+    const [fieldRuta, metaRuta, helpersRuta] = useField({ type: "custom", name: "ruta", value: initialValue });
+    const [fieldCoordenadasPartida, metaCoordenadasPartida, helpersCoordenadasPartida] = useField({ type: "custom", name: "coordenadasPartida", value: initialValue });
     const { value: valueCoordenadasPartida } = metaCoordenadasPartida;
     const { setValue: setValueCoordenadasPartida } = helpersCoordenadasPartida;
-    const [fieldCoordenadasLlegada, metaCoordenadasLlegada, helpersCoordenadasLlegada] = useField({ type: "custom", name: "viaje.coordenadasLlegada", value: initialValue });
+    const [fieldCoordenadasLlegada, metaCoordenadasLlegada, helpersCoordenadasLlegada] = useField({ type: "custom", name: "coordenadasLlegada", value: initialValue });
     const { value: valueCoordenadasLlegada } = metaCoordenadasLlegada;
     const { setValue: setValueCoordenadasLlegada } = helpersCoordenadasLlegada;
     const { value: valuePartida } = metaPartida;
@@ -40,12 +40,12 @@ export const SeleccionarUbicacion = ({ initialValue }) => {
     const { setValue: setValueRuta } = helpersRuta;
     const { value: valueLlegada } = metaLlegada;
     const { setValue: setValueLlegada } = helpersLlegada;
-
+ 
     // const { isLoaded } = useJsApiLoader({
     //     id: 'google-map-script',
     //     googleMapsApiKey: "AIzaSyAwXqH5JgdnOqOJy8F8_PrkvOqLtHhy60I",
     //     libraries: lib,
-    // });
+    // }); 
     const onLoad = useCallback((map) => {
         const bounds = new window.google.maps.LatLngBounds(center);
         setMap(map);
@@ -85,6 +85,7 @@ export const SeleccionarUbicacion = ({ initialValue }) => {
             }
         );
     }
+    
 
     // Función para manejar el evento de clic en el mapa
     const handleMapClick = (event) => {
@@ -127,7 +128,7 @@ export const SeleccionarUbicacion = ({ initialValue }) => {
                         <div className="p-inputgroup flex-1">
                             <InputText
                                 {...fieldPartida}
-                                name="viaje.direccionPartida"
+                                name="direccionPartida"
                                 placeholder='Direccion de partida'
                                 value={valuePartida}
                                 disabled={true}
@@ -145,7 +146,7 @@ export const SeleccionarUbicacion = ({ initialValue }) => {
                         <div className="p-inputgroup flex-1">
                             <InputText
                                 {...fieldLlegada}
-                                name="viaje.direccionLlegada"
+                                name="direccionLlegada"
                                 placeholder='Direccion de llegada'
                                 value={valueLlegada}
                                 disabled={true}
