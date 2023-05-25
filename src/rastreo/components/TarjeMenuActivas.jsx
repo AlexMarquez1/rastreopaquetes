@@ -76,10 +76,10 @@ const TarjeMenuActivas = () => {
           onMouseEnter={handleHover}
           onMouseLeave={handleLeave}
         >
-          <LoadScript
+          {/* <LoadScript
             googleMapsApiKey="AIzaSyAwXqH5JgdnOqOJy8F8_PrkvOqLtHhy60I"
             libraries={['places']}
-          >
+          > */}
       
             <GoogleMap
               mapContainerStyle={{
@@ -102,7 +102,7 @@ const TarjeMenuActivas = () => {
                 />
               )}
             </GoogleMap>
-          </LoadScript>
+          {/* </LoadScript> */}
           {/* <img
     className="w-full h-48 object-cover"
     src="https://source.unsplash.com/random/800x600"

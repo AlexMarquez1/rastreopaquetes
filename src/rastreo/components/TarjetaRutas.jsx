@@ -3,7 +3,7 @@ import { GoogleMap, LoadScript, Marker } from '@react-google-maps/api';
 import "react-multi-carousel/lib/styles.css";
 import useAuth from '../../hooks/useAuth';
 
-const TarjetaRutas = ({idViaje, descripcion, chofer, idVehiculo, partida, destino, setMensaje, latPartida, latLlegada, lngpartida, lngLlegada, fechaPartida, fechaLlegada}) => {
+const TarjetaRutas = ({idViaje, descripcion, chofer, idVehiculo, partida, destino, setMensaje, latPartida, latLlegada, lngpartida, lngLlegada, fechaPartida, fechaLlegada, empresa}) => {
 
   const { userAuth } = useAuth();
   
@@ -69,7 +69,8 @@ const TarjetaRutas = ({idViaje, descripcion, chofer, idVehiculo, partida, destin
               <div style={{float: 'right'}} className='cursor-pointer'>
                 <i className="pi pi-angle-down text-xl"></i>
               </div>
-              <h5 className="card-title font-bold text-xl">Id viaje: {idViaje}</h5>
+              <h5 className="card-title font-bold text-xl">Id viaje: <span className='font-normal text-ms'>{idViaje}</span></h5>
+              <h4 className="card-title font-bold text-xl">Empresa: <span className='font-normal text-ms'>{empresa}</span></h4>
               <div className='row'>
                 <div className='col'>
                   <h5 className="card-title font-bold text-base">

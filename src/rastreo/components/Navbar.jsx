@@ -11,6 +11,7 @@ export const Navbar = () => {
 
     //Funcion Boton Cerrar sesión
     const onLogout = () => {
+        localStorage.removeItem('token');
         navigate('/login', {
             replace: true
         });

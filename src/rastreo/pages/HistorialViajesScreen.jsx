@@ -106,6 +106,7 @@ const HistorialViajesScreen = () => {
     var resultadosBusqueda=viajesUsuario.filter((elemento)=>{
        if(elemento.conductor.nombrecompleto.toString().toLowerCase().includes(terminoBusqueda.toLowerCase())
         || elemento.idviaje.toString().toLowerCase().includes(terminoBusqueda.toLowerCase())
+        || elemento.empresa.razonsocial.toString().toLowerCase().includes(terminoBusqueda.toLowerCase())
        )
       {
         return elemento;
@@ -176,6 +177,7 @@ const HistorialViajesScreen = () => {
                                   idViaje={data.idviaje}
                                   descripcion={data.descripcion}
                                   chofer={data.conductor.nombrecompleto}
+                                  empresa={data.empresa.razonsocial}
                                   idVehiculo={data.vehiculo.idvehiculo}
                                   partida={data.direccionpartida}
                                   fechaPartida={data.fechasalida}
@@ -230,6 +232,7 @@ const HistorialViajesScreen = () => {
                               idViaje={data.idviaje}
                               descripcion={data.descripcion}
                               chofer={data.conductor.nombrecompleto}
+                              empresa={data.empresa.razonsocial}
                               idVehiculo={data.vehiculo.idvehiculo}
                               partida={data.direccionpartida}
                               fechaPartida={data.fechasalida}
@@ -285,6 +288,7 @@ const HistorialViajesScreen = () => {
                                 idViaje={data.idviaje}
                                 descripcion={data.descripcion}
                                 chofer={data.conductor.nombrecompleto}
+                                empresa={data.empresa.razonsocial}
                                 idVehiculo={data.vehiculo.idvehiculo}
                                 partida={data.direccionpartida}
                                 fechaPartida={data.fechasalida}
