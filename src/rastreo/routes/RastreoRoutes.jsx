@@ -8,7 +8,6 @@ import ConductoresScreen from '../pages/ConductoresScreen'
 import VehiculosScreen from '../pages/VehiculosScreen'
 import EmpresaScreen from '../pages/EmpresaScreen'
 import { Mapa } from '../../components/Mapa/Mapa'
-import { NavBarPrincipal } from '../components/NavBarPrincipal'
 import { Navigate, Route, Routes } from 'react-router-dom'
 import { Navbar } from '../components/NavBar'
 
@@ -16,8 +15,9 @@ const RastreoRoutes = () => {
   return (
     <>
     <Navbar/>
-    {/* <NavBarPrincipal/> */}
+  
     <div className="pt-7">
+    
         <Routes>
             <Route path="menu" element={<MenuScreen/>}/>
             <Route path="viajes" element={<RegistroViajesScreen/>}/>
@@ -27,9 +27,9 @@ const RastreoRoutes = () => {
             <Route path="vehiculos" element={<VehiculosScreen/>}/>
             <Route path="empresas" element={<EmpresaScreen/>}/>
             <Route path="mapa" element={<Mapa/>}/>
-            <Route path="/" element={<Navigate to='menu'/>}/>
+            <Route path="/" element={<Navigate to='login'/>}/>
         </Routes>
-        </div>
+    </div>
     </>
   )
 }

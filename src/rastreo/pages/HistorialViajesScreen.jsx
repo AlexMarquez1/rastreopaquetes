@@ -9,6 +9,10 @@ import "react-multi-carousel/lib/styles.css";
 
 import { useFetchViajes } from '../hooks/useFetchViajes';
 
+// context del usuario que inicio sesion
+import useAuth from '../../hooks/useAuth';
+import ModalHistorialViajes from '../components/ModalHistorialViajes';
+
 const styleRegistro = {
     width: '85%',
 }
@@ -18,14 +22,47 @@ const styleRegistroModal = {
     background: 'rgb(190,15,52)',
 }
 
+//// COMPONENTE ////
 const HistorialViajesScreen = () => {
 
-  // const { data: viajeData, loading: loadingViaje } = useFetchViajes([]);
+  const [busqueda, setBusqueda] = useState('')
+  const [mensaje, setMensaje] = useState(false);
+  const [dataViaje, setDataViaje] = useState(null);
+  // const [itemCount, setItemCount] = useState(viajesUsuario.length);
+  // estate de abrir y cerrar de los acordiones del modal
+  const [show, setShow] = useState(null);
+  const [show2, setShow2] = useState(null);
+  const [show3, setShow3] = useState(null);
 
-    const [show, setShow] = useState(null);
-    const [show2, setShow2] = useState(null);
-    const [show3, setShow3] = useState(null);
+  // estate del viaje inicial
+  const [viajeActual, setViajeActual] = useState({
+    idempresa: '',
+    razonsocial: '',
+    direccion: '',
+    rfc: '',
+    telefono: '',
+    email: '',
+    giro: '',
+    idusuario: '',
+  });
 
+  // obtencion del usuario que inicio sesion
+  const { userAuth } = useAuth();
+
+  // obtencion de la data de todos los viajes 
+    const { data: viajeData, loading: loadingViaje } = useFetchViajes(viajeActual);
+
+    // flitrado de solo los viajes del usuario que inicio sesion
+    const [viajesUsuario, setViajesUsuario] = useState([]);
+
+    useEffect(() => {
+      if (viajeData) {
+        const viajesFiltrados = viajeData.filter(item => item.usuario.idusuario === userAuth.idusuario);
+        setViajesUsuario(viajesFiltrados);
+      }
+    }, [viajeData, userAuth]);
+
+    // responsive del carusel
     const responsive = {
         desktop: {
           breakpoint: { max: 3000, min: 1024 },
@@ -34,8 +71,8 @@ const HistorialViajesScreen = () => {
         },
         tablet: {
           breakpoint: { max: 1024, min: 464 },
-          items: 1,
-          slidesToSlide: 1,
+          items: 2,
+          slidesToSlide: 2,
         },
         mobile: {
           breakpoint: { max: 464, min: 0 },
@@ -44,7 +81,9 @@ const HistorialViajesScreen = () => {
         },
       };
 
+    // funciones de abrir y cerra de los acordiones del modal
     const toggleAccordionViaje = () => {
+      setMensaje(true);
       setShow(!show); 
     };
 
@@ -56,27 +95,24 @@ const HistorialViajesScreen = () => {
         setShow3(!show3); 
     };
 
-const [mensaje, setMensaje] = useState(false);
-const [cardsData, setCardsData] = useState([
-    { idViaje: '00001', estatus: 'completada', descripcion: 'Descripción de la Card 1', chofer: 'Andres Uribe Martinez', idVehiculo: '0001', vehiculoTipo: 'Motocicleta', partida: 'CDMX', destino: 'Durango'},
-    { idViaje: '00002', estatus: 'completada', descripcion: 'Descripción de la Card 2', chofer: 'Jorge Ramirez Santana', idVehiculo: '0008', vehiculoTipo: 'torton', partida: 'CDMX', destino: 'Monterrey'},
-    { idViaje: '00003', estatus: 'completada', descripcion: 'Descripción de la Card 3', chofer: 'Raul Chavarria Gudiño', idVehiculo: '0012', vehiculoTipo: 'rabon', partida: 'CDMX', destino: 'Guadalajara'},
-    { idViaje: '00004', estatus: 'completada', descripcion: 'Descripción de la Card 4', chofer: 'Andres Pliego Martinez', idVehiculo: '0015', vehiculoTipo: 'nissan', partida: 'CDMX', destino: 'Guadalajara'},
-  ]);
-  const [itemCount, setItemCount] = useState(cardsData.length);
-
-  const handleSearch = (searchTerm) => {
-    const filteredCards = cardsData.filter((card) =>
-      card.idViaje.toLowerCase().includes(searchTerm.toLowerCase())
-    );
-    setCardsData(filteredCards);
+  // función que se acciona cada que se escribe en el search
+  const handleSearch = e => {
+    setBusqueda(e.target.value);
+    filtrar(e.target.value);
   };
 
-    // const handleItemCount = (previousSlide, currentSlide) => {
-    //   const newCount = cardsData.length - currentSlide;
-    //   setItemCount(newCount);
-    // };
-
+  // función que filtra la entra del search 
+  const filtrar=(terminoBusqueda)=>{
+    var resultadosBusqueda=viajesUsuario.filter((elemento)=>{
+       if(elemento.conductor.nombrecompleto.toString().toLowerCase().includes(terminoBusqueda.toLowerCase())
+        || elemento.idviaje.toString().toLowerCase().includes(terminoBusqueda.toLowerCase())
+       )
+      {
+        return elemento;
+      }
+    });
+    setViajesUsuario(resultadosBusqueda);
+  }
 
   return (
     <>
@@ -84,22 +120,22 @@ const [cardsData, setCardsData] = useState([
     <div className='container py-4'>
       <div className='row'>
         <div className='col-sm-12 col-md-6'>
-          <BarraBusqueda handleSearch={handleSearch} cardsData={cardsData}/>
+          <BarraBusqueda handleSearch={handleSearch} cardsData={viajesUsuario} setDataViaje={setDataViaje} dataViaje={dataViaje} busqueda={busqueda}/>
         </div>
       <div className='col-sm-12 col-md-6'>
         <div className="card">
           <div className="card-body">  
             <h1 className='text-black text-left text-3xl font-semibold'>
-              Total de viajes: {itemCount}
+              {/* Total de viajes: {itemCount} */}
             </h1>
             <h1 className='text-black text-left text-2xl'>
-              Viajes activos: <span className='font-semibold'>{cardsData.filter(card => card.estatus === 'activa').length}</span>
+              Viajes activos: <span className='font-semibold'>{viajesUsuario.filter(card => card.estatus === 'activo').length}</span>
             </h1>
             <h1 className='text-black text-left text-2xl'>
-              Viajes asignados: <span className='font-semibold'>{cardsData.filter(card => card.estatus === 'asignada').length}</span>
+              Viajes programados: <span className='font-semibold'>{viajesUsuario.filter(card => card.estatus === 'programado').length}</span>
             </h1>
             <h1 className='text-black text-left text-2xl'>
-              Viajes completados: <span className='font-semibold'>{cardsData.filter(card => card.estatus === 'completada').length}</span>
+              Viajes completados: <span className='font-semibold'>{viajesUsuario.filter(card => card.estatus === 'completado').length}</span>
             </h1>
           </div>
         </div>
@@ -111,7 +147,7 @@ const [cardsData, setCardsData] = useState([
         <div className="card form drop-shadow-md"style={styleRegistro}>
             <br />
             <h1 className="card-title">
-                <p className="fs-4">Viajes activos: {cardsData.filter(card => card.estatus === 'activa').length}</p>
+                <p className="fs-4">Viajes activos: {viajesUsuario.filter(card => card.estatus === 'activo').length}</p>
             </h1>
             <br />
             <div className='container'>
@@ -134,16 +170,22 @@ const [cardsData, setCardsData] = useState([
                       itemClass="carousel-item-padding-40-px"                    
                     > 
                         {
-                            cardsData.filter(trip => trip.estatus === 'activa').map((data, index)=> ( 
+                            viajesUsuario.filter(trip => trip.estatus === 'activo').map((data, index)=> ( 
                                 <TarjetaRutas
-                                    key={index}
-                                    idViaje={data.idViaje}
-                                    descripcion={data.descripcion}
-                                    chofer={data.chofer}
-                                    idVehiculo={data.idVehiculo}
-                                    partida={data.partida}
-                                    destinio={data.destino}
-                                    setMensaje={setMensaje}
+                                  key={index}
+                                  idViaje={data.idviaje}
+                                  descripcion={data.descripcion}
+                                  chofer={data.conductor.nombrecompleto}
+                                  idVehiculo={data.vehiculo.idvehiculo}
+                                  partida={data.direccionpartida}
+                                  fechaPartida={data.fechasalida}
+                                  fechaLlegada={data.fechallegada}
+                                  destino={data.direccionllegada}
+                                  setMensaje={setMensaje}
+                                  latPartida={data.latpartida}
+                                  latLlegada={data.latllegada}
+                                  lngpartida={data.lngpartida}
+                                  lngLlegada={data.lngllegada}
                                 /> 
                             ))
                         }
@@ -159,7 +201,7 @@ const [cardsData, setCardsData] = useState([
         <div className="card form" style={styleRegistro}>
         <br />
             <h1 className="card-title">
-                <p className="fs-4">Viajes asignados: {cardsData.filter(card => card.estatus === 'asignada').length}</p>
+                <p className="fs-4">Viajes programados: {viajesUsuario.filter(card => card.estatus === 'programado').length}</p>
             </h1>
             <br />
             <div className='container'>
@@ -182,16 +224,22 @@ const [cardsData, setCardsData] = useState([
                       itemClass="carousel-item-padding-40-px"
                     > 
                         {
-                        cardsData.filter(trip => trip.estatus === 'asignada').map((data, index)=> (
+                        viajesUsuario.filter(trip => trip.estatus === 'programado').map((data, index)=> (
                             <TarjetaRutas
-                                key={index}
-                                idViaje={data.idViaje}
-                                descripcion={data.descripcion}
-                                chofer={data.chofer}
-                                idVehiculo={data.idVehiculo}
-                                partida={data.partida}
-                                destinio={data.destino}
-                                setMensaje={setMensaje}
+                              key={index}
+                              idViaje={data.idviaje}
+                              descripcion={data.descripcion}
+                              chofer={data.conductor.nombrecompleto}
+                              idVehiculo={data.vehiculo.idvehiculo}
+                              partida={data.direccionpartida}
+                              fechaPartida={data.fechasalida}
+                              fechaLlegada={data.fechallegada}
+                              destino={data.direccionllegada}
+                              setMensaje={setMensaje}
+                              latPartida={data.latpartida}
+                              latLlegada={data.latllegada}
+                              lngpartida={data.lngpartida}
+                              lngLlegada={data.lngllegada}
                             />
                         ))
                         }
@@ -203,13 +251,12 @@ const [cardsData, setCardsData] = useState([
     </section>
     </div>
     
-
     <div className='bg-white border-2 border-t-red-600'>
     <section className="section_item flex-container py-6 drop-shadow-md">
         <div className="card form drop-shadow-md" style={styleRegistro}>
         <br />
             <h1 className="card-title">
-                <p className="fs-4">Viajes completados: {cardsData.filter(card => card.estatus === 'completada').length}</p>
+                <p className="fs-4">Viajes completados: {viajesUsuario.filter(card => card.estatus === 'completado').length}</p>
             </h1>
             <br />
             <div className='container'>
@@ -232,16 +279,22 @@ const [cardsData, setCardsData] = useState([
                       itemClass="carousel-item-padding-40-px"
                     >
                         {
-                        cardsData.filter(trip => trip.estatus === 'completada').map((data, index)=> (
+                        viajesUsuario.filter(trip => trip.estatus === 'completado').map((data, index)=> (
                             <TarjetaRutas
                                 key={index}
-                                idViaje={data.idViaje}
+                                idViaje={data.idviaje}
                                 descripcion={data.descripcion}
-                                chofer={data.chofer}
-                                idVehiculo={data.idVehiculo}
-                                partida={data.partida}
-                                destino={data.destino}
+                                chofer={data.conductor.nombrecompleto}
+                                idVehiculo={data.vehiculo.idvehiculo}
+                                partida={data.direccionpartida}
+                                fechaPartida={data.fechasalida}
+                                fechaLlegada={data.fechallegada}
+                                destino={data.direccionllegada}
                                 setMensaje={setMensaje}
+                                latPartida={data.latpartida}
+                                latLlegada={data.latllegada}
+                                lngpartida={data.lngpartida}
+                                lngLlegada={data.lngllegada}
                             />
                         ))
                         }
@@ -253,6 +306,9 @@ const [cardsData, setCardsData] = useState([
     </div> 
      
     {/* MODAL */}
+    {/* <ModalHistorialViajes
+      
+    /> */}
     <Dialog header="Detalles de viaje" visible={mensaje} style={{ width: '90vw' }} onHide={() => setMensaje(false)}>
         <section className="section_item flex-container" style={{ paddingTop: '5%' }}>
             <div className="card" style={styleRegistroModal} onClick={toggleAccordionViaje}>
@@ -265,12 +321,12 @@ const [cardsData, setCardsData] = useState([
             </h1>   
             </div>
             {
-                show &&
+                show &&(
                 <div className='container bg-[#dfdfdf]'>
                 <div className='row'>
                     <div className='col-sm-6 col-md-6 col-xl-4 p-4'>
                       <ul className="list-group list-group-flush">
-                        <p className="list-group-item-dark btn mr-auto" aria-current="true">Id viaje: {'00001'}</p>
+                        <p className="list-group-item-dark btn mr-auto" aria-current="true">Id viaje: {viajeActual.idempresa}</p>
                         <li className="list-group-item btn mr-auto">Estatus: {''}</li>
                         <li className="list-group-item btn mr-auto">Direccion de partida: {''}</li>
                         <li className="list-group-item btn mr-auto">Direccion de destino: {''}</li>
@@ -282,7 +338,7 @@ const [cardsData, setCardsData] = useState([
                       <ul className="list-group list-group-flush">
                         <p className="list-group-item-dark btn mr-auto" aria-current="true">Empresa Relacionada: {''}</p>
                         <li className="list-group-item mr-auto">Direccion de la empresa: {''}</li>
-                        <li className="list-group-item mr-auto">RFC de la empresa: {''}</li>
+                        <li className="list-group-item mr-auto">RFC de la empresa: {viajeActual.rfc}</li>
                       </ul>
                     </div>
                     <div className='col-sm-6 col-md-6 col-xl-4 p-4'>
@@ -293,7 +349,7 @@ const [cardsData, setCardsData] = useState([
                     </div>
                 </div>
             </div>
-            } 
+            )} 
         </section> 
         <section className="section_item flex-container" style={{ paddingTop: '5%' }}>
             <div className="card" style={styleRegistroModal} onClick={toggleAccordionConductor}>

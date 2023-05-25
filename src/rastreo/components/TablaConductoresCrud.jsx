@@ -17,7 +17,7 @@ export const TablaConductoresCrud = ({ data, encabezados, id, editar = false, el
 
     const { userAuth } = useAuth();
 
-    const conductorFiltrado = lista.filter(item => item.us.idusuario === userAuth.idusuario);
+    const conductorFiltrado = lista.filter(item => item.usuario.idusuario === userAuth.idusuario);
 
     const confirmDeleteProduct = (proyecto) => {
         console.log(proyecto);

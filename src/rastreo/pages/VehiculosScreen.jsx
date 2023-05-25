@@ -30,11 +30,11 @@ const { data: vehiculos, loading } = useFetchVehiculo(vehiculoActual);
     <div>
         {!loading ? <DisponibilidadVehiculo data={vehiculos}/> : 
         <Player src='https://assets10.lottiefiles.com/packages/lf20_bxuyrltk.json'
-        className="player"
-        loop
-        autoplay
-        style={{ height: '300px', width: '300px' }}
-      />
+            className="player"
+            loop
+            autoplay
+            style={{ height: '300px', width: '300px' }}
+        />
         } 
     </div>
     <div className='bg-white'>

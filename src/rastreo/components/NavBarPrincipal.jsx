@@ -159,3 +159,19 @@ export const NavBarPrincipal = () => {
         </nav>
     )
 }
+
+
+{/* <div className="card m-2 mb-6 drop-shadow-md bg-[#dfdfdf] transition duration-500 ease-in-out transform hover:-translate-y-3 hover:shadow-2xl">    
+    <div>
+      <ul className="list-group list-group-flush">
+        <li className="list-group-item text-left"><span className='font-bold text-lg'>Chofer:</span> {chofer}</li>
+        <li className="list-group-item text-left"><span className='font-bold text-lg'>Id vehículo:</span> {idVehiculo}</li>
+        <li className="list-group-item text-left"><span className='font-bold text-lg'>Descripción:</span> {descripcion}</li>
+      </ul>
+      <div className="card-body">
+        <a href="#" className="card-link text-[#BE0F34] hover:text-rose-500 text-lg"> <i className="pi pi-map-marker text-[#BE0F34] hover:text-opacity-75"></i> Seguimiento</a>
+        <a href="#" className="card-link text-[#BE0F34] hover:text-rose-500 text-lg" onClick={() => {setMensaje(true)}}><i className="pi pi-external-link text-[#BE0F34] hover:text-opacity-75"></i> Ver más 
+        </a>
+      </div>
+    </div>           
+</div> */}

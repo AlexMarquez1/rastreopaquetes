@@ -47,7 +47,7 @@ const { data: empresas, loading } = useFetchEmpresas(empresaActual);
     <section className="section_item flex-container py-6">
     <div className="card form drop-shadow-md bg-[#FFF]" style={styleRegistro}>
         <br />
-        <h1 className="card-title card-title pb-4 card-title pb-4 text-3xl text-[#BE0F34]">
+        <h1 className="card-title card-title card-title pb-4 text-3xl text-[#BE0F34]">
             Registro de nueva empresa
         </h1>
           <NuevaEmpresasForm/>

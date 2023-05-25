@@ -13,7 +13,6 @@ export const useFetchViajes = (viaje)=>{
             api,
             viaje
         ).then(viaje =>{
-            console.log(viaje);
             setState({
                 data: viaje,
                 loading: false,

@@ -168,7 +168,7 @@ const { userAuth } = useAuth();
   const { data: vehiculosData, loading: loadingVehiculo } = useFetchVehiculo(vehiculoActual);
   
   const empresasFiltradas = empresasData.filter(item => item.razonsocial && item.usuario.idusuario === userAuth.idusuario);
-  const conductoresFiltrados = conductoresData.filter(item => item.nombrecompleto && item.us.idusuario === userAuth.idusuario);
+  const conductoresFiltrados = conductoresData.filter(item => item.nombrecompleto && item.usuario.idusuario === userAuth.idusuario);
   const vehiculosFiltrados = vehiculosData.filter(item => item.marca && item.usuario.idusuario === userAuth.idusuario);
 
   const onSubmit = (values, {resetForm}) => {
@@ -182,7 +182,7 @@ const { userAuth } = useAuth();
       <section className="section_item flex-container py-6" >
         <div className="card form drop-shadow-md bg-[#FFF]" style={styleRegistro}>
           <br />
-          <h1 className="card-title card-title pb-4 card-title pb-4 text-3xl text-[#BE0F34]">
+          <h1 className="card-title card-title card-title pb-4 text-3xl text-[#BE0F34]">
             Registra un nuevo viaje
           </h1>
           <Formik initialValues={initialValues} onSubmit={onSubmit}>

@@ -27,7 +27,7 @@ export const LoginScreen = () => {
     <div className=''>
         <div className='col bg-[#BE0F34]'>
             <div className="card-body text-center">
-              <h1 className='text-black text-3xl py-4 text-white'>Gestiona tus:</h1>
+              <h1 className='text-3xl py-4 text-white'>Gestiona tus:</h1>
               <div className='container'>
                 <div className='row justify-center'>
                   <div className='col-sm-6 col-md-3 col-xl-2 m-3 grid justify-items-center'>
@@ -46,7 +46,7 @@ export const LoginScreen = () => {
                   </div>
                   <div className='col-sm-6 col-md-3 col-xl-2 m-3 grid justify-items-center'>
                     <div className="bg-white rounded-full h-40 w-40 flex items-center justify-center shadow-lg relative drop-shadow-md transition duration-500 ease-in-out transform hover:-translate-y-5 hover:shadow-2xl">
-                      <img src="src/assets/conductor.png" alt="Descripción de la imagen" className='' viewBox="0 0 20 20" fill="currentColor"/>
+                      <img src="src/assets/conductor2.png" alt="Descripción de la imagen" className='' viewBox="0 0 20 20" fill="currentColor"/>
                     </div>
                     <span className='text-xl font-semibold text-white p-2'>Conductores</span>
                   </div>

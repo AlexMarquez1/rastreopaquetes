@@ -135,8 +135,6 @@ export const MenuScreen = () => {
 const { data: vehiculos, loading: loadingVehiculo } = useFetchVehiculo(vehiculoActual);
 const { data: empresasData, loading: loadingEmpresa } = useFetchEmpresas(empresaActual);
 
-console.log(empresasData)
-
 const empresasFiltradas = empresasData.filter(item => item.razonsocial && item.usuario.idusuario === userAuth.idusuario);
 
   const [mostrarEmpresa, setMostrarEmpresa] = useState(false);

@@ -41,10 +41,10 @@ export const Mapa = () => {
     const [direccion, setDireccion] = useState(null);
     const [map, setMap] = useState(null);
 
-    const { isLoaded } = useJsApiLoader({
-        id: 'google-map-script',
-        googleMapsApiKey: "AIzaSyAwXqH5JgdnOqOJy8F8_PrkvOqLtHhy60I"
-    });
+    // const { isLoaded } = useJsApiLoader({
+    //     id: 'google-map-script',
+    //     googleMapsApiKey: "AIzaSyAwXqH5JgdnOqOJy8F8_PrkvOqLtHhy60I"
+    // });
     
     const onLoad = useCallback((map) => {
         const bounds = new window.google.maps.LatLngBounds(center);
@@ -84,7 +84,7 @@ export const Mapa = () => {
 
     }
 
-    return isLoaded ? (
+    return  (
         <Flex
 
             flexDirection='column'
@@ -123,7 +123,7 @@ export const Mapa = () => {
             />
         </Flex>
 
-    ) : <></>
+    ) 
 
     5559252688
 }

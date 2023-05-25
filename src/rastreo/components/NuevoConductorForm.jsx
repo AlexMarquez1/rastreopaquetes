@@ -41,6 +41,8 @@ const NuevoConductorForm = ({toggleNuevoConductorForm}) => {
     const { userAuth } = useAuth();
     const usuario = userAuth;
 
+    console.log(usuario)
+
     const initialValues = {
         nombrecompleto: '',
         fechanacimiento: '',
@@ -68,22 +70,22 @@ const NuevoConductorForm = ({toggleNuevoConductorForm}) => {
 
       const onSubmit = (values, { resetForm }) => {
         const conductor = {...values, usuario}
-        console.log(values)
+        console.log(conductor)
 
-         fetch('http://192.168.0.6:8080/nuevo/conductor', {
-           method: 'POST', // O 'PUT' según el tipo de solicitud que desees realizar
-           headers: {
-             'Content-Type': 'application/json' // Asegúrate de establecer el tipo de contenido adecuado
-           },
-           body: JSON.stringify(conductor) // Convierte los valores a JSON antes de enviarlos
-         })
-           .then(response => response.json())
-           .then(responseData => {
-             // Lógica adicional después de enviar los datos a la API
-             // ...
-             console.log('Respuesta de la API:', responseData);
-           })
-           .catch(error => console.log(error));
+        fetch('http://192.168.0.6:8080/nuevo/conductor', {
+          method: 'POST', // O 'PUT' según el tipo de solicitud que desees realizar
+          headers: {
+            'Content-Type': 'application/json' // Asegúrate de establecer el tipo de contenido adecuado
+          },
+          body: JSON.stringify(conductor) // Convierte los valores a JSON antes de enviarlos
+        })
+          .then(response => response.json())
+          .then(responseData => {
+            // Lógica adicional después de enviar los datos a la API
+            // ...
+            console.log('Respuesta de la API:', responseData);
+          })
+          .catch(error => console.log(error));
       
         //  resetForm();
       }; 

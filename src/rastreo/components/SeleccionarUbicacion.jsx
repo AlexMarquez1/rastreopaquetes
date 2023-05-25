@@ -41,11 +41,11 @@ export const SeleccionarUbicacion = ({ initialValue }) => {
     const { value: valueLlegada } = metaLlegada;
     const { setValue: setValueLlegada } = helpersLlegada;
 
-    const { isLoaded } = useJsApiLoader({
-        id: 'google-map-script',
-        googleMapsApiKey: "AIzaSyAwXqH5JgdnOqOJy8F8_PrkvOqLtHhy60I",
-        libraries: lib,
-    });
+    // const { isLoaded } = useJsApiLoader({
+    //     id: 'google-map-script',
+    //     googleMapsApiKey: "AIzaSyAwXqH5JgdnOqOJy8F8_PrkvOqLtHhy60I",
+    //     libraries: lib,
+    // });
     const onLoad = useCallback((map) => {
         const bounds = new window.google.maps.LatLngBounds(center);
         setMap(map);
@@ -119,7 +119,7 @@ export const SeleccionarUbicacion = ({ initialValue }) => {
         setCenter({ lat: location.lat, lng: location.lng });
         setZoom(20);
     }
-    return isLoaded ? (
+    return  (
         <>
             <div className="container text-start" style={{ position: 'relative', height: '500px' }}>
                 <div className='row'>
@@ -162,6 +162,8 @@ export const SeleccionarUbicacion = ({ initialValue }) => {
                 </div>
                 <div className="row">
                     <div className='col'>
+                   
+
                         <GoogleMap
                             onLoad={onLoad}
                             onUnmount={onUnmount}
@@ -301,5 +303,5 @@ export const SeleccionarUbicacion = ({ initialValue }) => {
             </div>
         </>
 
-    ) : <></>;
+    ) ;
 };

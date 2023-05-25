@@ -32,7 +32,7 @@ function ConductoresScreen() {
     telefono: '',
     curp: '',
     rfc: '',
-    usuario: '',
+    usuarioconductor: '',
     contrasena: '',
     calle: '',
     numeroexterior: '',
@@ -62,7 +62,7 @@ const columns = [
 { field: 'telefono', head: 'N° telefono' },
 { field: 'curp', head: 'CURP' },
 { field: 'rfc', head: 'RFC' },
-{ field: 'usuario', head: 'Usuario' },
+{ field: 'usuarioconductor', head: 'Usuario' },
 { field: 'contrasena', head: 'Contraseña' },
 ];
 

@@ -1,9 +1,14 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { GoogleMap, LoadScript, Marker } from '@react-google-maps/api';
-import Carousel from "react-multi-carousel";
 import "react-multi-carousel/lib/styles.css";
+import useAuth from '../../hooks/useAuth';
 
-const TarjetaRutas = ({idViaje, descripcion, chofer, idVehiculo, partida, destino, cardsData, setCardsData, setMensaje}) => {
+const TarjetaRutas = ({idViaje, descripcion, chofer, idVehiculo, partida, destino, setMensaje, latPartida, latLlegada, lngpartida, lngLlegada, fechaPartida, fechaLlegada}) => {
+
+  const { userAuth } = useAuth();
+  
+  const latPartidaDecimal = parseFloat(latPartida);
+  const lngPartidaDecimal = parseFloat(lngpartida);
 
   const [selectedLocation, setSelectedLocation] = useState(null);
   const [show, setShow] = useState(null);
@@ -33,9 +38,6 @@ const TarjetaRutas = ({idViaje, descripcion, chofer, idVehiculo, partida, destin
   return (
     <>
         <div className="card m-2 mb-6 drop-shadow-md bg-[#dfdfdf] transition duration-500 ease-in-out transform hover:-translate-y-3 hover:shadow-2xl">
-          <LoadScript
-            googleMapsApiKey="AIzaSyAwXqH5JgdnOqOJy8F8_PrkvOqLtHhy60I"   
-          >
             <GoogleMap
               mapContainerStyle={{
                 height: '250px',
@@ -43,8 +45,8 @@ const TarjetaRutas = ({idViaje, descripcion, chofer, idVehiculo, partida, destin
               }}
 
               center={{
-                  lat: -34.6083, // Latitud inicial del mapa
-                  lng: -58.3712, // Longitud inicial del mapa
+                  lat: latPartidaDecimal, // Latitud inicial del mapa
+                  lng: lngPartidaDecimal, // Longitud inicial del mapa
               }}
               
               zoom={10} // Nivel de zoom inicial del mapa
@@ -59,23 +61,51 @@ const TarjetaRutas = ({idViaje, descripcion, chofer, idVehiculo, partida, destin
                     />
                 )}
             </GoogleMap>
-          </LoadScript>
+            
+          
             {/* <img src="" className="card-img-top" alt="..." style={{ width: "200px", height: "auto" }}/> */}
             {/* <ion-icon name="chevron-down-circle float-right"></ion-icon> */}
             <div onClick={toggleAccordion} className="card-body">
               <div style={{float: 'right'}} className='cursor-pointer'>
                 <i className="pi pi-angle-down text-xl"></i>
               </div>
-                <h5 className="card-title font-bold text-xl">Id viaje: {idViaje}</h5>
-                <p className="card-text">{descripcion}</p>
+              <h5 className="card-title font-bold text-xl">Id viaje: {idViaje}</h5>
+              <div className='row'>
+                <div className='col'>
+                  <h5 className="card-title font-bold text-base">
+                    Partida:
+                    <span className='font-normal text-ms'><br/>{partida}</span>
+                  </h5>
+                </div>
+                <div className='col'>
+                  <h5 className="card-title font-bold text-base">
+                    destino:
+                    <span className='font-normal text-ms'><br/>{destino}</span>
+                  </h5>
+                </div>
+              </div>
+              <div className='row'>
+                <div className='col'>
+                  <h5 className="card-title font-bold text-base">
+                    Fecha de salida:
+                    <span className='font-normal text-ms'><br/>{fechaPartida}</span>
+                  </h5>
+                </div>
+                <div className='col'>
+                  <h5 className="card-title font-bold text-base">
+                    Fecha de llegada:
+                    <span className='font-normal text-ms'> {fechaLlegada}</span>
+                  </h5>
+                </div>
+              </div>
             </div>
             {
               show &&
                 <div>
                   <ul className="list-group list-group-flush">
-                    <li className="list-group-item"><span className='font-bold text-lg'>Chofer:</span> {chofer}</li>
-                    <li className="list-group-item"><span className='font-bold text-lg'>Id vehículo:</span> {idVehiculo}</li>
-                    <li className="list-group-item"><span className='font-bold text-lg'>Traslado:</span> {partida} - {destino}</li>
+                    <li className="list-group-item text-left"><span className='font-bold text-lg'>Chofer:</span> {chofer}</li>
+                    <li className="list-group-item text-left"><span className='font-bold text-lg'>Id vehículo:</span> {idVehiculo}</li>
+                    <li className="list-group-item text-left"><span className='font-bold text-lg'>Descripción:</span> {descripcion}</li>
                   </ul>
                   <div className="card-body">
                     <a href="#" className="card-link text-[#BE0F34] hover:text-rose-500 text-lg"> <i className="pi pi-map-marker text-[#BE0F34] hover:text-opacity-75"></i> Seguimiento</a>

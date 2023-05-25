@@ -2,6 +2,7 @@ import React, { useState } from 'react'
 import { GoogleMap, LoadScript, Marker } from '@react-google-maps/api';
 import Carousel from "react-multi-carousel";
 import "react-multi-carousel/lib/styles.css";
+import GoogleMapLoader from '../helpers/GoogleMapLoader';
 
 const styleRegistroModal = {
   width: '95%',
@@ -77,9 +78,9 @@ const TarjeMenuActivas = () => {
         >
           <LoadScript
             googleMapsApiKey="AIzaSyAwXqH5JgdnOqOJy8F8_PrkvOqLtHhy60I"
-            
-      libraries={["places"]} // Agrega esta línea para cargar la biblioteca "places"
+            libraries={['places']}
           >
+      
             <GoogleMap
               mapContainerStyle={{
                 height: '300px',
@@ -137,72 +138,7 @@ const TarjeMenuActivas = () => {
             )}
           </div>
         </div>
-        <div
-          className={`w-full max-w-xxl mx-auto rounded-md overflow-hidden transform transition duration-500 ease-in-out p-2 ${isHovered ? "" : "shadow-md"
-            }`}
-          onMouseEnter={handleHover}
-          onMouseLeave={handleLeave}
-        >
-          <LoadScript
-            googleMapsApiKey="AIzaSyAwXqH5JgdnOqOJy8F8_PrkvOqLtHhy60I"
-          >
-            <GoogleMap
-              mapContainerStyle={{
-                height: '300px',
-                width: '100%',
-              }}
-              center={{
-                lat: -34.6083, // Latitud inicial del mapa
-                lng: -58.3712, // Longitud inicial del mapa
-              }}
-              zoom={10} // Nivel de zoom inicial del mapa
-            // onClick={handleMapClick} // Asignamos la función de manejo de clic en el mapa
-            >
-              {selectedLocation && ( // Si hay una ubicación seleccionada, mostramos un marcador en el mapa
-                <Marker
-                  position={{
-                    lat: selectedLocation.lat,
-                    lng: selectedLocation.lng,
-                  }}
-                />
-              )}
-            </GoogleMap>
-          </LoadScript>
-          {/* <img
-    className="w-full h-48 object-cover"
-    src="https://source.unsplash.com/random/800x600"
-    alt="Beach"
-  /> */}
-          <div className="p-4 #dfdfdf">
-            <h2 className="font-bold text-xl mb-2">Beach Vacation 2</h2>
-            <p className="text-gray-700 text-base">
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce eget
-              lorem eu velit ultrices dapibus ac eget mauris.
-            </p>
-            <button
-              className={`mt-4 bg-green-400 hover:bg-green-400 text-white font-bold py-2 px-4 rounded ${isHovered && "opacity-80 hover:bg-green-600"
-                }`}
-              onClick={handleToggle}
-            >
-              <i className="pi pi-clock px-1"></i>
-              historial de viaje
-            </button>
-            {isOpen && (
-              <>
-                <div className="absolute top-0 left-0 w-full h-full items-center justify-center">
-                  <div className="rounded-md p-4 m-3">
-                    <button
-                      className="bg-white hover:bg-red-700 text-gray-700 hover:text-white font-bold px-2 rounded-full mr-auto"
-                      onClick={handleToggle}
-                    >
-                      <i className="pi pi-times-circle"></i>
-                    </button>
-                  </div>
-                </div>
-              </>
-            )}
-          </div>
-        </div>
+        
       </Carousel>
 
     </>

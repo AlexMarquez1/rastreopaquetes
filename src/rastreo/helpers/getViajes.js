@@ -1,13 +1,6 @@
-import useAuth from '../../hooks/useAuth';
-
 export const getViajes = async (api,) =>{
 
-    const { userAuth } = useAuth();
-
-    console.log(userAuth);
-    // const usuarioLogiado = lista.filter(item => item.us.idusuario === userAuth.idusuario);
-
-    const url =`${api}/obtener/viajes/usuario`;
+    const url =`${api}/obtener/viajes`;
     const options = {
         method: "GET",
         cache: "no-cache",
