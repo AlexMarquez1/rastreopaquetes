@@ -35,12 +35,12 @@ const { data: empresas, loading } = useFetchEmpresas(empresaActual);
     <h1 className="pt-6 px-6 text-5xl font-bold">Empresas relacionadas</h1>
     {!loading ? 
     <TarjetaEmpresa data={empresas}/> : 
-    <Player src='https://assets10.lottiefiles.com/packages/lf20_bxuyrltk.json'
-            className="player"
-            loop
-            autoplay
-            style={{ height: '300px', width: '300px' }}
-          />
+      <Player src='https://lottie.host/57646f0b-6bba-4428-b49e-f47f4c50d1a2/by0A7ETtTu.json'
+        className="player"
+        loop
+        autoplay
+        style={{ height: '300px', width: '300px' }}
+      />
     }
     
 

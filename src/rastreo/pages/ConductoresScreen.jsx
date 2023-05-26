@@ -81,7 +81,7 @@ const toggleNuevoConductorForm = () => {
           {!loading ? 
             <TablaConductoresCrud data={conductores} conductorActual={conductorActual} setconductorActual={setconductorActual} encabezados={columns} id={'idusuario'} tipoDatos={'Usuarios'} editar={false} eliminar={false} toggleNuevoConductorForm={toggleNuevoConductorForm}/>
             :
-            <Player src='https://assets10.lottiefiles.com/packages/lf20_bxuyrltk.json'
+            <Player src='https://lottie.host/57646f0b-6bba-4428-b49e-f47f4c50d1a2/by0A7ETtTu.json'
             className="player"
             loop
             autoplay

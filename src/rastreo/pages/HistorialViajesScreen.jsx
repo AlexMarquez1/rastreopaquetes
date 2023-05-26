@@ -12,6 +12,7 @@ import { useFetchViajes } from '../hooks/useFetchViajes';
 // context del usuario que inicio sesion
 import useAuth from '../../hooks/useAuth';
 import ModalHistorialViajes from '../components/ModalHistorialViajes';
+import { ModalHistorial } from '../components/ModalHistorial';
 
 const styleRegistro = {
     width: '85%',
@@ -45,6 +46,10 @@ const HistorialViajesScreen = () => {
     giro: '',
     idusuario: '',
   });
+
+  const [tarjetaViajeSeleccionado, setTarjetaViajeSeleccionado] = useState(null);
+
+  console.log(tarjetaViajeSeleccionado);
 
   // obtencion del usuario que inicio sesion
   const { userAuth } = useAuth();
@@ -174,6 +179,7 @@ const HistorialViajesScreen = () => {
                             viajesUsuario.filter(trip => trip.estatus === 'activo').map((data, index)=> ( 
                                 <TarjetaRutas
                                   key={index}
+                                  data={data}
                                   idViaje={data.idviaje}
                                   descripcion={data.descripcion}
                                   chofer={data.conductor.nombrecompleto}
@@ -188,6 +194,7 @@ const HistorialViajesScreen = () => {
                                   latLlegada={data.latllegada}
                                   lngpartida={data.lngpartida}
                                   lngLlegada={data.lngllegada}
+                                  setTarjetaViajeSeleccionado={setTarjetaViajeSeleccionado}
                                 /> 
                             ))
                         }
@@ -229,6 +236,7 @@ const HistorialViajesScreen = () => {
                         viajesUsuario.filter(trip => trip.estatus === 'programado').map((data, index)=> (
                             <TarjetaRutas
                               key={index}
+                              data={data}
                               idViaje={data.idviaje}
                               descripcion={data.descripcion}
                               chofer={data.conductor.nombrecompleto}
@@ -243,6 +251,7 @@ const HistorialViajesScreen = () => {
                               latLlegada={data.latllegada}
                               lngpartida={data.lngpartida}
                               lngLlegada={data.lngllegada}
+                              setTarjetaViajeSeleccionado={setTarjetaViajeSeleccionado}
                             />
                         ))
                         }
@@ -285,6 +294,7 @@ const HistorialViajesScreen = () => {
                         viajesUsuario.filter(trip => trip.estatus === 'completado').map((data, index)=> (
                             <TarjetaRutas
                                 key={index}
+                                data={data}
                                 idViaje={data.idviaje}
                                 descripcion={data.descripcion}
                                 chofer={data.conductor.nombrecompleto}
@@ -299,6 +309,7 @@ const HistorialViajesScreen = () => {
                                 latLlegada={data.latllegada}
                                 lngpartida={data.lngpartida}
                                 lngLlegada={data.lngllegada}
+                                setTarjetaViajeSeleccionado={setTarjetaViajeSeleccionado}
                             />
                         ))
                         }
@@ -310,9 +321,6 @@ const HistorialViajesScreen = () => {
     </div> 
      
     {/* MODAL */}
-    {/* <ModalHistorialViajes
-      
-    /> */}
     <Dialog header="Detalles de viaje" visible={mensaje} style={{ width: '90vw' }} onHide={() => setMensaje(false)}>
         <section className="section_item flex-container" style={{ paddingTop: '5%' }}>
             <div className="card" style={styleRegistroModal} onClick={toggleAccordionViaje}>
@@ -330,25 +338,25 @@ const HistorialViajesScreen = () => {
                 <div className='row'>
                     <div className='col-sm-6 col-md-6 col-xl-4 p-4'>
                       <ul className="list-group list-group-flush">
-                        <p className="list-group-item-dark btn mr-auto" aria-current="true">Id viaje: {viajeActual.idempresa}</p>
-                        <li className="list-group-item btn mr-auto">Estatus: {''}</li>
-                        <li className="list-group-item btn mr-auto">Direccion de partida: {''}</li>
-                        <li className="list-group-item btn mr-auto">Direccion de destino: {''}</li>
-                        <li className="list-group-item btn mr-auto">Hora de partida: {''}</li>
-                        <li className="list-group-item btn mr-auto">Hora de destino: {''}</li>
+                        <p className="list-group-item-dark btn mr-auto" aria-current="true">Id viaje: {tarjetaViajeSeleccionado.idviaje}</p>
+                        <li className="list-group-item btn mr-auto">Estatus: {tarjetaViajeSeleccionado.estatus}</li>
+                        <li className="list-group-item btn mr-auto">Direccion de partida: {tarjetaViajeSeleccionado.direccionpartida}</li>
+                        <li className="list-group-item btn mr-auto">Direccion de destino: {tarjetaViajeSeleccionado.direccionllegada}</li>
+                        <li className="list-group-item btn mr-auto">Hora de partida: {tarjetaViajeSeleccionado.horapartida}</li>
+                        <li className="list-group-item btn mr-auto">Hora de destino: {tarjetaViajeSeleccionado.horallegada}</li>
                       </ul>
                     </div>
                     <div className='col-sm-6 col-md-6 col-xl-4 p-4'>
                       <ul className="list-group list-group-flush">
-                        <p className="list-group-item-dark btn mr-auto" aria-current="true">Empresa Relacionada: {''}</p>
-                        <li className="list-group-item mr-auto">Direccion de la empresa: {''}</li>
-                        <li className="list-group-item mr-auto">RFC de la empresa: {viajeActual.rfc}</li>
+                        <p className="list-group-item-dark btn mr-auto" aria-current="true">Empresa Relacionada: {tarjetaViajeSeleccionado.empresa.razonsocial}</p>
+                        <li className="list-group-item mr-auto">Direccion de la empresa: {tarjetaViajeSeleccionado.empresa.direccion}</li>
+                        <li className="list-group-item mr-auto">RFC de la empresa: {tarjetaViajeSeleccionado.empresa.rfc}</li>
                       </ul>
                     </div>
                     <div className='col-sm-6 col-md-6 col-xl-4 p-4'>
                       <ul className="list-group list-group-flush">
-                        <p className="list-group-item-dark btn mr-auto" aria-current="true">descripcion del viaje: {''}</p>
-                        <p className="list-group-item mr-auto">Nuestro viaje de carga comenzó en el puerto de origen, donde cargamos un contenedor de 40 pies lleno de mercancías diversas, incluyendo maquinarias pesadas y piezas de repuesto. Una vez que el contenedor fue asegurado correctamente, partimos hacia nuestro destino final, que estaba ubicado en una ciudad a 500 km de distancia.</p>
+                        <p className="list-group-item-dark btn mr-auto" aria-current="true">descripcion del viaje:</p>
+                        <p className="list-group-item mr-auto">{tarjetaViajeSeleccionado.descripcion}</p>
                       </ul>
                     </div>
                 </div>
@@ -373,7 +381,7 @@ const HistorialViajesScreen = () => {
                           <ul className="list-group list-group-flush">
                             <p className="list-group-item-dark btn mr-auto" aria-current="true">Id Conductor: {'00001'}</p>
                             <img className="list-group-item mr-auto h-48 w-48" src='https://randomuser.me/api/portraits/men/1.jpg' alt=""/>
-                            <li className="list-group-item mr-auto">Nombre completo: {''}</li>
+                            <li className="list-group-item mr-auto">Nombre completo: {tarjetaViajeSeleccionado.conductor.nombrecompleto}</li>
                             <li className="list-group-item mr-auto">Edad: {''}</li>
                             <li className="list-group-item mr-auto">Numero de contacto: {''}</li>
                             <li className="list-group-item mr-auto">Tipo de sangre: {''}</li>

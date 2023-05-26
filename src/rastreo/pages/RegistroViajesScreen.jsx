@@ -173,7 +173,7 @@ const { userAuth } = useAuth();
     const viajes = {
       empresa: values.empresas,
       conductor: values.conductores,
-      vahiculo: values.vehiculos,
+      vehiculo: values.vehiculos,
       tiposervicio: values.tiposervicio.tipo,
       descripcion: values.descripcionviaje,
       fechasalida: values.fechasalida,
@@ -188,7 +188,20 @@ const { userAuth } = useAuth();
       usuario: userAuth
     }
 
-    console.log(viajes);
+    fetch('http://192.168.0.6:8080/nuevo/viaje', {
+          method: 'POST', // O 'PUT' según el tipo de solicitud que desees realizar
+          headers: {
+            'Content-Type': 'application/json' // Asegúrate de establecer el tipo de contenido adecuado
+          },
+          body: JSON.stringify(viajes) // Convierte los valores a JSON antes de enviarlos
+        })
+          .then(response => response.json())
+          .then(responseData => {
+            // Lógica adicional después de enviar los datos a la API
+            // ...
+            console.log('Respuesta de la API:', responseData);
+          })
+          .catch(error => console.log(error));
 
     // resetForm();
   };
@@ -228,7 +241,7 @@ const { userAuth } = useAuth();
                         className="player"
                         loop
                         autoplay
-                        style={{ height: '70px', width: '70px' }}
+                        style={{ height: '50px', width: '50px' }}
                         />
                         }
                     
@@ -247,7 +260,6 @@ const { userAuth } = useAuth();
                           as={Dropdown}
                           value={values.conductores}
                           onChange={(e)=>{
-                            console.log(e.value);
                             handleChange(e); 
                             setConductorSeleccionado(e.value);
                           }}
@@ -264,7 +276,7 @@ const { userAuth } = useAuth();
                         className="player"
                         loop
                         autoplay
-                        style={{ height: '70px', width: '70px' }}
+                        style={{ height: '50px', width: '50px' }}
                         />
                         }
                         
@@ -309,7 +321,7 @@ const { userAuth } = useAuth();
                         className="player"
                         loop
                         autoplay
-                        style={{ height: '70px', width: '70px' }}
+                        style={{ height: '50px', width: '50px' }}
                         />
                         }
                         

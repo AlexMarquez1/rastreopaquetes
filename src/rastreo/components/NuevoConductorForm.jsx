@@ -255,18 +255,25 @@ const NuevoConductorForm = ({toggleNuevoConductorForm}) => {
                             <div className="col-sm-6 col-md-6 col-xl-4 pb-5">
                                 <div className='p-inputgroup flex-1'>
                                     <span className='p-float-label'>
-                                        <Field
+                                        <FileUpload
                                             as={FileUpload}
                                             mode="basic"
-                                            chooseLabel="Subir foto del conductor" 
-                                            url="/api/upload" 
+                                            chooseLabel="Subir foto del conductor"
+                                            customUpload={true}
+                                            auto={true}
                                             accept=".jpg" 
                                             maxFileSize={1000000}
-                                            name="foto"
-                                            onChange={handleChange}
-                                            value={values.foto}
-                                            inputid='foto'
                                             required={true}
+                                            uploadHandler={({files}) => {
+                                                console.log(files)
+                                                const [file] = files;
+                                                const fileReader = new FileReader();
+                                                fileReader.onload= (e) => {
+                                                    console.log(e.target.result);
+                                                }
+                                                fileReader.readAsDataURL(file);
+                                            }}
+                                           
                                         />
                                         <span className="p-inputgroup-addon">
                                             <i className="pi pi-image"></i>

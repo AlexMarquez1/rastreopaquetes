@@ -19,12 +19,6 @@ const RastreoRoutes = () => {
     <Navbar/>
   
     <div className="pt-7">
-    <LoadScript
-      googleMapsApiKey="AIzaSyAwXqH5JgdnOqOJy8F8_PrkvOqLtHhy60I"
-      libraries={['places']}
-      region='MX'
-      language='es'
-    >
         <Routes>
             <Route element={<ProtectedRoutes />}>
               <Route path="menu" element={<MenuScreen/>}/>
@@ -37,10 +31,7 @@ const RastreoRoutes = () => {
               <Route path="mapa" element={<Mapa/>}/>
             </Route>
             <Route path="/" element={<Navigate to='login'/>}/>
-        </Routes>
-
-    </LoadScript>
-        
+        </Routes>  
     </div>
     </>
   )
