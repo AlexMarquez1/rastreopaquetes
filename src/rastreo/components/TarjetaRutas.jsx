@@ -3,7 +3,7 @@ import { GoogleMap, LoadScript, Marker } from '@react-google-maps/api';
 import "react-multi-carousel/lib/styles.css";
 import useAuth from '../../hooks/useAuth';
 
-const TarjetaRutas = ({ idViaje, descripcion, chofer, idVehiculo, partida, destino, setMensaje, latPartida, latLlegada, lngpartida, lngLlegada, fechaPartida, fechaLlegada, empresa, setTarjetaViajeSeleccionado, data}) => {
+const TarjetaRutas = ({data, idViaje, descripcion, chofer, idVehiculo, partida, destino, setMensaje, latPartida, latLlegada, lngpartida, lngLlegada, fechaPartida, fechaLlegada, empresa, setTarjetaViajeSeleccionado, tipoVehiculo, marcaVehiculo, modeloVehiculo}) => {
 
   const { userAuth } = useAuth();
 
@@ -105,8 +105,8 @@ const TarjetaRutas = ({ idViaje, descripcion, chofer, idVehiculo, partida, desti
           <div>
             <ul className="list-group list-group-flush">
               <li className="list-group-item text-left"><span className='font-bold text-lg'>Chofer:</span> {chofer}</li>
-              <li className="list-group-item text-left"><span className='font-bold text-lg'>Id vehículo:</span> {idVehiculo}</li>
-              <li className="list-group-item text-left"><span className='font-bold text-lg'>Descripción:</span> {descripcion}</li>
+              <li className="list-group-item text-left"><span className='font-bold text-lg'>Vehículo:</span> {tipoVehiculo}, {marcaVehiculo}, {modeloVehiculo}</li>
+              <li className="list-group-item text-left"><span className='font-bold text-lg'>Descripción del viaje:</span> {descripcion}</li>
             </ul>
             <div className="card-body">
               <a href="#" className="card-link text-[#BE0F34] hover:text-rose-500 text-lg"> <i className="pi pi-map-marker text-[#BE0F34] hover:text-opacity-75"></i> Seguimiento</a>

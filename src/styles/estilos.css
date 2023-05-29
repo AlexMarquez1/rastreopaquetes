@@ -145,4 +145,15 @@ body {
     background-color: #e0e0e0; /* Cambia el color de fondo del elemento activo de la lista */
   }
 
+  @keyframes fade-in {
+    0% {
+      opacity: 0;
+    }
+    100% {
+      opacity: 1;
+    }
+  }
   
+  .custom-fade-in {
+    animation: fade-in 0.5s ease-in;
+  }

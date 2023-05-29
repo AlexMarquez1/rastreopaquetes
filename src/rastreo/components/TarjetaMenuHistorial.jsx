@@ -20,7 +20,7 @@ const TarjetaMenuHistorial = () => {
   return (
     <>
 
-<div
+{/* <div
       className={`relative w-full max-w-md mx-auto rounded-md overflow-hidden transform transition duration-500 ease-in-out ${
         isHovered ? "scale-105 shadow-xl" : "shadow-md"
       }`}
@@ -67,7 +67,7 @@ const TarjetaMenuHistorial = () => {
           </div>
         )}
       </div>
-    </div>
+    </div> */}
 
 
 
@@ -90,7 +90,7 @@ const TarjetaMenuHistorial = () => {
       </div>
     </div> */}
 
-    <div className="relative w-full max-w-md rounded overflow-hidden shadow-lg bg-white">
+    {/* <div className="relative w-full max-w-md rounded overflow-hidden shadow-lg bg-white">
       <img className="w-full h-64 object-cover transform transition duration-500 ease-in-out hover:scale-110" src="https://source.unsplash.com/random/800x600" alt="Random image" />
       <div className="absolute bottom-0 w-full bg-white bg-opacity-75 py-3 px-6">
         <div className="text-xl font-medium mb-2">Card Title</div>
@@ -99,7 +99,7 @@ const TarjetaMenuHistorial = () => {
           Click Me
         </button>
       </div>
-    </div>
+    </div> */}
 
     {/* <div className="w-full max-w-xs rounded overflow-hidden shadow-lg bg-white hover:shadow-xl transition duration-500 ease-in-out transform hover:-translate-y-1 hover:scale-105">
       <img className="w-full h-48 object-cover" src="https://source.unsplash.com/random/800x600" alt="Random image" />
@@ -130,11 +130,17 @@ const TarjetaMenuHistorial = () => {
         <div className="md:flex-shrink-0">
           <img className="h-48 w-full object-cover md:w-48" src="https://source.unsplash.com/random/800x600" alt="Random image" />
         </div>
-        <div className="p-8">
+        <div className="p-4">
           <div className="uppercase tracking-wide text-sm text-indigo-500 font-semibold">Card subtitle</div>
           <a href="#" className="block mt-1 text-lg leading-tight font-medium text-black hover:underline">Card title</a>
           <p className="mt-2 text-gray-500">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus dignissim purus vitae nulla maximus, eu dignissim velit porttitor.</p>
         </div>
+        <div className="p-4">
+          <div className="uppercase tracking-wide text-sm text-indigo-500 font-semibold">Card subtitle</div>
+          <a href="#" className="block mt-1 text-lg leading-tight font-medium text-black hover:underline">Card title</a>
+          <p className="mt-2 text-gray-500">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus dignissim purus vitae nulla maximus, eu dignissim velit porttitor.</p>
+        </div>
+        
       </div>
       <div className="p-6 bg-gray-50 transition duration-300 ease-in-out transform hover:-translate-y-2">
         <a href="#" className="block text-center bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full transition duration-300 ease-in-out transform hover:-translate-y-1 hover:scale-110">
@@ -143,7 +149,7 @@ const TarjetaMenuHistorial = () => {
       </div>
     </div>
 
-    <div className="relative w-full max-w-md mb-6 mx-auto rounded-md shadow-md overflow-hidden transition duration-500 ease-in-out transform hover:-translate-y-2 hover:shadow-2xl">
+    {/* <div className="relative w-full max-w-md mb-6 mx-auto rounded-md shadow-md overflow-hidden transition duration-500 ease-in-out transform hover:-translate-y-2 hover:shadow-2xl">
       <div className="relative flex items-center justify-center h-64 overflow-hidden">
         <img className="absolute inset-0 w-full h-full object-cover" src="https://source.unsplash.com/random/800x600" alt="Random image" />
         <div className="absolute inset-0 bg-black opacity-50"></div>
@@ -168,7 +174,7 @@ const TarjetaMenuHistorial = () => {
         <h1 className="text-gray-200 font-bold text-lg">$9.99</h1>
         <button className="px-3 py-1 bg-gray-200 text-sm text-gray-900 font-semibold rounded">Add to Cart</button>
       </div>
-    </div>
+    </div> */}
 
 
 

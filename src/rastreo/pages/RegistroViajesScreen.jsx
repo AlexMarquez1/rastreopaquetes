@@ -262,6 +262,7 @@ const { userAuth } = useAuth();
                           onChange={(e)=>{
                             handleChange(e); 
                             setConductorSeleccionado(e.value);
+                            console.log(e.value)
                           }}
                           options={conductoresFiltrados}
                           optionLabel="nombrecompleto"

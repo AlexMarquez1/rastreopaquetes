@@ -49,8 +49,6 @@ const HistorialViajesScreen = () => {
 
   const [tarjetaViajeSeleccionado, setTarjetaViajeSeleccionado] = useState(null);
 
-  console.log(tarjetaViajeSeleccionado);
-
   // obtencion del usuario que inicio sesion
   const { userAuth } = useAuth();
 
@@ -120,6 +118,31 @@ const HistorialViajesScreen = () => {
     setViajesUsuario(resultadosBusqueda);
   }
 
+  // estructura para calcular la edad apartir de la fecha de nacimiento
+  const [edadActual, setEdadActual] = useState(null);
+
+  useEffect(() => {
+    if (tarjetaViajeSeleccionado) {
+      const fechaNacimiento = new Date(tarjetaViajeSeleccionado.conductor.fechanacimiento);
+      const edad = calculateAge(fechaNacimiento);
+      setEdadActual(edad);
+    }
+  }, [tarjetaViajeSeleccionado]);
+
+  function calculateAge(dateOfBirth) {
+    const today = new Date();
+    const birthDate = new Date(dateOfBirth);
+    let age = today.getFullYear() - birthDate.getFullYear();
+    const monthDifference = today.getMonth() - birthDate.getMonth();
+
+    if (monthDifference < 0 || (monthDifference === 0 && today.getDate() < birthDate.getDate())) {
+      age--;
+    }
+
+    return age;
+  }
+
+
   return (
     <>
     <h1 className='pt-6 px-6 text-5xl font-bold'>Historial de viajes</h1>
@@ -185,6 +208,9 @@ const HistorialViajesScreen = () => {
                                   chofer={data.conductor.nombrecompleto}
                                   empresa={data.empresa.razonsocial}
                                   idVehiculo={data.vehiculo.idvehiculo}
+                                  tipoVehiculo={data.vehiculo.tipovehiculo}
+                                  marcaVehiculo={data.vehiculo.marca}
+                                  modeloVehiculo={data.vehiculo.modelo}
                                   partida={data.direccionpartida}
                                   fechaPartida={data.fechasalida}
                                   fechaLlegada={data.fechallegada}
@@ -242,6 +268,9 @@ const HistorialViajesScreen = () => {
                               chofer={data.conductor.nombrecompleto}
                               empresa={data.empresa.razonsocial}
                               idVehiculo={data.vehiculo.idvehiculo}
+                              tipoVehiculo={data.vehiculo.tipovehiculo}
+                              marcaVehiculo={data.vehiculo.marca}
+                              modeloVehiculo={data.vehiculo.modelo}
                               partida={data.direccionpartida}
                               fechaPartida={data.fechasalida}
                               fechaLlegada={data.fechallegada}
@@ -300,6 +329,9 @@ const HistorialViajesScreen = () => {
                                 chofer={data.conductor.nombrecompleto}
                                 empresa={data.empresa.razonsocial}
                                 idVehiculo={data.vehiculo.idvehiculo}
+                                tipoVehiculo={data.vehiculo.tipovehiculo}
+                                marcaVehiculo={data.vehiculo.marca}
+                                modeloVehiculo={data.vehiculo.modelo}
                                 partida={data.direccionpartida}
                                 fechaPartida={data.fechasalida}
                                 fechaLlegada={data.fechallegada}
@@ -332,36 +364,55 @@ const HistorialViajesScreen = () => {
                 <p className="fs-4 text-white">Detalles del viaje</p>
             </h1>   
             </div>
-            {
-                show &&(
-                <div className='container bg-[#dfdfdf]'>
-                <div className='row'>
-                    <div className='col-sm-6 col-md-6 col-xl-4 p-4'>
-                      <ul className="list-group list-group-flush">
-                        <p className="list-group-item-dark btn mr-auto" aria-current="true">Id viaje: {tarjetaViajeSeleccionado.idviaje}</p>
-                        <li className="list-group-item btn mr-auto">Estatus: {tarjetaViajeSeleccionado.estatus}</li>
-                        <li className="list-group-item btn mr-auto">Direccion de partida: {tarjetaViajeSeleccionado.direccionpartida}</li>
-                        <li className="list-group-item btn mr-auto">Direccion de destino: {tarjetaViajeSeleccionado.direccionllegada}</li>
-                        <li className="list-group-item btn mr-auto">Hora de partida: {tarjetaViajeSeleccionado.horapartida}</li>
-                        <li className="list-group-item btn mr-auto">Hora de destino: {tarjetaViajeSeleccionado.horallegada}</li>
-                      </ul>
-                    </div>
-                    <div className='col-sm-6 col-md-6 col-xl-4 p-4'>
-                      <ul className="list-group list-group-flush">
-                        <p className="list-group-item-dark btn mr-auto" aria-current="true">Empresa Relacionada: {tarjetaViajeSeleccionado.empresa.razonsocial}</p>
-                        <li className="list-group-item mr-auto">Direccion de la empresa: {tarjetaViajeSeleccionado.empresa.direccion}</li>
-                        <li className="list-group-item mr-auto">RFC de la empresa: {tarjetaViajeSeleccionado.empresa.rfc}</li>
-                      </ul>
-                    </div>
-                    <div className='col-sm-6 col-md-6 col-xl-4 p-4'>
-                      <ul className="list-group list-group-flush">
-                        <p className="list-group-item-dark btn mr-auto" aria-current="true">descripcion del viaje:</p>
-                        <p className="list-group-item mr-auto">{tarjetaViajeSeleccionado.descripcion}</p>
-                      </ul>
-                    </div>
+            {show && (
+              <div className="container bg-[#dfdfdf] rounded-md">
+                <div className="row">
+                  <div className="col-sm-6 col-md-6 col-xl-4 p-4 border-r-4">
+                    <ul>
+                      <h2 className="text-lg mr-auto font-bold text-left pb-3" aria-current="true">
+                        Id viaje: <span className="font-normal">{tarjetaViajeSeleccionado.idviaje}</span>
+                      </h2>
+                      <li className="mr-auto font-bold text-left pb-2">
+                        Estatus: <span className="font-normal">{tarjetaViajeSeleccionado.estatus}</span>
+                      </li>
+                      <li className="mr-auto font-bold text-left pb-2">
+                        Direccion de partida: <span className="font-normal">{tarjetaViajeSeleccionado.direccionpartida}</span>
+                      </li>
+                      <li className="mr-auto font-bold text-left pb-2">
+                        Direccion de destino: <span className="font-normal">{tarjetaViajeSeleccionado.direccionllegada}</span>
+                      </li>
+                      <li className="mr-auto font-bold text-left pb-2">
+                        Hora de partida: <span className="font-normal">{tarjetaViajeSeleccionado.horapartida}</span>
+                      </li>
+                      <li className="mr-auto font-bold text-left pb-2">
+                        Hora de destino: <span className="font-normal">{tarjetaViajeSeleccionado.horallegada}</span>
+                      </li>
+                    </ul>
+                  </div>
+                  <div className="col-sm-6 col-md-6 col-xl-4 p-4 border-r-4">
+                    <ul>
+                      <h2 className="text-lg mr-auto font-bold text-left pb-3" aria-current="true">
+                        Empresa Relacionada: <span className="font-normal">{tarjetaViajeSeleccionado.empresa.razonsocial}</span>
+                      </h2>
+                      <li className="mr-auto font-bold text-left pb-2">
+                        Direccion de la empresa: <span className="font-normal">{tarjetaViajeSeleccionado.empresa.direccion}</span>
+                      </li>
+                      <li className="mr-auto font-bold text-left pb-2">
+                        RFC de la empresa: <span className="font-normal">{tarjetaViajeSeleccionado.empresa.rfc}</span>
+                      </li>
+                    </ul>
+                  </div>
+                  <div className="col-sm-6 col-md-6 col-xl-4 p-4">
+                    <ul>
+                      <h2 className="text-lg mr-auto font-bold text-left pb-3" aria-current="true">
+                        Descripcion del viaje:
+                      </h2>
+                      <li className="mr-auto font-normal text-left pb-2">{tarjetaViajeSeleccionado.descripcion}</li>
+                    </ul>
+                  </div>
                 </div>
-            </div>
-            )} 
+              </div>
+            )}
         </section> 
         <section className="section_item flex-container" style={{ paddingTop: '5%' }}>
             <div className="card" style={styleRegistroModal} onClick={toggleAccordionConductor}>
@@ -370,32 +421,34 @@ const HistorialViajesScreen = () => {
                 <div style={{float: 'right'}} className='px-4 text-white'>
                     <i className="pi pi-angle-down"></i>
                 </div>
-                <p className="fs-4 text-white">Detalles del Conductor</p>
+                <p className="fs-4 text-white">Detalles del conductor</p>
             </h1>   
             </div>
             {
                 show2 &&
-                <div className='container bg-[#dfdfdf]'>
+                <div className='container bg-[#dfdfdf] rounded-md'>
                     <div className='row'>
-                        <div className='col-sm-6 col-md-6 col-xl-4 p-4'>
-                          <ul className="list-group list-group-flush">
-                            <p className="list-group-item-dark btn mr-auto" aria-current="true">Id Conductor: {'00001'}</p>
-                            <img className="list-group-item mr-auto h-48 w-48" src='https://randomuser.me/api/portraits/men/1.jpg' alt=""/>
-                            <li className="list-group-item mr-auto">Nombre completo: {tarjetaViajeSeleccionado.conductor.nombrecompleto}</li>
-                            <li className="list-group-item mr-auto">Edad: {''}</li>
-                            <li className="list-group-item mr-auto">Numero de contacto: {''}</li>
-                            <li className="list-group-item mr-auto">Tipo de sangre: {''}</li>
+                        <div className='col-sm-6 col-md-6 col-xl-4 p-4 border-r-4'>
+                          <ul className="">
+                            <h2 className="text-lg mr-auto font-bold text-left pb-3" aria-current="true">Id Conductor: <span className='font-normal'>{tarjetaViajeSeleccionado.conductor.idconductor}</span></h2>
+                            <img className="mr-auto font-bold text-left pb-2 h-48 w-48" src='https://randomuser.me/api/portraits/men/1.jpg' alt=""/>
+                            <li className="mr-auto font-bold text-left pb-2">Nombre completo: <span className='font-normal'>{tarjetaViajeSeleccionado.conductor.nombrecompleto}</span></li>
+                            <li className="mr-auto font-bold text-left pb-2">Edad: <span className='font-normal'>{edadActual}</span></li>
+                            <li className="mr-auto font-bold text-left pb-2">Numero de contacto: <span className='font-normal'>{tarjetaViajeSeleccionado.conductor.telefono}</span></li>
+                            <li className="mr-auto font-bold text-left pb-2">Tipo de sangre: <span className='font-normal'>{tarjetaViajeSeleccionado.conductor.tiposangre}</span></li>
                           </ul>
                         </div>
-                        <div className='col-sm-6 col-md-6 col-xl-4 p-4'>
-                          <ul className="list-group list-group-flush">
-                            <p className="list-group-item-dark btn mr-auto" aria-current="true">Numero de licencia: {''}</p>
-                            <li className="list-group-item mr-auto">Tipo de licencia: {''}</li>
-                            <li className="list-group-item mr-auto">Vigencia: {''}</li>
-                            <button type="button" className="btn btn-outline-secondary">
-                                <i className="pi pi-eye p-2"></i>
-                                    Ver licencia
-                            </button>
+                        <div className='col-sm-6 col-md-6 col-xl-4 p-4 border-r-4'>
+                          <ul className="">
+                            <h2 className="text-lg mr-auto font-bold text-left pb-3" aria-current="true">Numero de licencia: <span className='font-normal'>{tarjetaViajeSeleccionado.conductor.numerolicencia}</span></h2>
+                            <li className="mr-auto font-bold text-left pb-2">Tipo de licencia: <span className='font-normal'>{tarjetaViajeSeleccionado.conductor.tipolicencia}</span></li>
+                            <li className="mr-auto font-bold text-left pb-2">Vigencia: <span className='font-normal'>{tarjetaViajeSeleccionado.conductor.fechavencimiento}</span></li>
+                            <div className='text-left'>
+                              <button type="button" className="bg-[#BE0F34] text-white border border-white hover:bg-white hover:text-red-600 shadow-md font-[Poppins] py-2 px-3 mt-4 rounded duration-500 font-bold justify-items-start">
+                                  <i className="pi pi-eye p-2"></i>
+                                      Ver licencia
+                              </button>
+                            </div> 
                           </ul>
                         </div>
 
@@ -416,27 +469,38 @@ const HistorialViajesScreen = () => {
             </div>
             {
                 show3 &&
-                <div className='container bg-[#dfdfdf]'>
+                <div className='container bg-[#dfdfdf] rounded-md'>
                     <div className='row'>
-                        <div className='col-sm-6 col-md-6 col-xl-4 p-4'>
+                        <div className='col-sm-6 col-md-6 col-xl-4 p-4 border-r-4'>
                           <ul className="list-group list-group-flush">
-                            <p className="list-group-item-dark btn mr-auto" aria-current="true">Id vehículo: {'00001'}</p>
-                            <li className="list-group-item btn mr-auto">Tipo de vehículo: {''}</li>
-                            <li className="list-group-item btn mr-auto">Placas: {''}</li>
-                            <li className="list-group-item btn mr-auto">Marca: {''}</li>
-                            <li className="list-group-item btn mr-auto">Modelo: {''}</li>
+                            <h2 className="text-lg mr-auto font-bold text-left pb-3" aria-current="true">Id vehículo: <span className='font-normal'>{tarjetaViajeSeleccionado.vehiculo.idvehiculo}</span></h2>
+                            <li className="mr-auto font-bold text-left pb-2">Tipo de vehículo: <span className='font-normal'>{tarjetaViajeSeleccionado.vehiculo.tipovehiculo}</span></li>
+                            <li className="mr-auto font-bold text-left pb-2">Placas: <span className='font-normal'>{tarjetaViajeSeleccionado.vehiculo.placas}</span></li>
+                            <li className="mr-auto font-bold text-left pb-2">Marca: <span className='font-normal'>{tarjetaViajeSeleccionado.vehiculo.marca}</span></li>
+                            <li className="mr-auto font-bold text-left pb-2">Modelo: <span className='font-normal'>{tarjetaViajeSeleccionado.vehiculo.modelo}</span></li>
+                            <li className="mr-auto font-bold text-left pb-2">Numero de serie: <span className='font-normal'>{tarjetaViajeSeleccionado.vehiculo.numeroserie}</span></li>
+                          </ul>
+                        </div>
+                        <div className='col-sm-6 col-md-6 col-xl-4 p-4 border-r-4 ra'>
+                          <ul className="list-group list-group-flush">
+                            <h2 className="text-lg mr-auto font-bold text-left pb-3" aria-current="true">tarjeta de circulación: <span>{tarjetaViajeSeleccionado.vehiculo.numerocirculacion}</span></h2>
+                            <div className='text-left'>
+                              <button type="button" className="bg-[#BE0F34] text-white border border-white hover:bg-white hover:text-red-600 shadow-md font-[Poppins] py-2 px-3 mt-4 rounded duration-500 font-bold justify-items-start">
+                                  <i className="pi pi-eye p-2"></i>
+                                      Ver tarjeta de circulación
+                              </button>
+                            </div>
                           </ul>
                         </div>
                         <div className='col-sm-6 col-md-6 col-xl-4 p-4'>
                           <ul className="list-group list-group-flush">
-                            <p className="list-group-item-dark btn mr-auto" aria-current="true">Numero de circulacion: {''}</p>
-                            <li className="list-group-item mr-auto">QR: {''}</li>
-                          </ul>
-                        </div>
-                        <div className='col-sm-6 col-md-6 col-xl-4 p-4'>
-                          <ul className="list-group list-group-flush">
-                            <p className="list-group-item-dark btn mr-auto" aria-current="true">Seguro vehicular: {''}</p>
-                            <li className="list-group-item mr-auto">QR: {''}</li>
+                            <h2 className="text-lg mr-auto font-bold text-left pb-3" aria-current="true">Seguro vehicular: <span className='font-normal'>{tarjetaViajeSeleccionado.vehiculo.nombreseguro}</span></h2>
+                            <div className='text-left'>
+                              <button type="button" className="bg-[#BE0F34] text-white border border-white hover:bg-white hover:text-red-600 shadow-md font-[Poppins] py-2 px-3 mt-4 rounded duration-500 font-bold justify-items-start">
+                                  <i className="pi pi-eye p-2"></i>
+                                      Ver poliza de seguro
+                              </button>
+                            </div>
                           </ul>
                         </div>
                     </div>
@@ -444,6 +508,8 @@ const HistorialViajesScreen = () => {
             }  
         </section>   
     </Dialog>
+
+    {/* <TarjetaMenuHistorial/> */}
     </>
   )
 }

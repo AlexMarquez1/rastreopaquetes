@@ -12,34 +12,7 @@ import { useFetchEmpresas } from '../hooks/useFetchEmpresas';
 
 import useAuth from '../../hooks/useAuth';
 import { useNavigate } from 'react-router-dom';
-
-const empresas = [
-  {
-    rasonSocial: 'Empresa 1',
-    direccion: '',
-    rfc: 'EPLDH213',
-    telefono: '',
-    correo: '',
-    giroEmpresa: '',
-  },
-  {
-    rasonSocial: 'Empresa 2',
-    direccion: '',
-    rfc: 'DHAIUVDN243',
-    telefono: '',
-    correo: '',
-    giroEmpresa: '',
-  },
-  {
-    rasonSocial: 'Empresa 3',
-    direccion: '',
-    rfc: 'JHOPAJBW1231',
-    telefono: '',
-    correo: '',
-    giroEmpresa: '',
-  },
-];
-
+import { Player } from '@lottiefiles/react-lottie-player';
 
 
 const valorInicial = {
@@ -99,15 +72,10 @@ const initialValues = {
   }
 };
 
+// COMPONENTE //
 export const MenuScreen = () => {
 
   const navigate = useNavigate();
-
-    const cerrarSesion = () => {
-        navigate('/login', {
-            replace: true
-        });
-    }
 
   const { userAuth } = useAuth();
 
@@ -138,10 +106,14 @@ const { data: empresasData, loading: loadingEmpresa } = useFetchEmpresas(empresa
 const empresasFiltradas = empresasData.filter(item => item.razonsocial && item.usuario.idusuario === userAuth.idusuario);
 
   const [mostrarEmpresa, setMostrarEmpresa] = useState(false);
+  const [selectedOption, setSelectedOption] = useState('');
 
-  const onSubmit = (values) => {
-    console.log(values);
+  const onSubmit = (event) => {
+    const selectedValue = event.target.value;
+    setSelectedOption(selectedValue);
   };
+
+  console.log(selectedOption);
 
   return (
     <>
@@ -151,11 +123,11 @@ const empresasFiltradas = empresasData.filter(item => item.razonsocial && item.u
       </button> */}
       <div className='container'>
       <div className="row">
-          <div className="col-sm-12 col-md-4 py-6 p-4">
+          <div className="col-sm-12 col-md-4 p-4">
             <div className="card drop-shadow-md bg-[#FFF]">
               <div className="card-body">
                 <div className='text-center'>
-                  <i className="pi  pi-building " style={{ fontSize: '3rem' }}></i>
+                  <i className="pi pi-building " style={{ fontSize: '3rem' }}></i>
                   <br></br>
                   <h1 className='text-3xl'>Empresas</h1>
                 </div>
@@ -168,20 +140,28 @@ const empresasFiltradas = empresasData.filter(item => item.razonsocial && item.u
                             {
                               !loadingEmpresa ?
                               <Field
-                              name='values.empresas'
-                              as={Dropdown}
-                              value={values.empresas}
-                              onChange={handleChange}
-                              options={empresasFiltradas}
-                              optionLabel="razonsocial"
-                              filter
-                              filterPlaceholder='Buscar por nombre'
-                              emptyFilterMessage='Empresa no registrada'
-                              placeholder="Selecciona una empresa"
-                              className="w-full md:w-14rem p-inputtext"
-                              required={true}  
-                            /> :
-                            <></>
+                                name='empresas'
+                                as={Dropdown}
+                                value={values.empresas}
+                                onChange={(e)=>{
+                                  handleChange(e); 
+                                  setSelectedOption(e.value);
+                                }}
+                                options={empresasFiltradas}
+                                optionLabel="razonsocial"
+                                filter
+                                filterPlaceholder='Buscar por nombre'
+                                emptyFilterMessage='Empresa no registrada'
+                                placeholder="Selecciona una empresa"
+                                className="w-full md:w-14rem"
+                                required={true}  
+                              /> :
+                            <Player src='https://lottie.host/dd2750b1-c089-4c4a-bf24-1dfb2d704326/suCIibC1KW.json'
+                              className="player"
+                              loop
+                              autoplay
+                              style={{ height: '50px', width: '50px' }}
+                            />
                             }
                             
                             <Button className='bg-[#BE0F34] botones-estilo' icon="pi pi-building" type='button' onClick={() => setMostrarEmpresa(true)} disabled={values.empresas.razonsocial === '' ? true : false} />

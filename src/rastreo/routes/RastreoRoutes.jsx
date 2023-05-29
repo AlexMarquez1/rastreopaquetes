@@ -9,7 +9,7 @@ import VehiculosScreen from '../pages/VehiculosScreen'
 import EmpresaScreen from '../pages/EmpresaScreen'
 import { Mapa } from '../../components/Mapa/Mapa'
 import { Navigate, Route, Routes } from 'react-router-dom'
-import { Navbar } from '../components/NavBar'
+import { Navbar } from '../components/Navbar'
 import { ProtectedRoutes } from '../../routers/ProtectedRoutes'
 import { LoadScript } from '@react-google-maps/api'
 
