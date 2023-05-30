@@ -3,7 +3,7 @@ import TarjeMenuActivas from '../components/TarjeMenuActivas';
 import { Dropdown } from 'primereact/dropdown';
 import { Field, Formik, Form } from 'formik';
 import { Button } from 'primereact/button';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Dialog } from 'primereact/dialog';
 import { DisponibilidadVehiculo } from '../components/DisponibilidadVehiculo';
 import { useFetchVehiculo } from '../hooks/useFetchVehiculos';
@@ -11,8 +11,8 @@ import { useFetchVehiculo } from '../hooks/useFetchVehiculos';
 import { useFetchEmpresas } from '../hooks/useFetchEmpresas';
 
 import useAuth from '../../hooks/useAuth';
-import { useNavigate } from 'react-router-dom';
 import { Player } from '@lottiefiles/react-lottie-player';
+import { useFetchViajes } from '../hooks/useFetchViajes';
 
 
 const valorInicial = {
@@ -21,61 +21,8 @@ const valorInicial = {
   }
 }
 
-const initialValues = {
-  viaje: {
-    Empresa: {
-      rasonSocial: '',
-      direccion: '',
-      rfc: '',
-      telefono: '',
-      correo: '',
-      giroEmpresa: '',
-    },
-    Conductor: {
-      idConductor: '',
-      nombreCompleto: '',
-      edad: '',
-      tipoDeSangre: '',
-      numeroContacto: '',
-      numeroLicencia: '',
-      tipoLicencia: '',
-      vigencia: '',
-      licencia: '',
-    },
-    Vehiculo: {
-      idVeiculo: '',
-      tipo: '',
-      marca: '',
-      modelo: '',
-      placas: '',
-      numeroSerie: '',
-      tarjetaCirculacion: '',
-      Seguro: {
-        aseguradora: '',
-        numeroPolisa: '',
-        telefono: '',
-        web: '',
-        fechaAlta: '',
-        fechaVencimiento: '',
-        poliza: '',
-      }
-    },
-    descripcionViaje: '',
-    tipoServicio: '',
-    diaSalida: '',
-    direccionPartida: 'hola',
-    latPartida: '',
-    lngPartida: '',
-    direccionLlegada: '',
-    latLlegada: '',
-    lngLlegada: '',
-  }
-};
-
 // COMPONENTE //
 export const MenuScreen = () => {
-
-  const navigate = useNavigate();
 
   const { userAuth } = useAuth();
 
@@ -100,10 +47,34 @@ export const MenuScreen = () => {
     perfil: { idPerfil: 1, perfil: 'admin', }
 });
 
+  // estate del viaje inicial
+  const [viajeActual, setViajeActual] = useState({
+    idempresa: '',
+    razonsocial: '',
+    direccion: '',
+    rfc: '',
+    telefono: '',
+    email: '',
+    giro: '',
+    idusuario: '',
+  });
+
+  const [viajesUsuario, setViajesUsuario] = useState([]);
+
 const { data: vehiculos, loading: loadingVehiculo } = useFetchVehiculo(vehiculoActual);
 const { data: empresasData, loading: loadingEmpresa } = useFetchEmpresas(empresaActual);
+const { data: viajeData, loading: loadingViaje } = useFetchViajes(viajeActual);
 
 const empresasFiltradas = empresasData.filter(item => item.razonsocial && item.usuario.idusuario === userAuth.idusuario);
+
+useEffect(() => {
+  if (viajeData) {
+    const viajesFiltradas = viajeData.filter(item => item.estatus == 'activo' && item.usuario.idusuario === userAuth.idusuario);
+    setViajesUsuario(viajesFiltradas)
+  }
+}, [viajeData, userAuth]);
+
+// console.log(viajesUsuario);
 
   const [mostrarEmpresa, setMostrarEmpresa] = useState(false);
   const [selectedOption, setSelectedOption] = useState('');
@@ -118,9 +89,6 @@ const empresasFiltradas = empresasData.filter(item => item.razonsocial && item.u
   return (
     <>
       <h1 className="pt-6 px-6 text-5xl font-bold">Sistema de rastreo</h1>
-      {/* <button onClick={cerrarSesion}>
-        cerrar sesion
-      </button> */}
       <div className='container'>
       <div className="row">
           <div className="col-sm-12 col-md-4 p-4">
@@ -182,8 +150,19 @@ const empresasFiltradas = empresasData.filter(item => item.razonsocial && item.u
                   <br></br>
                   <h1 className='text-3xl'>Viajes activos.</h1>
                 </div>
-                <div className='pt-5 m-4'>
-                  <TarjeMenuActivas/>
+                <div className='m-4'>
+                  {
+                    !loadingViaje ?
+                    <TarjeMenuActivas viajesUsuario={viajesUsuario} loadingViaje={loadingViaje}/>
+                    :
+                    <Player src='https://lottie.host/7d6dd8ce-b89c-4c97-ae7d-8ec9fe1a5f7b/YLQyRUzCfx.json'
+                      className="player"
+                      loop
+                      autoplay
+                      style={{ height: '300px', width: '300px' }}
+                    />
+                  }
+                  
                 </div>
               </div>
             </div>

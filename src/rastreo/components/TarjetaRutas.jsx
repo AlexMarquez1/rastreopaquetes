@@ -5,8 +5,6 @@ import useAuth from '../../hooks/useAuth';
 
 const TarjetaRutas = ({data, idViaje, descripcion, chofer, idVehiculo, partida, destino, setMensaje, latPartida, latLlegada, lngpartida, lngLlegada, fechaPartida, fechaLlegada, empresa, setTarjetaViajeSeleccionado, tipoVehiculo, marcaVehiculo, modeloVehiculo}) => {
 
-  const { userAuth } = useAuth();
-
   const latPartidaDecimal = parseFloat(latPartida);
   const lngPartidaDecimal = parseFloat(lngpartida);
 
