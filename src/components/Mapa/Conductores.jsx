@@ -27,6 +27,26 @@ export const Conductores = ({ socket, conductorSeleccionado, setConductorSelecci
 
             }
         });
+        socket.on('recibeubicacion', (data) => {
+            console.log('ubicacion: ', data);
+            if(lista.length == 0){ 
+                setLista([data]);
+            }else{
+                const isFound = lista.some(element => {
+                    if (element.ubicacion.Nombre === data.ubicacion.Nombre) {
+                        return true;
+                    }
+                    return false;
+                });
+                if (isFound) {
+                    console.log('Dato ya guardado');
+                } else {
+                    console.log('leyendo datos');
+                    setLista((old) => [...old, data]); 
+    
+                }
+            }
+        });
 
         socket.on('desconectado', (data) => {
             console.log('Desconectado: ', data);
@@ -45,6 +65,7 @@ export const Conductores = ({ socket, conductorSeleccionado, setConductorSelecci
         });
 
         return () => {
+            socket.off('recibeubicacion');
             socket.off('conductor');
             socket.off('desconectado');
         }
