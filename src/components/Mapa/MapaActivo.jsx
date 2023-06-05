@@ -10,7 +10,7 @@ import {socketUrl} from '../../helpers/VariablesGlobales';
 
 const containerStyle = {
     width: '100%',
-    height: '100%'
+    height: '200%'
 };
 
 // const center = {
@@ -91,7 +91,7 @@ export const MapaActivo = ({data}) => {
     <Flex
         flexDirection='column'
         alignItems='center'
-        h='100vh'
+        h='50vh'
         >
         <Box position='' h='50%' w='100%'>
             <GoogleMap

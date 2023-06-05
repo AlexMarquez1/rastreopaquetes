@@ -13,6 +13,7 @@ import { useFetchEmpresas } from '../hooks/useFetchEmpresas';
 import useAuth from '../../hooks/useAuth';
 import { Player } from '@lottiefiles/react-lottie-player';
 import { useFetchViajes } from '../hooks/useFetchViajes';
+import { VehiculoSeleccionado } from '../components/VehiculoSeleccionado';
 
 
 const valorInicial = {
@@ -26,6 +27,8 @@ export const MenuScreen = () => {
 
   const { userAuth } = useAuth();
 
+  const [isOpen, setIsOpen] = useState(false);
+  const [selectedItem, setSelectedItem] = useState(null);
   const [empresaActual, setEmpresaActual] = useState({
     idempresa: '',
     razonsocial: '',
@@ -60,6 +63,8 @@ export const MenuScreen = () => {
   });
 
   const [viajesUsuario, setViajesUsuario] = useState([]);
+  const [empresaSeleccionada, setEmpresaSeleccionada] = useState({});
+  const [selectedOption, setSelectedOption] = useState('');
 
 const { data: vehiculos, loading: loadingVehiculo } = useFetchVehiculo(vehiculoActual);
 const { data: empresasData, loading: loadingEmpresa } = useFetchEmpresas(empresaActual);
@@ -69,35 +74,39 @@ const empresasFiltradas = empresasData.filter(item => item.razonsocial && item.u
 
 useEffect(() => {
   if (viajeData) {
-    const viajesFiltradas = viajeData.filter(item => item.estatus == 'activo' && item.usuario.idusuario === userAuth.idusuario);
+    const viajesFiltradas = viajeData.filter(item => item.estatus == 'activo' && item.usuario.idusuario === userAuth.idusuario && item.empresa.razonsocial === selectedOption.razonsocial);
     setViajesUsuario(viajesFiltradas)
   }
-}, [viajeData, userAuth]);
+}, [viajeData, userAuth, selectedOption]);
 
-// console.log(viajesUsuario);
+console.log(empresaSeleccionada)
 
   const [mostrarEmpresa, setMostrarEmpresa] = useState(false);
-  const [selectedOption, setSelectedOption] = useState('');
 
   const onSubmit = (event) => {
     const selectedValue = event.target.value;
     setSelectedOption(selectedValue);
+    console.log(selectedValue)
   };
 
-  console.log(selectedOption);
+  // funcion para abrir el modal del boton de la empresa selecionada
+  const handleToggle = (item) => {
+    setSelectedItem(item);
+    setIsOpen(!isOpen);
+  };
 
   return (
     <>
       <h1 className="pt-6 px-6 text-5xl font-bold">Sistema de rastreo</h1>
       <div className='container'>
       <div className="row">
-          <div className="col-sm-12 col-md-4 p-4">
+          <div className="col-sm-12 col-md-12 col-xl-3 p-4">
             <div className="card drop-shadow-md bg-[#FFF]">
               <div className="card-body">
                 <div className='text-center'>
                   <i className="pi pi-building " style={{ fontSize: '3rem' }}></i>
                   <br></br>
-                  <h1 className='text-3xl'>Empresas</h1>
+                  <h1 className='text-3xl text-[#BE0F34] font-extrabold'>Empresas</h1>
                 </div>
                 <div className='col-sm-12 pt-4'>
                   <Formik initialValues={valorInicial} onSubmit={onSubmit}>
@@ -114,6 +123,7 @@ useEffect(() => {
                                 onChange={(e)=>{
                                   handleChange(e); 
                                   setSelectedOption(e.value);
+                                  setEmpresaSeleccionada(e.value)
                                 }}
                                 options={empresasFiltradas}
                                 optionLabel="razonsocial"
@@ -138,32 +148,85 @@ useEffect(() => {
                       </Form>
                     )}
                   </Formik>
+                  <div className='pt-4'>
+                    <ul>
+                      <p className='pb-2 font-bold'>Detalles de la empresa seleccionada.</p>
+                      <li className="text-xl mr-auto font-bold text-left pb-3" aria-current="true">
+                         {/* {viajesUsuario.empresa.razonsocial} */}
+                      </li>
+                      <li className="text-xl mr-auto font-bold text-left pb-3" aria-current="true">
+                        <i className="pi pi-map" style={{ fontSize: '1rem' }}></i> Viajes activos: <span className="text-lg font-normal text-gray-700"> {viajesUsuario.length}</span>
+                      </li>
+                      <li className="text-xl mr-auto font-bold text-left pb-3" aria-current="true">
+                        <i className="pi pi-users" style={{ fontSize: '1rem' }}></i> Conductor(es) en ruta: <span className="text-sm font-normal text-gray-700"> 
+                            {
+                              viajesUsuario.map((item) => ( 
+                                <ul key={item.idviaje}>
+                                  <li className='pl-3'>
+                                    - {item.conductor.nombrecompleto}
+                                  </li>
+                                </ul>
+                              ))
+                            }
+                        </span>
+                      </li>
+                      <li className="text-xl mr-auto font-bold text-left pb-2" aria-current="true">
+                        <i className="pi pi-truck" style={{ fontSize: '1rem' }}></i> Vehículo(s) en ruta: <span className="text-sm font-normal text-gray-700"> 
+                          {
+                            viajesUsuario.map((item) => ( 
+                              <ul key={item.idviaje}>
+                                <li className='pl-3'>
+                                  - ({item.vehiculo.idvehiculo}), {item.vehiculo.tipovehiculo}, {item.vehiculo.marca}, {item.vehiculo.modelo}
+                                </li>
+                              </ul>
+                            ))
+                          }
+                        </span>
+                      </li>
+                    </ul>
+                  </div>
                 </div>
               </div>
             </div>
           </div>
-          <div className="col-sm-12 col-md-8 p-4">
+          <div className="col-sm-12 col-md-12 col-xl-9 p-4">
             <div className="card drop-shadow-md bg-[#FFF]">
               <div className="card-body">
                 <div className='text-center'>
-                  <i className="pi pi-map-marker " style={{ fontSize: '3rem' }}></i>
+                  <i className="pi pi-map" style={{ fontSize: '3rem' }}></i>
                   <br></br>
-                  <h1 className='text-3xl'>Viajes activos.</h1>
+                  <h1 className='text-3xl text-[#BE0F34] font-extrabold'>Viajes activos.</h1>
                 </div>
-                <div className='m-4'>
                   {
-                    !loadingViaje ?
-                    <TarjeMenuActivas viajesUsuario={viajesUsuario} loadingViaje={loadingViaje}/>
+                    viajesUsuario.length === 0 ? 
+                    <div className='w-auto h-auto'>
+                      <div className='text-center items-center justify-center'>
+                        <Player src='https://lottie.host/aeb39e04-78b2-476a-ba37-fa532ce07679/4LQ09HIXkz.json'
+                          className="player"
+                          loop
+                          autoplay
+                          style={{ height: '300px', width: '300px' }}
+                        />
+                        <h1 className=' text-5xl font-bold'>Sin viajes activos</h1>
+                      </div>
+                      
+                    </div> 
                     :
-                    <Player src='https://lottie.host/7d6dd8ce-b89c-4c97-ae7d-8ec9fe1a5f7b/YLQyRUzCfx.json'
-                      className="player"
-                      loop
-                      autoplay
-                      style={{ height: '300px', width: '300px' }}
-                    />
+                    <div className='m-4'>
+                        {
+                          !loadingViaje ?
+                          <TarjeMenuActivas viajesUsuario={viajesUsuario} loadingViaje={loadingViaje}/>
+                          :
+                          <Player src='https://lottie.host/7d6dd8ce-b89c-4c97-ae7d-8ec9fe1a5f7b/YLQyRUzCfx.json'
+                            className="player"
+                            loop
+                            autoplay
+                            style={{ height: '300px', width: '300px' }}
+                          />
+                        }
+                      </div>
                   }
-                  
-                </div>
+                
               </div>
             </div>
           </div>
@@ -173,13 +236,13 @@ useEffect(() => {
               <div className="card-body text-center">
                 <i className="pi pi-truck" style={{ fontSize: '3rem' }}></i>
                 <br></br>
-                <h1 className='text-black text-3xl pb-4'>Disponibilidad de vehículos</h1>
+                <h1 className='text-3xl pb-4 text-[#BE0F34] font-extrabold'>Disponibilidad de vehículos</h1>
                 <div className='container'>
                   <div className='row justify-center'>
                     <div className='col-sm-6 col-md-3 col-xl-2 m-3 grid justify-items-center cursor-pointer' onClick={() => handleToggle((vehiculos.filter(item => item.tipovehiculo === 'Motocicleta' && item.usuario.idusuario === userAuth.idusuario)))}>
                       <div className="bg-white rounded-full h-40 w-40 hover:bg-red-600 hover:border-white border-2 border-red-700 flex items-center justify-center shadow-lg relative drop-shadow-md transition duration-500 ease-in-out transform hover:-translate-y-3 hover:shadow-2xl">
                         <span className="bg-red-500 text-white absolute top-0 right-0 rounded-full h-5 w-5 flex items-center justify-center shadow-sm border-2 border-white">
-                        {/* {vehiculos.filter(item => item.tipovehiculo === 'Motocicleta' && item.usuario.idusuario === userAuth.idusuario).length} */}
+                        {vehiculos.filter(item => item.tipovehiculo === 'Motocicleta' && item.usuario.idusuario === userAuth.idusuario).length}
                         </span>
                         <img src="src/assets/iconos_transporte/motorcycle.png" alt="Descripción de la imagen" className='' viewBox="0 0 20 20" fill="currentColor"/>
                       </div>
@@ -188,7 +251,7 @@ useEffect(() => {
                     <div className='col-sm-6 col-md-3 col-xl-2 m-3 grid justify-items-center cursor-pointer' onClick={() => handleToggle(vehiculos.filter(item => item.tipovehiculo === 'Nissan' && item.usuario.idusuario === userAuth.idusuario))}>
                       <div className="bg-white rounded-full h-40 w-40 hover:bg-red-600 hover:border-white border-2 border-red-700 flex items-center justify-center shadow-lg relative drop-shadow-md transition duration-500 ease-in-out transform hover:-translate-y-3 hover:shadow-2xl">
                         <span className="bg-red-500 text-white absolute top-0 right-0 rounded-full h-5 w-5 flex items-center justify-center shadow-sm border-2 border-white">
-                        {/* {vehiculos.filter(item => item.tipovehiculo === 'Nissan' && item.usuario.idusuario === userAuth.idusuario).length} */}
+                        {vehiculos.filter(item => item.tipovehiculo === 'Nissan' && item.usuario.idusuario === userAuth.idusuario).length}
                         </span>
                         <img src="src/assets/iconos_transporte/nissan-estaquita-redilas.png" alt="Descripción de la imagen" className='' viewBox="0 0 20 20" fill="currentColor"/>
                       </div>
@@ -197,7 +260,7 @@ useEffect(() => {
                     <div className='col-sm-6 col-md-3 col-xl-2 m-3 grid justify-items-center cursor-pointer' onClick={() => handleToggle(vehiculos.filter(item => item.tipovehiculo === 'Camioneta 3 1/2' && item.usuario.idusuario === userAuth.idusuario))}>
                       <div className="bg-white rounded-full h-40 w-40 hover:bg-red-600 hover:border-white border-2 border-red-700 flex items-center justify-center shadow-lg relative drop-shadow-md transition duration-500 ease-in-out transform hover:-translate-y-3 hover:shadow-2xl">
                         <span className="bg-red-500 text-white absolute top-0 right-0 rounded-full h-5 w-5 flex items-center justify-center shadow-sm border-2 border-white">
-                        {/* {vehiculos.filter(item => item.tipovehiculo === 'Camioneta 3 1/2' && item.usuario.idusuario === userAuth.idusuario).length} */}
+                        {vehiculos.filter(item => item.tipovehiculo === 'Camioneta 3 1/2' && item.usuario.idusuario === userAuth.idusuario).length}
                         </span>
                         <img src="src/assets/iconos_transporte/dodge-ram.png" alt="Descripción de la imagen" className='' viewBox="0 0 20 20" fill="currentColor"/>
                       </div>
@@ -206,7 +269,7 @@ useEffect(() => {
                     <div className='col-sm-6 col-md-3 col-xl-2 m-3 grid justify-items-center cursor-pointer' onClick={() => handleToggle(vehiculos.filter(item => item.tipovehiculo === 'Torton' && item.usuario.idusuario === userAuth.idusuario))}>
                       <div className="bg-white rounded-full h-40 w-40 hover:bg-red-600 hover:border-white border-2 border-red-700 flex items-center justify-center shadow-lg relative drop-shadow-md transition duration-500 ease-in-out transform hover:-translate-y-3 hover:shadow-2xl">
                         <span className="bg-red-500 text-white absolute top-0 right-0 rounded-full h-5 w-5 flex items-center justify-center shadow-sm border-2 border-white">
-                          {/* {vehiculos.filter(item => item.tipovehiculo === 'Torton' && item.usuario.idusuario === userAuth.idusuario).length} */}
+                          {vehiculos.filter(item => item.tipovehiculo === 'Torton' && item.usuario.idusuario === userAuth.idusuario).length}
                         </span>
                         <img src="src/assets/iconos_transporte/torton.png" alt="Descripción de la imagen" className='' viewBox="0 0 20 20" fill="currentColor"/>
                       </div>
@@ -215,7 +278,7 @@ useEffect(() => {
                     <div className='col-sm-6 col-md-3 col-xl-2 m-3 grid justify-items-center cursor-pointer' onClick={() => handleToggle(vehiculos.filter(item => item.tipovehiculo === 'Rabon' && item.usuario.idusuario === userAuth.idusuario))}>
                       <div className="bg-white rounded-full h-40 w-40 hover:bg-red-600 hover:border-white border-2 border-red-700 flex items-center justify-center shadow-lg relative drop-shadow-md transition duration-500 ease-in-out transform hover:-translate-y-3 hover:shadow-2xl">
                         <span className="bg-red-500 text-white absolute top-0 right-0 rounded-full h-5 w-5 flex items-center justify-center shadow-sm border-2 border-white">
-                        {/* {vehiculos.filter(item => item.tipovehiculo === 'Rabon' && item.usuario.idusuario === userAuth.idusuario).length} */}
+                        {vehiculos.filter(item => item.tipovehiculo === 'Rabon' && item.usuario.idusuario === userAuth.idusuario).length}
                         </span>
                         <img src="src/assets/iconos_transporte/rabon.png" alt="Descripción de la imagen" className='' viewBox="0 0 20 20" fill="currentColor"/>
                       </div>
@@ -224,18 +287,18 @@ useEffect(() => {
                     <div className='col-sm-6 col-md-3 col-xl-2 m-3 grid justify-items-center cursor-pointer' onClick={() => handleToggle(vehiculos.filter(item => item.tipovehiculo === 'Trailer' && item.usuario.idusuario === userAuth.idusuario))}>
                       <div className="bg-white rounded-full h-40 w-40 hover:bg-red-600 hover:border-white border-2 border-red-700 flex items-center justify-center shadow-lg hover:shadow-indigo-500/50 relative drop-shadow-md transition duration-500 ease-in-out transform hover:-translate-y-3 hover:shadow-2xl">
                         <span className="bg-red-500 text-white absolute top-0 right-0 rounded-full h-5 w-5 flex items-center justify-center shadow-sm border-2 border-white">
-                        {/* {vehiculos.filter(item => item.tipovehiculo === 'Trailer' && item.usuario.idusuario === userAuth.idusuario).length} */}
+                        {vehiculos.filter(item => item.tipovehiculo === 'Trailer' && item.usuario.idusuario === userAuth.idusuario).length}
                         </span>
                         <img src="src/assets/iconos_transporte/trailer.png" alt="Descripción de la imagen" className='' viewBox="0 0 20 20" fill="currentColor"/>
                       </div>
                       <span className='text-xl font-semibold'>Trailer</span>
                     </div>
                     {
-                      // isOpen && (
-                      //   <>
-                      //     <VehiculoSeleccionado selectedItem={selectedItem} handleToggle={handleToggle}/>
-                      //   </>
-                      // )
+                      isOpen && (
+                        <>
+                          <VehiculoSeleccionado selectedItem={selectedItem} handleToggle={handleToggle}/>
+                        </>
+                      )
                     }
                     
                   </div>
@@ -246,10 +309,24 @@ useEffect(() => {
           </div>
         </div>
       </div>
-      <Dialog header="Empresa" visible={mostrarEmpresa} style={{ width: '50vw' }} onHide={() => setMostrarEmpresa(false)}>
-        <p className="m-0">
-          Empresa: Informacion de la empresa
-        </p>
+      <Dialog header={empresaSeleccionada.razonsocial} visible={mostrarEmpresa} style={{ width: '50vw' }} onHide={() => setMostrarEmpresa(false)}>
+        <ul>
+          <li className="text-lg mr-auto font-bold text-left pb-2" aria-current="true">
+            <i className="pi pi-map-marker" style={{ fontSize: '1rem' }}></i> Direccion: <span className="font-normal">{empresaSeleccionada.direccion}</span>
+          </li>
+          <li className="text-lg mr-auto font-bold text-left pb-2">
+            <i className="pi pi-phone" style={{ fontSize: '1rem' }}></i> Telefono: <span className="font-normal">{empresaSeleccionada.telefono}</span>
+          </li>
+          <li className="text-lg mr-auto font-bold text-left pb-2">
+            <i className="pi pi-desktop" style={{ fontSize: '1rem' }}></i> RFC: <span className="font-normal">{empresaSeleccionada.rfc}</span>
+          </li>
+          <li className="text-lg mr-auto font-bold text-left pb-2">
+            <i className="pi pi-at" style={{ fontSize: '1rem' }}></i> E-mail: <span className="font-normal">{empresaSeleccionada.email}</span>
+          </li>
+          <li className="text-lg mr-auto font-bold text-left pb-2">
+            <i className="pi pi-building" style={{ fontSize: '1rem' }}></i> Giro: <span className="font-normal">{empresaSeleccionada.giro}</span>
+          </li>
+        </ul>
       </Dialog>
     </>
   )

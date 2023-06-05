@@ -15,6 +15,8 @@ import { useFetchVehiculo } from '../hooks/useFetchVehiculos';
 
 import useAuth from '../../hooks/useAuth';
 import { Player } from '@lottiefiles/react-lottie-player';
+import { InformacionEmpresa } from '../components/InformacionEmpresa';
+import { InformacionVehiculo } from '../components/InformacionVehiculo';
 
 const styleRegistro = {
   width: '85%'
@@ -91,17 +93,9 @@ export const RegistroViajesScreen = () => {
   const [mostrarEmpresa, setMostrarEmpresa] = useState(false);
   const [mostrarConductor, setMostrarConductor] = useState(false);
   const [mostrarVehiculo, setMostrarVehiculo] = useState(false);
-  const [conductorSeleccionado, setConductorSeleccionado] = useState({
-    idConductor: '',
-    nombreCompleto: '',
-    edad: '',
-    tipoDeSangre: '',
-    numeroContacto: '',
-    numeroLicencia: '',
-    tipoLicencia: '',
-    vigencia: '',
-    licencia: '',
-  });
+  const [empresaSeleccionada, setEmpresaSeleccionada] = useState({})
+  const [conductorSeleccionado, setConductorSeleccionado] = useState({});
+  const [vehiculoSeleccionado, setVehiculoSeleccionado] = useState({});
 
    const [empresaActual, setEmpresaActual] = useState({
      idempresa: '',
@@ -209,10 +203,10 @@ const { userAuth } = useAuth();
   return (
     <>
     <h1 className="pt-6 px-6 text-5xl font-bold">Nuevo viaje</h1>
-      <section className="section_item flex-container py-6" >
+      <section className="section_item flex-container py-4" >
         <div className="card form drop-shadow-md bg-[#FFF]" style={styleRegistro}>
           <br />
-          <h1 className="card-title card-title card-title pb-4 text-3xl text-[#BE0F34]">
+          <h1 className="text-3xl text-[#BE0F34] font-extrabold pb-4">
             Registra un nuevo viaje
           </h1>
           <Formik initialValues={initialValues} onSubmit={onSubmit}>
@@ -225,27 +219,29 @@ const { userAuth } = useAuth();
                         {
                           !loadingEmpresa?
                           <Field
-                          name='empresas'
-                          as={Dropdown}
-                          value={values.empresas}
-                          onChange={handleChange}
-                          options={empresasFiltradas}
-                          optionLabel="razonsocial"
-                          filter
-                          filterPlaceholder='Buscar por nombre'
-                          emptyFilterMessage='Empresa no registrada'
-                          placeholder="Selecciona una empresa"
-                          className="w-full md:w-14rem"
-                        /> :
-                        <Player src='https://lottie.host/dd2750b1-c089-4c4a-bf24-1dfb2d704326/suCIibC1KW.json'
-                        className="player"
-                        loop
-                        autoplay
-                        style={{ height: '50px', width: '50px' }}
-                        />
+                            name='empresas'
+                            as={Dropdown}
+                            value={values.empresas}
+                            onChange={(e)=>{
+                              handleChange(e); 
+                              setEmpresaSeleccionada(e.value);
+                            }}
+                            options={empresasFiltradas}
+                            optionLabel="razonsocial"
+                            filter
+                            filterPlaceholder='Buscar por nombre'
+                            emptyFilterMessage='Empresa no registrada'
+                            placeholder="Selecciona una empresa"
+                            className="w-full md:w-14rem"
+                          /> 
+                          :
+                          <Player src='https://lottie.host/dd2750b1-c089-4c4a-bf24-1dfb2d704326/suCIibC1KW.json'
+                            className="player"
+                            loop
+                            autoplay
+                            style={{ height: '50px', width: '50px' }}
+                          />
                         }
-                    
-                        
                         <Button
                           className='bg-[#BE0F34]'
                           icon="pi pi-building" type='button' onClick={() => setMostrarEmpresa(true)} disabled={values.empresas.razonsocial === '' ? true : false} />
@@ -256,34 +252,31 @@ const { userAuth } = useAuth();
                         {
                           !loadingConductor ?
                           <Field
-                          name='conductores'
-                          as={Dropdown}
-                          value={values.conductores}
-                          onChange={(e)=>{
-                            handleChange(e); 
-                            setConductorSeleccionado(e.value);
-                            console.log(e.value)
-                          }}
-                          options={conductoresFiltrados}
-                          optionLabel="nombrecompleto"
-                          filter
-                          filterPlaceholder='Buscar por nombre'
-                          emptyFilterMessage='Conductor no registrado'
-                          placeholder="Selecciona un conductor"
-                          className="w-full md:w-14rem"
-                          required={true}
-                        /> : 
-                        <Player src='https://lottie.host/dd2750b1-c089-4c4a-bf24-1dfb2d704326/suCIibC1KW.json'
-                        className="player"
-                        loop
-                        autoplay
-                        style={{ height: '50px', width: '50px' }}
-                        />
-                        }
-                        
-                          
-                       
-                        
+                            name='conductores'
+                            as={Dropdown}
+                            value={values.conductores}
+                            onChange={(e)=>{
+                              handleChange(e); 
+                              setConductorSeleccionado(e.value);
+                              console.log(e.value);
+                            }}
+                            options={conductoresFiltrados}
+                            optionLabel="nombrecompleto"
+                            filter
+                            filterPlaceholder='Buscar por nombre'
+                            emptyFilterMessage='Conductor no registrado'
+                            placeholder="Selecciona un conductor"
+                            className="w-full md:w-14rem"
+                            required={true}
+                          /> 
+                          : 
+                          <Player src='https://lottie.host/dd2750b1-c089-4c4a-bf24-1dfb2d704326/suCIibC1KW.json'
+                            className="player"
+                            loop
+                            autoplay
+                            style={{ height: '50px', width: '50px' }}
+                          />
+                        }                
                         {/* <Dropdown 
                           value={valueConductor}
                           onChange={(e)=>{ setValueConductor(e.target.value)}}
@@ -307,7 +300,10 @@ const { userAuth } = useAuth();
                           name='vehiculos'
                           as={Dropdown}
                           value={values.vehiculos}
-                          onChange={handleChange}
+                          onChange={(e)=>{
+                            handleChange(e); 
+                            setVehiculoSeleccionado(e.value);
+                          }}
                           options={vehiculosFiltrados}
                           optionLabel="marca"
                           filter
@@ -397,17 +393,13 @@ const { userAuth } = useAuth();
                       <Button type="submit" label='Registrar' className='text-[#BE0F34] m-4'/>
                     </div>
                 </div>
-                <Dialog header="Empresa" visible={mostrarEmpresa} style={{ width: '50vw' }} onHide={() => setMostrarEmpresa(false)}>
-                  <p className="m-0">
-                    Empresa: Informacion de la empresa
-                  </p>
+                <Dialog header={empresaSeleccionada.razonsocial} visible={mostrarEmpresa} style={{ width: '70vw' }} onHide={() => setMostrarEmpresa(false)}>
+                  <InformacionEmpresa empresaSeleccionada={empresaSeleccionada}/>
                 </Dialog>
-                <Dialog header="Vehiculo" visible={mostrarVehiculo} style={{ width: '50vw' }} onHide={() => setMostrarVehiculo(false)}>
-                  <p className="m-0">
-                    Vehiculo: Informacion del vehiculo
-                  </p>
+                <Dialog header="Vehiculo" visible={mostrarVehiculo} style={{ width: '70vw' }} onHide={() => setMostrarVehiculo(false)}>
+                   <InformacionVehiculo vehiculoSeleccionado={vehiculoSeleccionado}/>
                 </Dialog>
-                <Dialog header="Conductor" visible={mostrarConductor} style={{ width: '50vw' }} onHide={() => setMostrarConductor(false)}>
+                <Dialog header="Conductor" visible={mostrarConductor} style={{ width: '70vw' }} onHide={() => setMostrarConductor(false)}>
                   <InformacionConductor conductorSeleccionado={conductorSeleccionado} />
                 </Dialog>
               </Form>

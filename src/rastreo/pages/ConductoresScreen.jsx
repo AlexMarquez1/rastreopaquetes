@@ -94,7 +94,7 @@ const toggleNuevoConductorForm = () => {
     <section id="form" className="section_item flex-container" style={{ paddingTop: '5%' }}>
       <div className="card form" style={styleRegistro}>
           <br />
-          <h1 className="card-title pb-4 card-title pb-4 text-3xl text-[#BE0F34]">
+          <h1 className="text-3xl text-[#BE0F34] font-extrabold pb-4">
               Registrar un nuevo conductor
           </h1>
               <NuevoConductorForm toggleNuevoConductorForm={toggleNuevoConductorForm}/>

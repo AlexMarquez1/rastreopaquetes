@@ -56,7 +56,7 @@ export const TablaConductoresCrud = ({ data, encabezados, id, editar = false, el
 
     const header = (
         <div style={{ alignItems: 'center', justifyContent: 'space-between'}}>
-            <h1 className="card-title pb-4 text-3xl text-left text-[#BE0F34]">
+            <h1 className="text-3xl text-[#BE0F34] font-extrabold text-center pb-4">
               Lista de conductores
           </h1>
             <span className="p-input-icon-left m-2">

@@ -25,7 +25,7 @@ const NuevaEmpresasForm = () => {
     const onSubmit = (values, { resetForm }) => {
         const empresa = {...values, usuario}
         console.log(empresa)
-        fetch('http://192.168.0.6:8080/nueva/empresa', {
+        fetch('http://192.168.0.191:8080/nueva/empresa', {
           method: 'POST', // O 'PUT' según el tipo de solicitud que desees realizar
           headers: {
             'Content-Type': 'application/json' // Asegúrate de establecer el tipo de contenido adecuado

@@ -14,8 +14,6 @@ const styleRegistroModal = {
 
 const TarjeMenuActivas = ({viajesUsuario, loadingViaje}) => {
 
-  console.log(viajesUsuario);
-
   const [show, setShow] = useState(null);
 
   const toggleAccordionViaje = () => {

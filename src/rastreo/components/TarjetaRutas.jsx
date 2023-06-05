@@ -30,6 +30,13 @@ const TarjetaRutas = ({data, idViaje, descripcion, chofer, idVehiculo, partida, 
   };
 
   const toggleAccordion = () => {
+    
+  };
+
+  const [rotate, setRotate] = useState(false);
+
+  const handleIconClick = () => {
+    setRotate(!rotate);
     setShow(!show);
   };
 
@@ -60,26 +67,27 @@ const TarjetaRutas = ({data, idViaje, descripcion, chofer, idVehiculo, partida, 
           )}
         </GoogleMap>
 
-
-        {/* <img src="" className="card-img-top" alt="..." style={{ width: "200px", height: "auto" }}/> */}
-        {/* <ion-icon name="chevron-down-circle float-right"></ion-icon> */}
-        <div onClick={toggleAccordion} className="card-body">
-          <div style={{ float: 'right' }} className='cursor-pointer'>
-            <i className="pi pi-angle-down text-xl"></i>
+        <div className="card-body">
+          <div style={{ float: 'right' }} className='flex justify-end cursor-pointer' onClick={handleIconClick}>
+            <i className={`pi pi-chevron-down text-xl transform ${rotate ? 'rotate-180' : 'rotate-0'} rounded-full border border-gray-500 hover:border-white p-2 transition duration-300 ease-in-out hover:bg-[#BE0F34] text-[#BE0F34] hover:text-white hover:shadow-md`}></i>
           </div>
-          <h5 className="card-title font-bold text-xl">Id viaje: <span className='font-normal text-ms'>{idViaje}</span></h5>
-          <h4 className="card-title font-bold text-xl">Empresa: <span className='font-normal text-ms'>{empresa}</span></h4>
-          <div className='row'>
+          <h5 className="card-title font-bold text-xl text-left">Id viaje: <span className='font-normal text-ms text-gray-700'>{idViaje}</span></h5>
+          <h4 className="card-title font-bold text-xl text-left">Empresa: <span className='font-normal text-ms text-gray-700'>{empresa}</span></h4>
+          {
+            show &&
+
+            <>
+            <div className='row'>
             <div className='col'>
               <h5 className="card-title font-bold text-base">
                 Partida:
-                <span className='font-normal text-ms'><br />{partida}</span>
+                <span className='font-normal text-ms text-gray-700'><br />{partida}</span>
               </h5>
             </div>
             <div className='col'>
               <h5 className="card-title font-bold text-base">
                 destino:
-                <span className='font-normal text-ms'><br />{destino}</span>
+                <span className='font-normal text- text-gray-700'><br />{destino}</span>
               </h5>
             </div>
           </div>
@@ -87,7 +95,7 @@ const TarjetaRutas = ({data, idViaje, descripcion, chofer, idVehiculo, partida, 
             <div className='col'>
               <h5 className="card-title font-bold text-base">
                 Fecha de salida:
-                <span className='font-normal text-ms'><br />{fechaPartida}</span>
+                <span className='font-normal text-ms text-gray-700'><br />{fechaPartida}</span>
               </h5>
             </div>
             <div className='col'>
@@ -97,9 +105,6 @@ const TarjetaRutas = ({data, idViaje, descripcion, chofer, idVehiculo, partida, 
               </h5>
             </div>
           </div>
-        </div>
-        {
-          show &&
           <div>
             <ul className="list-group list-group-flush">
               <li className="list-group-item text-left"><span className='font-bold text-lg'>Chofer:</span> {chofer}</li>
@@ -112,7 +117,10 @@ const TarjetaRutas = ({data, idViaje, descripcion, chofer, idVehiculo, partida, 
               </a>
             </div>
           </div>
-        }
+            </>
+          }
+          
+        </div>
       </div>
     </>
   )

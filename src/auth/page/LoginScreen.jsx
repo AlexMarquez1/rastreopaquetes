@@ -12,15 +12,15 @@ export const LoginScreen = () => {
       </div>
       <div className='hidden lg:flex h-full w-3/4 bg-[#BE0F34] items-center justify-center'>
         <div className='w-auto h-auto'>
-        <div className='text-center items-center justify-center'>
-          <h1 className=' text-5xl font-bold text-white'>Rastreo app</h1>
-          <Player src='https://lottie.host/e1ddb718-71bd-4f86-867a-186f78d680f6/PgcsqPRRSV.json'
-            className="player"
-            loop
-            autoplay
-            style={{ height: '600px', width: '600px' }}
-          />
-        </div>
+          <div className='text-center items-center justify-center'>
+            <h1 className=' text-5xl font-bold text-white'>Rastreo app</h1>
+            <Player src='https://lottie.host/e1ddb718-71bd-4f86-867a-186f78d680f6/PgcsqPRRSV.json'
+              className="player"
+              loop
+              autoplay
+              style={{ height: '600px', width: '600px' }}
+            />
+          </div>
         </div>
       </div> 
     </div>

@@ -41,7 +41,7 @@ const { data: vehiculos, loading } = useFetchVehiculo(vehiculoActual);
     <section className="section_item flex-container py-6 drop-shadow-md">
         <div className="card form drop-shadow-md" style={styleRegistro}>
             <br />
-            <h1 className="text-black text-3xl pb-4">
+            <h1 className="text-3xl text-[#BE0F34] font-extrabold pb-4">
                 Registrar un nuevo vehículo
             </h1>
             <NuevoVehiculoForm />

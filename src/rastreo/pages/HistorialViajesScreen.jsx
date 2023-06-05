@@ -34,6 +34,9 @@ const HistorialViajesScreen = () => {
   const [show, setShow] = useState(null);
   const [show2, setShow2] = useState(null);
   const [show3, setShow3] = useState(null);
+  const [rotate, setRotate] = useState(false);
+  const [rotate2, setRotate2] = useState(false);
+  const [rotate3, setRotate3] = useState(false);
 
   // estate del viaje inicial
   const [viajeActual, setViajeActual] = useState({
@@ -88,19 +91,25 @@ const HistorialViajesScreen = () => {
     const toggleAccordionViaje = () => {
       setMensaje(true);
       setShow(!show); 
+      setRotate(!rotate);
     };
 
     const toggleAccordionConductor = () => {
+      setMensaje(true);
         setShow2(!show2); 
+        setRotate2(!rotate2);
     };
 
     const toggleAccordionVehiculo = () => {
+      setMensaje(true);
         setShow3(!show3); 
+        setRotate3(!rotate3);
     };
 
   // función que se acciona cada que se escribe en el search
   const handleSearch = e => {
-    setBusqueda(e.target.value);
+    setBusqueda(e.
+      target.value);
     filtrar(e.target.value);
   };
 
@@ -142,7 +151,6 @@ const HistorialViajesScreen = () => {
     return age;
   }
 
-
   return (
     <>
     <h1 className='pt-6 px-6 text-5xl font-bold'>Historial de viajes</h1>
@@ -176,7 +184,7 @@ const HistorialViajesScreen = () => {
         <div className="card form drop-shadow-md"style={styleRegistro}>
             <br />
             <h1 className="card-title">
-                <p className="fs-4">Viajes activos: {viajesUsuario.filter(card => card.estatus === 'activo').length}</p>
+                <p className="text-3xl text-[#BE0F34] font-extrabold">Viajes activos: <span className='text-black'>{viajesUsuario.filter(card => card.estatus === 'activo').length}</span></p>
             </h1>
             <br />
             <div className='container'>
@@ -236,7 +244,7 @@ const HistorialViajesScreen = () => {
         <div className="card form" style={styleRegistro}>
         <br />
             <h1 className="card-title">
-                <p className="fs-4">Viajes programados: {viajesUsuario.filter(card => card.estatus === 'programado').length}</p>
+                <p className="text-3xl text-[#BE0F34] font-extrabold">Viajes programados: <span className='text-black'>{viajesUsuario.filter(card => card.estatus === 'programado').length}</span></p>
             </h1>
             <br />
             <div className='container'>
@@ -245,18 +253,18 @@ const HistorialViajesScreen = () => {
                         renderDotsOutside={true} 
                         infinite={true} 
                         swipeable={true}
-                      draggable={false}
-                      showDots={true}
-                      responsive={responsive}
-                      autoPlay={false}
-                      autoPlaySpeed={3000}
-                      keyBoardControl={true}
-                      customTransition="all .5"
-                      transitionDuration={500}
-                      containerClass="carousel-container"
-                      removeArrowOnDeviceType={['tablet', 'mobile']}
-                      dotListClass="custom-dot-list-style"
-                      itemClass="carousel-item-padding-40-px"
+                        draggable={false}
+                        showDots={true}
+                        responsive={responsive}
+                        autoPlay={false}
+                        autoPlaySpeed={3000}
+                        keyBoardControl={true}
+                        customTransition="all .5"
+                        transitionDuration={500}
+                        containerClass="carousel-container"
+                        removeArrowOnDeviceType={['tablet', 'mobile']}
+                        dotListClass="custom-dot-list-style"
+                        itemClass="carousel-item-padding-40-px"
                     > 
                         {
                         viajesUsuario.filter(trip => trip.estatus === 'programado').map((data, index)=> (
@@ -297,7 +305,7 @@ const HistorialViajesScreen = () => {
         <div className="card form drop-shadow-md" style={styleRegistro}>
         <br />
             <h1 className="card-title">
-                <p className="fs-4">Viajes completados: {viajesUsuario.filter(card => card.estatus === 'completado').length}</p>
+                <p className="text-3xl text-[#BE0F34] font-extrabold">Viajes completados: <span className='text-black'>{viajesUsuario.filter(card => card.estatus === 'completado').length}</span></p>
             </h1>
             <br />
             <div className='container'>
@@ -358,9 +366,9 @@ const HistorialViajesScreen = () => {
             <div className="card" style={styleRegistroModal} onClick={toggleAccordionViaje}>
             <br />
             <h1 className="card-title">
-                <div style={{float: 'right'}} className='px-4 text-white'>
-                    <i className="pi pi-angle-down"></i>
-                </div>
+            <div style={{ float: 'right' }} className='flex justify-end cursor-pointer'>
+              <i className={`pi pi-angle-down text-xl transform ${rotate ? 'rotate-180' : 'rotate-0'} rounded-full hover:border-white p-2 mr-2 transition duration-300 ease-in-out hover:bg-white text-white hover:text-red-700 hover:shadow-md`}></i>
+            </div>
                 <p className="fs-4 text-white">Detalles del viaje</p>
             </h1>   
             </div>
@@ -418,8 +426,8 @@ const HistorialViajesScreen = () => {
             <div className="card" style={styleRegistroModal} onClick={toggleAccordionConductor}>
             <br />
             <h1 className="card-title">
-                <div style={{float: 'right'}} className='px-4 text-white'>
-                    <i className="pi pi-angle-down"></i>
+                <div style={{ float: 'right' }} className='flex justify-end cursor-pointer' >
+                  <i className={`pi pi-angle-down text-xl transform ${rotate2 ? 'rotate-180' : 'rotate-0'} rounded-full hover:border-white p-2 mr-2 transition duration-300 ease-in-out hover:bg-white text-white hover:text-red-700 hover:shadow-md`}></i>
                 </div>
                 <p className="fs-4 text-white">Detalles del conductor</p>
             </h1>   
@@ -461,8 +469,8 @@ const HistorialViajesScreen = () => {
             <div className="card" style={styleRegistroModal} onClick={toggleAccordionVehiculo}>
             <br />
             <h1 className="card-title">
-                <div style={{float: 'right'}} className='px-4 text-white'>
-                    <i className="pi pi-angle-down"></i>
+                <div style={{ float: 'right' }} className='flex justify-end cursor-pointer'>
+                  <i className={`pi pi-angle-down text-xl transform ${rotate3 ? 'rotate-180' : 'rotate-0'} rounded-full hover:border-white p-2 mr-2 transition duration-300 ease-in-out hover:bg-white text-white hover:text-red-700 hover:shadow-md`}></i>
                 </div>
                 <p className="fs-4 text-white">Detalles del vehiculo</p>
             </h1>   

@@ -2,7 +2,7 @@ import { Marker } from '@react-google-maps/api'
 import React, { useEffect } from 'react'
 
 export const MarcadorMensaje = ({mensajes, setmensaje, socket}) => {
-    console.log('Mensajes: ', mensajes);
+    // console.log('Mensajes: ', mensajes);
     const marcadores = {
         'Inicio viaje': 'https://firebasestorage.googleapis.com/v0/b/isae-de6da.appspot.com/o/Imagenes%2FMarcadores%2FMark-Truck.png?alt=media&token=69964d8f-4669-4bbd-a3e2-39f742441f7c',
         'Cambio de chofer': 'https://firebasestorage.googleapis.com/v0/b/isae-de6da.appspot.com/o/Imagenes%2FMarcadores%2FMark-People.png?alt=media&token=6be4f93f-fc11-4efb-9669-199adb7c91e1',
