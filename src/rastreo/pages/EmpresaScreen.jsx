@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import NuevaEmpresasForm from '../components/NuevaEmpresasForm'
 import { useFetchEmpresas } from '../hooks/useFetchEmpresas';
 import useAuth from '../../hooks/useAuth';
@@ -11,7 +11,7 @@ const styleRegistro = {
 
 const EmpresaScreen = () => {
 
-  // const { userAuth } = useAuth();
+  const { userAuth, setUserAuth } = useAuth();
   
   const [empresaActual, setEmpresaActual] = useState({
     idempresa: '',
@@ -22,15 +22,32 @@ const EmpresaScreen = () => {
     email: '',
     giro: '',
     idusuario: '',
-});
+  });
 
-const { data: empresas, loading } = useFetchEmpresas(empresaActual);
+const { data: empresas, loading, refetchEmpresas } = useFetchEmpresas(empresaActual);
 
-// const empresaFiltrada = empresasState.filter(item => item.usuario.idusuario === userAuth.idusuario);
+// Función para refrescar las empresas después de agregar una nueva
+const refrescarEmpresas = () => {
+  refetchEmpresas(); // Llama a la función refetchEmpresas del hook useFetchEmpresas
+};
 
+// Función para manejar el evento de agregar una nueva empresa
+const handleAgregarEmpresa = (nuevaEmpresa) => {
+  setEmpresaActual(nuevaEmpresa); // Actualiza el estado empresaActual con la nueva empresa agregada
+  refrescarEmpresas(); // Refresca las empresas para mostrar la empresa recién agregada
+};
 
-  return (
-    
+// funcion que hace que al hacer refesh se mantenga el usuario activo
+useEffect(() => {
+  const loggedInUser = localStorage.getItem("user");
+  
+  if (loggedInUser) {
+    const foundUser = JSON.parse(loggedInUser);
+    setUserAuth(foundUser);
+  }
+}, []);
+
+  return (   
     <> 
     <h1 className="pt-6 px-6 text-5xl font-bold">Empresas relacionadas</h1>
     {!loading ? 
@@ -42,15 +59,13 @@ const { data: empresas, loading } = useFetchEmpresas(empresaActual);
         style={{ height: '300px', width: '300px' }}
       />
     }
-    
-
     <section className="section_item flex-container py-6">
     <div className="card form drop-shadow-md bg-[#FFF]" style={styleRegistro}>
         <br />
         <h1 className="text-3xl text-[#BE0F34] font-extrabold pb-5">
             Registro de nueva empresa
         </h1>
-          <NuevaEmpresasForm/>
+          <NuevaEmpresasForm data={empresas} setEmpresaActual={setEmpresaActual}/>
     </div>
 </section>
     

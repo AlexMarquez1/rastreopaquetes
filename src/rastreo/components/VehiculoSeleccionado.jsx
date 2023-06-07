@@ -16,7 +16,7 @@ export const VehiculoSeleccionado = ({handleToggle, selectedItem}) => {
     </div>
     <div className="inset-0 flex items-center justify-center">
       <div className="bg-white rounded-lg p-3 overflow-x-auto">
-        <h2 className="text-3xl text-[#BE0F34] font-extrabold mb-4">Detalles del elemento</h2>
+        <h2 className="text-3xl text-[#BE0F34] font-extrabold mb-4">Vehículos</h2>
 
         <table className="min-w-full divide-y divide-gray-200 border border-[#BE0F34]">
           <thead className="bg-[#BE0F34]">
@@ -28,6 +28,7 @@ export const VehiculoSeleccionado = ({handleToggle, selectedItem}) => {
               <th className="px-3 py-3 sm:py-2 text-left text-xs font-medium text-white uppercase tracking-wider">Tipo</th>
               <th className="px-3 py-3 sm:py-2 text-left text-xs font-medium text-white uppercase tracking-wider">Placas</th>
               <th className="px-3 py-3 sm:py-2 text-left text-xs font-medium text-white uppercase tracking-wider">N° serie</th>
+              <th className="px-3 py-3 sm:py-2 text-left text-xs font-medium text-white uppercase tracking-wider">Disponibilidad</th>
               <th className="px-3 py-3 sm:py-2 text-left text-xs font-medium text-white uppercase tracking-wider">Seguro</th>
               <th className="px-3 py-3 sm:py-2 text-left text-xs font-medium text-white uppercase tracking-wider">Poliza</th>
               <th className="px-3 py-3 sm:py-2 text-left text-xs font-medium text-white uppercase tracking-wider">Trajeta circulación</th>
@@ -45,6 +46,9 @@ export const VehiculoSeleccionado = ({handleToggle, selectedItem}) => {
                 <td className="px-3 py-3 sm:py-2 whitespace-nowrap text-sm text-gray-700">{vehiculo.tipovehiculo}</td>
                 <td className="px-3 py-3 sm:py-2 whitespace-nowrap text-sm text-gray-700">{vehiculo.placas}</td>
                 <td className="px-3 py-3 sm:py-2 whitespace-nowrap text-sm text-gray-700">{vehiculo.numeroserie}</td>
+                <td className={`px-3 py-3 sm:py-2 whitespace-nowrap text-sm font-semibold ${vehiculo.estatusvehiculo === 'disponible' ? 'text-green-500' : 'text-red-500'}`}>
+                  {vehiculo.estatusvehiculo}
+                </td>
                 <td className="px-3 py-3 sm:py-2 whitespace-nowrap text-sm text-gray-700">{vehiculo.nombreseguro}</td>
                 <td className="px-3 py-3 whitespace-nowrap">
                   <div className="flex space-x-4">

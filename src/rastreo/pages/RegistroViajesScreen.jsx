@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { Field, Form, Formik } from 'formik';
 import { Dropdown } from 'primereact/dropdown';
 import { Button } from 'primereact/button';
@@ -153,7 +153,7 @@ const [vehiculoActual, setVehiculoActual] = useState({
   archivopolizaseguro: '',
 });
 
-const { userAuth } = useAuth();
+const { userAuth, setUserAuth} = useAuth();
 
   const { data: empresasData, loading: loadingEmpresa } = useFetchEmpresas(empresaActual);
   const { data: conductoresData, loading: loadingConductor } = useFetchConductor(conductorActual);
@@ -182,7 +182,7 @@ const { userAuth } = useAuth();
       usuario: userAuth
     }
 
-    fetch('http://192.168.0.6:8080/nuevo/viaje', {
+    fetch('http://192.168.0.191:8080/nuevo/viaje', {
           method: 'POST', // O 'PUT' según el tipo de solicitud que desees realizar
           headers: {
             'Content-Type': 'application/json' // Asegúrate de establecer el tipo de contenido adecuado
@@ -199,6 +199,16 @@ const { userAuth } = useAuth();
 
     // resetForm();
   };
+
+  useEffect(() => {
+    const loggedInUser = localStorage.getItem("user");
+    
+    if (loggedInUser) {
+      const foundUser = JSON.parse(loggedInUser);
+      setUserAuth(foundUser);
+      console.log(foundUser)
+    }
+  }, []);
 
   return (
     <>
@@ -297,34 +307,34 @@ const { userAuth } = useAuth();
                         {
                           !loadingVehiculo ?
                           <Field
-                          name='vehiculos'
-                          as={Dropdown}
-                          value={values.vehiculos}
-                          onChange={(e)=>{
-                            handleChange(e); 
-                            setVehiculoSeleccionado(e.value);
-                          }}
-                          options={vehiculosFiltrados}
-                          optionLabel="marca"
-                          filter
-                          filterPlaceholder='Buscar por tipo'
-                          emptyFilterMessage='Vehiculo no registrado'
-                          placeholder="Selecciona un vehiculo"
-                          className="w-full md:w-14rem"
-                          required={true}
-                        />
-                        : 
-                        <Player src='https://lottie.host/dd2750b1-c089-4c4a-bf24-1dfb2d704326/suCIibC1KW.json'
-                        className="player"
-                        loop
-                        autoplay
-                        style={{ height: '50px', width: '50px' }}
-                        />
+                            name='vehiculos'
+                            as={Dropdown}
+                            value={values.vehiculos}
+                            onChange={(e)=>{
+                              handleChange(e); 
+                              setVehiculoSeleccionado(e.value);
+                            }}
+                            options={vehiculosFiltrados}
+                            optionLabel={vehiculo => `(${vehiculo.tipovehiculo}), ${vehiculo.marca}, ${vehiculo.modelo}`}
+                            filter
+                            filterPlaceholder='Buscar por tipo'
+                            emptyFilterMessage='Vehiculo no registrado'
+                            placeholder="Selecciona un vehiculo"
+                            className="w-full md:w-14rem"
+                            required={true}
+                          />
+                          : 
+                          <Player src='https://lottie.host/dd2750b1-c089-4c4a-bf24-1dfb2d704326/suCIibC1KW.json'
+                            className="player"
+                            loop
+                            autoplay
+                            style={{ height: '50px', width: '50px' }}
+                          />
                         }
                         
                         <Button
                           className='bg-[#BE0F34]'
-                          icon="pi pi-car" type='button' onClick={() => setMostrarVehiculo(true)} disabled={values.vehiculos.tipo === '' ? true : false} />
+                          icon="pi pi-car" type='button' onClick={() => setMostrarVehiculo(true)} disabled={values.vehiculos.tipovehiculo === '' ? true : false} />
 
                       </div>
                     </div>

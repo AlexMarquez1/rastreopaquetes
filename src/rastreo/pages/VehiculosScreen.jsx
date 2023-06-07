@@ -1,4 +1,4 @@
-import React, { useContext, useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import NuevoVehiculoForm from '../components/NuevoVehiculoForm'
 import { useFetchVehiculo } from '../hooks/useFetchVehiculos';
 import { DisponibilidadVehiculo } from '../components/DisponibilidadVehiculo';
@@ -6,6 +6,7 @@ import { DisponibilidadVehiculo } from '../components/DisponibilidadVehiculo';
 import { Player } from '@lottiefiles/react-lottie-player';
 
 import { ApiContext } from '../context/ApiProvider';
+import useAuth from '../../hooks/useAuth';
 
 const styleRegistro = {
     width: '85%',
@@ -22,7 +23,21 @@ const VehiculosScreen = () => {
         telefonocontacto: '',
         perfil: { idPerfil: 1, perfil: 'admin', }
     });
+
+const { userAuth, setUserAuth } = useAuth();
+
 const { data: vehiculos, loading } = useFetchVehiculo(vehiculoActual);
+
+// funcion que hace que al hacer refesh se mantenga el usuario activo
+useEffect(() => {
+    const loggedInUser = localStorage.getItem("user");
+    
+    if (loggedInUser) {
+      const foundUser = JSON.parse(loggedInUser);
+      setUserAuth(foundUser);
+      console.log(foundUser)
+    }
+  }, []);
 
   return (
     <>
@@ -44,7 +59,7 @@ const { data: vehiculos, loading } = useFetchVehiculo(vehiculoActual);
             <h1 className="text-3xl text-[#BE0F34] font-extrabold pb-4">
                 Registrar un nuevo vehículo
             </h1>
-            <NuevoVehiculoForm />
+            <NuevoVehiculoForm data={vehiculos} setVehiculoActual={setVehiculoActual}/>
         </div>
     </section>
     </div>

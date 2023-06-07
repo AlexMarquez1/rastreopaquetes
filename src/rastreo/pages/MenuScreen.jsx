@@ -18,14 +18,14 @@ import { VehiculoSeleccionado } from '../components/VehiculoSeleccionado';
 
 const valorInicial = {
   empresas: {
-    razonsocial: ''
+    razonsocial: 'ISAe'
   }
 }
 
 // COMPONENTE //
 export const MenuScreen = () => {
 
-  const { userAuth } = useAuth();
+  const { userAuth, setUserAuth } = useAuth();
 
   const [isOpen, setIsOpen] = useState(false);
   const [selectedItem, setSelectedItem] = useState(null);
@@ -72,14 +72,20 @@ const { data: viajeData, loading: loadingViaje } = useFetchViajes(viajeActual);
 
 const empresasFiltradas = empresasData.filter(item => item.razonsocial && item.usuario.idusuario === userAuth.idusuario);
 
+// useEffect(() => {
+//   if (viajeData) {
+//     const viajesFiltradas = viajeData.filter(item => item.estatus == 'activo' && item.usuario.idusuario === userAuth.idusuario && item.empresa.razonsocial === selectedOption.razonsocial);
+//     setViajesUsuario(viajesFiltradas)
+//   }
+// }, [viajeData, userAuth, selectedOption]);
+
 useEffect(() => {
   if (viajeData) {
-    const viajesFiltradas = viajeData.filter(item => item.estatus == 'activo' && item.usuario.idusuario === userAuth.idusuario && item.empresa.razonsocial === selectedOption.razonsocial);
-    setViajesUsuario(viajesFiltradas)
+    const viajesFiltradas = viajeData.filter(item => item.estatus === 'activo' && item.usuario.idusuario === userAuth.idusuario && item.empresa.razonsocial === selectedOption.razonsocial);
+    const primerViajeActivo = viajesFiltradas.find(item => item.estatus === 'activo');
+    setViajesUsuario(primerViajeActivo ? [primerViajeActivo] : []);
   }
 }, [viajeData, userAuth, selectedOption]);
-
-console.log(empresaSeleccionada)
 
   const [mostrarEmpresa, setMostrarEmpresa] = useState(false);
 
@@ -95,11 +101,20 @@ console.log(empresaSeleccionada)
     setIsOpen(!isOpen);
   };
 
+  useEffect(() => {
+    const loggedInUser = localStorage.getItem("user");
+
+    if (loggedInUser) {
+      const foundUser = JSON.parse(loggedInUser);
+      setUserAuth(foundUser);
+    }
+  }, []);
+
   return (
     <>
       <h1 className="pt-6 px-6 text-5xl font-bold">Sistema de rastreo</h1>
       <div className='container'>
-      <div className="row">
+        <div className="row">
           <div className="col-sm-12 col-md-12 col-xl-3 p-4">
             <div className="card drop-shadow-md bg-[#FFF]">
               <div className="card-body">
@@ -119,7 +134,7 @@ console.log(empresaSeleccionada)
                               <Field
                                 name='empresas'
                                 as={Dropdown}
-                                value={values.empresas}
+                                value={values.empresas.razonsocial}
                                 onChange={(e)=>{
                                   handleChange(e); 
                                   setSelectedOption(e.value);
@@ -141,7 +156,6 @@ console.log(empresaSeleccionada)
                               style={{ height: '50px', width: '50px' }}
                             />
                             }
-                            
                             <Button className='bg-[#BE0F34] botones-estilo' icon="pi pi-building" type='button' onClick={() => setMostrarEmpresa(true)} disabled={values.empresas.razonsocial === '' ? true : false} />
                           </div>
                         </div>
@@ -150,39 +164,44 @@ console.log(empresaSeleccionada)
                   </Formik>
                   <div className='pt-4'>
                     <ul>
-                      <p className='pb-2 font-bold'>Detalles de la empresa seleccionada.</p>
-                      <li className="text-xl mr-auto font-bold text-left pb-3" aria-current="true">
-                         {/* {viajesUsuario.empresa.razonsocial} */}
-                      </li>
-                      <li className="text-xl mr-auto font-bold text-left pb-3" aria-current="true">
-                        <i className="pi pi-map" style={{ fontSize: '1rem' }}></i> Viajes activos: <span className="text-lg font-normal text-gray-700"> {viajesUsuario.length}</span>
-                      </li>
-                      <li className="text-xl mr-auto font-bold text-left pb-3" aria-current="true">
-                        <i className="pi pi-users" style={{ fontSize: '1rem' }}></i> Conductor(es) en ruta: <span className="text-sm font-normal text-gray-700"> 
-                            {
-                              viajesUsuario.map((item) => ( 
-                                <ul key={item.idviaje}>
-                                  <li className='pl-3'>
-                                    - {item.conductor.nombrecompleto}
-                                  </li>
-                                </ul>
-                              ))
-                            }
-                        </span>
-                      </li>
-                      <li className="text-xl mr-auto font-bold text-left pb-2" aria-current="true">
-                        <i className="pi pi-truck" style={{ fontSize: '1rem' }}></i> Vehículo(s) en ruta: <span className="text-sm font-normal text-gray-700"> 
-                          {
-                            viajesUsuario.map((item) => ( 
-                              <ul key={item.idviaje}>
-                                <li className='pl-3'>
-                                  - ({item.vehiculo.idvehiculo}), {item.vehiculo.tipovehiculo}, {item.vehiculo.marca}, {item.vehiculo.modelo}
-                                </li>
-                              </ul>
-                            ))
-                          }
-                        </span>
-                      </li>
+                      <p className='pb-2 font-bold text-xl'>Detalles empresa seleccionada.</p>
+                      <div className='row'>
+                        <div className='col-sm-4 col-md-4 col-xl-12'>
+                          <li className="text-lg mr-auto font-bold text-left pb-3" aria-current="true">
+                            <i className="pi pi-map" style={{ fontSize: '1rem' }}></i> Viajes activos: <span className="text-lg font-normal text-gray-700"> {viajesUsuario.length}</span>
+                          </li>
+                        </div>
+                        <div className='col-sm-4 col-md-4 col-xl-12'>
+                          <li className="text-lg mr-auto font-bold text-left pb-3" aria-current="true">
+                            <i className="pi pi-users" style={{ fontSize: '1rem' }}></i> Conductor(es) en ruta: <span className="text-sm font-normal text-gray-700"> 
+                                {
+                                  viajesUsuario.map((item) => ( 
+                                    <ul key={item.idviaje}>
+                                      <li className='pl-3'>
+                                        <span className='font-extrabold'><i className="pi pi-angle-right"></i></span> {item.conductor.nombrecompleto}
+                                      </li>
+                                    </ul>
+                                  ))
+                                }
+                            </span>
+                          </li>
+                        </div>
+                        <div className='col-sm-4 col-md-4 col-xl-12'>
+                          <li className="text-lg mr-auto font-bold text-left pb-2" aria-current="true">
+                            <i className="pi pi-truck" style={{ fontSize: '1rem' }}></i> Vehículo(s) en ruta: <span className="text-sm font-normal text-gray-700"> 
+                              {
+                                viajesUsuario.map((item) => ( 
+                                  <ul key={item.idviaje}>
+                                    <li className='pl-3'>
+                                      <span className='font-extrabold'><i className="pi pi-angle-right"></i></span> ({item.vehiculo.idvehiculo}), {item.vehiculo.tipovehiculo}, {item.vehiculo.marca}, {item.vehiculo.modelo}
+                                    </li>
+                                  </ul>
+                                ))
+                              }
+                            </span>
+                          </li>
+                        </div>
+                      </div>
                     </ul>
                   </div>
                 </div>

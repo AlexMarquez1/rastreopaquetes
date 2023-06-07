@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { InputText } from 'primereact/inputtext';
 import { Password } from 'primereact/password';
 import { Button } from 'primereact/button';
@@ -45,6 +45,7 @@ export const FormularioLogin = () => {
             usuario: inputUsuario,
             contrasena: inputPass,
         }
+
         getValidation(api, nuevoUsuario).then((respuesta) => {
             if(respuesta !== undefined){
                 navigate('/menu');
@@ -54,10 +55,11 @@ export const FormularioLogin = () => {
             setLoading(false);
             
             setUserAuth(respuesta);
-            
-        });
-    }
 
+            localStorage.setItem('user', JSON.stringify(respuesta))
+            
+        });      
+    }
     
     return (
         <>
@@ -67,12 +69,12 @@ export const FormularioLogin = () => {
             <div className="card-body">
                 <div className='text-center'>
                     <h1 className="card-title pb-4 card-title text-3xl text-[#BE0F34]">Inicia Sesión</h1>
-                    <Player src='https://assets3.lottiefiles.com/packages/lf20_u8yeomaa.json'
-        className="player"
-        loop
-        autoplay
-        style={{ height: '150px', width: '150px' }}
-      />
+                        <Player src='https://assets3.lottiefiles.com/packages/lf20_u8yeomaa.json'
+                          className="player"
+                          loop
+                          autoplay
+                          style={{ height: '150px', width: '150px' }}
+                        />
                     <div className="p-inputgroup flex-1 pb-6">
                         <span className='p-float-label'>
                             <InputText inputid='usuario' value={inputUsuario} onChange={onInputUserChange} />

@@ -6,6 +6,7 @@ import { Button } from 'primereact/button';
 
 import { ApiContext } from '../context/ApiProvider';
 import { Player } from '@lottiefiles/react-lottie-player';
+import useAuth from '../../hooks/useAuth';
 
 const styleRegistro = {
     width: '85%',
@@ -13,7 +14,9 @@ const styleRegistro = {
 
 function ConductoresScreen() {
 
-  const { dataConductor, setDataConductor } = useContext(ApiContext);
+  const { userAuth, setUserAuth } = useAuth();
+
+  // const { dataConductor, setDataConductor } = useContext(ApiContext);
 
   useEffect(() => {
       // Llamada a la API y actualización de los datos en el estado
@@ -72,6 +75,17 @@ const toggleNuevoConductorForm = () => {
     div.scrollIntoView({ behavior: 'smooth' }); 
 };
 
+// funcion que hace que al hacer refesh se mantenga el usuario activo
+useEffect(() => {
+  const loggedInUser = localStorage.getItem("user");
+  
+  if (loggedInUser) {
+    const foundUser = JSON.parse(loggedInUser);
+    setUserAuth(foundUser);
+    console.log(foundUser)
+  }
+}, []);
+
   return (
     <>
     <h1 className='pt-6 px-6 text-5xl font-bold'>Conductores</h1>
@@ -97,7 +111,7 @@ const toggleNuevoConductorForm = () => {
           <h1 className="text-3xl text-[#BE0F34] font-extrabold pb-4">
               Registrar un nuevo conductor
           </h1>
-              <NuevoConductorForm toggleNuevoConductorForm={toggleNuevoConductorForm}/>
+              <NuevoConductorForm data={conductores} setconductorActual={setconductorActual} toggleNuevoConductorForm={toggleNuevoConductorForm}/>
       </div>
     </section>
     </>

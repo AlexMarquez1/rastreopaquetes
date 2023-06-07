@@ -8,7 +8,7 @@ import { Calendar } from 'primereact/calendar';
 import useAuth from '../../hooks/useAuth';
 import { useState } from 'react';
 
-const NuevoVehiculoForm = () => {
+const NuevoVehiculoForm = ({data, setVehiculoActual}) => {
 
     const [selectedFile, setSelectedFile] = useState(null);
 
@@ -54,7 +54,7 @@ const NuevoVehiculoForm = () => {
               'Content-Type': 'application/json' // Asegúrate de establecer el tipo de contenido adecuado
             },
             body: JSON.stringify(vehiculo) // Convierte los valores a JSON antes de enviarlos
-          })
+            })
             .then(response => response.json())
             .then(responseData => {
               // Lógica adicional después de enviar los datos a la API
@@ -64,6 +64,8 @@ const NuevoVehiculoForm = () => {
             .catch(error => console.log(error));
             
             resetForm();
+
+            setVehiculoActual(values);
       };
 
       const invoiceUploadHandler = ({files}) => {
@@ -165,7 +167,7 @@ const NuevoVehiculoForm = () => {
                                 <Field
                                     as={InputText}
                                     name="numeroserie"
-                                    keyfilter="pnum"
+                                    // keyfilter="pnum"
                                     onChange={handleChange}
                                     value={values.numeroserie}
                                     inputid='numeroserie'

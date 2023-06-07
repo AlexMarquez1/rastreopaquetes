@@ -6,7 +6,7 @@ import { Button } from 'primereact/button';
 
 import useAuth from '../../hooks/useAuth';
 
-const NuevaEmpresasForm = () => {
+const NuevaEmpresasForm = ({setEmpresaActual}) => {
 
     const { userAuth } = useAuth();
 
@@ -41,6 +41,8 @@ const NuevaEmpresasForm = () => {
           .catch(error => console.log(error));
       
         resetForm();
+
+        setEmpresaActual(values);
       };      
 
     return (

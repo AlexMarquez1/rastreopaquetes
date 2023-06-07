@@ -13,6 +13,7 @@ import { useFetchViajes } from '../hooks/useFetchViajes';
 import useAuth from '../../hooks/useAuth';
 import ModalHistorialViajes from '../components/ModalHistorialViajes';
 import { ModalHistorial } from '../components/ModalHistorial';
+import { Player } from '@lottiefiles/react-lottie-player';
 
 const styleRegistro = {
     width: '85%',
@@ -53,7 +54,7 @@ const HistorialViajesScreen = () => {
   const [tarjetaViajeSeleccionado, setTarjetaViajeSeleccionado] = useState(null);
 
   // obtencion del usuario que inicio sesion
-  const { userAuth } = useAuth();
+  const { userAuth, setUserAuth } = useAuth();
 
   // obtencion de la data de todos los viajes 
     const { data: viajeData, loading: loadingViaje } = useFetchViajes(viajeActual);
@@ -151,6 +152,17 @@ const HistorialViajesScreen = () => {
     return age;
   }
 
+  // funcion que hace que al hacer refesh se mantenga el usuario activo
+  useEffect(() => {
+    const loggedInUser = localStorage.getItem("user");
+    
+    if (loggedInUser) {
+      const foundUser = JSON.parse(loggedInUser);
+      setUserAuth(foundUser);
+      console.log(foundUser)
+    }
+  }, []);
+
   return (
     <>
     <h1 className='pt-6 px-6 text-5xl font-bold'>Historial de viajes</h1>
@@ -181,6 +193,8 @@ const HistorialViajesScreen = () => {
     </div>
     <div className='bg-white border-2 border-t-red-600'>
     <section className="section_item flex-container py-6 drop-shadow-md">
+      {
+        !loadingViaje ?
         <div className="card form drop-shadow-md"style={styleRegistro}>
             <br />
             <h1 className="card-title">
@@ -236,11 +250,22 @@ const HistorialViajesScreen = () => {
                 </div>
             </div>
         </div>
+        :
+        <Player src='https://lottie.host/7d6dd8ce-b89c-4c97-ae7d-8ec9fe1a5f7b/YLQyRUzCfx.json'
+            className="player"
+            loop
+            autoplay
+            style={{ height: '300px', width: '300px' }}
+        />
+      }
+        
     </section>
     </div>
     
     <div className='border-double border-2 border-t-red-600'>
     <section className="section_item flex-container py-6 drop-shadow-md">
+      {
+        !loadingViaje ? 
         <div className="card form" style={styleRegistro}>
         <br />
             <h1 className="card-title">
@@ -293,15 +318,25 @@ const HistorialViajesScreen = () => {
                         ))
                         }
                     </Carousel>
-                    
                 </div>
             </div>
         </div>
+        : 
+        <Player src='https://lottie.host/57646f0b-6bba-4428-b49e-f47f4c50d1a2/by0A7ETtTu.json'
+            className="player"
+            loop
+            autoplay
+            style={{ height: '300px', width: '300px' }}
+        />
+      }
+        
     </section>
     </div>
     
     <div className='bg-white border-2 border-t-red-600'>
     <section className="section_item flex-container py-6 drop-shadow-md">
+      {
+        !loadingViaje ? 
         <div className="card form drop-shadow-md" style={styleRegistro}>
         <br />
             <h1 className="card-title">
@@ -357,9 +392,17 @@ const HistorialViajesScreen = () => {
                 </div>
             </div>
         </div>
+        :
+        <Player src='https://lottie.host/7d6dd8ce-b89c-4c97-ae7d-8ec9fe1a5f7b/YLQyRUzCfx.json'
+            className="player"
+            loop
+            autoplay
+            style={{ height: '300px', width: '300px' }}
+        />
+      }
+        
     </section> 
-    </div> 
-     
+    </div>  
     {/* MODAL */}
     <Dialog header="Detalles de viaje" visible={mensaje} style={{ width: '90vw' }} onHide={() => setMensaje(false)}>
         <section className="section_item flex-container" style={{ paddingTop: '5%' }}>

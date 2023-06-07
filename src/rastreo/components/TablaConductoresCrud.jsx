@@ -6,7 +6,7 @@ import { InputText } from 'primereact/inputtext';
 import React, { useState } from 'react'
 import useAuth from '../../hooks/useAuth';
 
-export const TablaConductoresCrud = ({ data, encabezados, id, editar = false, eliminar = false, seleccionMultiple = false, toggleNuevoConductorForm }) => {
+export const TablaConductoresCrud = ({ data, encabezados, id, editar = false, eliminar = false, seleccionMultiple = false, toggleNuevoConductorForm, conductorActual }) => {
     const [globalFilter, setGlobalFilter] = useState(null);
     const [datoSeleccionado, setDatoSeleccionado] = useState()
     const [lista, setLista] = useState(data)
@@ -17,7 +17,14 @@ export const TablaConductoresCrud = ({ data, encabezados, id, editar = false, el
 
     const { userAuth } = useAuth();
 
-    const conductorFiltrado = lista.filter(item => item.usuario.idusuario === userAuth.idusuario);
+    // const conductorFiltrado = lista.filter(item => item.usuario.idusuario === userAuth.idusuario);
+
+    const conductoresFiltrados = lista.filter(
+        conductor =>
+          conductor.idconductor !== conductorActual?.idconductor &&
+        //   conductor.razonsocial &&
+          conductor.usuario.idusuario === userAuth.idusuario
+      );
 
     const confirmDeleteProduct = (proyecto) => {
         console.log(proyecto);
@@ -108,9 +115,9 @@ export const TablaConductoresCrud = ({ data, encabezados, id, editar = false, el
 
     return (
         <>
-            <DataTable value={conductorFiltrado} selection={datoSeleccionado} onSelectionChange={onSelection}
+            <DataTable value={conductoresFiltrados} selection={datoSeleccionado} onSelectionChange={onSelection}
                 onRowEditComplete={onRowEditComplete} editMode="row"
-                dataKey={id} paginator rows={10} rowsPerPageOptions={[5, 10, 25]} className="p-datatable-striped"
+                dataKey={conductoresFiltrados.idconductor} paginator rows={10} rowsPerPageOptions={[5, 10, 25]} className="p-datatable-striped"
                 paginatorTemplate="FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink CurrentPageReport RowsPerPageDropdown"
                 currentPageReportTemplate="Mostrando {first} y {last} de {totalRecords} registros"
                 globalFilter={globalFilter} header={header} responsiveLayout="scroll">

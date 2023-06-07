@@ -36,12 +36,10 @@ export const tiposLicencia = [
 ];
   
 
-const NuevoConductorForm = ({toggleNuevoConductorForm}) => {
+const NuevoConductorForm = ({toggleNuevoConductorForm, data, setconductorActual}) => {
 
     const { userAuth } = useAuth();
     const usuario = userAuth;
-
-    console.log(usuario)
 
     const initialValues = {
         nombrecompleto: '',
@@ -70,7 +68,6 @@ const NuevoConductorForm = ({toggleNuevoConductorForm}) => {
 
       const onSubmit = (values, { resetForm }) => {
         const conductor = {...values, usuario}
-        console.log(conductor)
 
         fetch('http://192.168.0.191:8080/nuevo/conductor', {
           method: 'POST', // O 'PUT' según el tipo de solicitud que desees realizar
@@ -87,7 +84,9 @@ const NuevoConductorForm = ({toggleNuevoConductorForm}) => {
           })
           .catch(error => console.log(error));
       
-        //  resetForm();
+        resetForm();
+
+        setconductorActual(values);
       }; 
          
   return (
@@ -329,7 +328,6 @@ const NuevoConductorForm = ({toggleNuevoConductorForm}) => {
                                             onChange={handleChange}
                                             value={values.numerointerior}
                                             inputid='direccion.numerointerior'
-                                            required={true}
                                             keyfilter="pnum"
                                             maxLength="6"
                                         />
@@ -415,7 +413,6 @@ const NuevoConductorForm = ({toggleNuevoConductorForm}) => {
                                             inputid='numerolicencia'
                                             required={true}
                                             keyfilter="pnum"
-                                            maxLength="5"
                                         />
                                         <span className="p-inputgroup-addon">
                                             <i className="pi pi-desktop"></i>

@@ -3,11 +3,11 @@ import useAuth from '../../hooks/useAuth';
 import Carousel from 'react-multi-carousel';
 import "react-multi-carousel/lib/styles.css";
 
-export const TarjetaEmpresa = ({data}) => {
+export const TarjetaEmpresa = ({data, empresaActual }) => {
 
     const { userAuth } = useAuth();
 
-    const empresasFiltradas = data.filter(item => item.razonsocial && item.usuario.idusuario === userAuth.idusuario);
+    // const empresasFiltradas = data.filter(item => item.razonsocial && item.usuario.idusuario === userAuth.idusuario);
     
     const responsive = {
       desktop: {
@@ -27,12 +27,19 @@ export const TarjetaEmpresa = ({data}) => {
       },
     };
 
+    const empresasFiltradas = data.filter(
+      empresa =>
+        empresa.idempresa !== empresaActual?.idempresa &&
+        empresa.razonsocial &&
+        empresa.usuario.idusuario === userAuth.idusuario
+    );
+
   return (
     <>
     <div className="col-sm-12 p-4">
       <div className="card">
         <div className="card-body text-center">
-        <h1 className='text-3xl text-[#BE0F34] font-extrabold pb-4'>Empresas dadas de alta</h1>
+        <h1 className='text-3xl text-[#BE0F34] font-extrabold pb-4'>Empresas dadas de alta <span className='text-black'>'{empresasFiltradas.length}'</span></h1>
           <div className='container'>
             <div className='row justify-center'>
                 <Carousel 
