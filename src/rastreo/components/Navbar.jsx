@@ -1,5 +1,11 @@
 import React, { useState } from 'react'
 import { Link, NavLink, useNavigate } from 'react-router-dom'
+import conductor from '../../assets/conductor2.png';
+import usuario from '../../assets/usuario.png';
+import mapa from '../../assets/mapa.png';
+import gps from '../../assets/gps.png';
+import camion from '../../assets/camion2.png';
+import historia from '../../assets/historia.png';
 
 export const Navbar = () => {
 
@@ -37,7 +43,7 @@ export const Navbar = () => {
                         <div className='row'>
                             <div className='col-2 md:hidden'>
                                 <div className="bg-white rounded-full h-14 w-14 flex items-center justify-center shadow-lg drop-shadow-md">
-                                    <img src="src/assets/usuario.png" alt="Descripción de la imagen" className='' viewBox="0 0 20 20" fill="currentColor" />
+                                    <img src={usuario} alt="Descripción de la imagen" className='' viewBox="0 0 20 20" fill="currentColor" />
                                 </div>
                             </div>
                             <div className='col-9 mx-1'>
@@ -52,7 +58,7 @@ export const Navbar = () => {
                         <div className='row'>
                             <div className='col-2 md:hidden'>
                                 <div className="bg-white rounded-full h-14 w-14 flex items-center justify-center shadow-lg relative drop-shadow-md">
-                                    <img src="src/assets/mapa.png" alt="Descripción de la imagen" className='' viewBox="0 0 20 20" fill="currentColor" />
+                                    <img src={mapa} alt="Descripción de la imagen" className='' viewBox="0 0 20 20" fill="currentColor" />
                                 </div>
                             </div>
                             <div className='col-9 mx-1'>
@@ -67,7 +73,7 @@ export const Navbar = () => {
                         <div className='row'>
                             <div className='col-2 md:hidden'>
                                 <div className="bg-white rounded-full h-14 w-14 flex items-center justify-center shadow-lg relative drop-shadow-md">
-                                    <img src="src/assets/gps.png" alt="Descripción de la imagen" className='' viewBox="0 0 20 20" fill="currentColor" />
+                                    <img src={gps} alt="Descripción de la imagen" className='' viewBox="0 0 20 20" fill="currentColor" />
                                 </div>
                             </div>
                             <div className='col-9 mx-1'>
@@ -82,7 +88,7 @@ export const Navbar = () => {
                         <div className='row'>
                             <div className='col-2 md:hidden'>
                                 <div className="bg-white rounded-full h-14 w-14 flex items-center justify-center shadow-lg relative drop-shadow-md">
-                                    <img src="src/assets/conductor2.png" alt="Descripción de la imagen" className='' viewBox="0 0 20 20" fill="currentColor" />
+                                    <img src={conductor} alt="Descripción de la imagen" className='' viewBox="0 0 20 20" fill="currentColor" />
                                 </div>
                             </div>
                             <div className='col-9 mx-1'>
@@ -112,7 +118,7 @@ export const Navbar = () => {
                         <div className='row'>
                             <div className='col-2 md:hidden'>
                                 <div className="bg-white rounded-full h-14 w-14 flex items-center justify-center shadow-lg relative drop-shadow-md">
-                                    <img src="src/assets/camion2.png" alt="Descripción de la imagen" className='' viewBox="0 0 20 20" fill="currentColor" />
+                                    <img src={camion} alt="Descripción de la imagen" className='' viewBox="0 0 20 20" fill="currentColor" />
                                 </div>
                             </div>
                             <div className='col-9 mx-1'>
@@ -127,7 +133,7 @@ export const Navbar = () => {
                         <div className='row'>
                             <div className='col-2 md:hidden'>
                                 <div className="bg-white rounded-full h-14 w-14 flex items-center justify-center shadow-lg relative drop-shadow-md">
-                                    <img src="src/assets/historia.png" alt="Descripción de la imagen" className='' fill="currentColor" />
+                                    <img src={historia} alt="Descripción de la imagen" className='' fill="currentColor" />
                                 </div>
                             </div>
                             <div className='col-9 mx-1'>

@@ -15,6 +15,13 @@ import { Player } from '@lottiefiles/react-lottie-player';
 import { useFetchViajes } from '../hooks/useFetchViajes';
 import { VehiculoSeleccionado } from '../components/VehiculoSeleccionado';
 
+import moto from '../../assets/iconos_transporte/motorcycle.png';
+import dodge from '../../assets/iconos_transporte/dodge-ram.png';
+import torton from '../../assets/iconos_transporte/torton.png';
+import rabon from '../../assets/iconos_transporte/rabon.png';
+import trailer from '../../assets/iconos_transporte/trailer.png';
+import nissan from '../../assets/iconos_transporte/nissan-estaquita-redilas.png';
+
 
 const valorInicial = {
   empresas: {
@@ -263,7 +270,7 @@ useEffect(() => {
                         <span className="bg-red-500 text-white absolute top-0 right-0 rounded-full h-5 w-5 flex items-center justify-center shadow-sm border-2 border-white">
                         {vehiculos.filter(item => item.tipovehiculo === 'Motocicleta' && item.usuario.idusuario === userAuth.idusuario).length}
                         </span>
-                        <img src="src/assets/iconos_transporte/motorcycle.png" alt="Descripción de la imagen" className='' viewBox="0 0 20 20" fill="currentColor"/>
+                        <img src={moto} alt="Descripción de la imagen" className='' viewBox="0 0 20 20" fill="currentColor"/>
                       </div>
                       <span className='text-xl font-semibold'>Motocicleta</span>
                     </div>
@@ -272,7 +279,7 @@ useEffect(() => {
                         <span className="bg-red-500 text-white absolute top-0 right-0 rounded-full h-5 w-5 flex items-center justify-center shadow-sm border-2 border-white">
                         {vehiculos.filter(item => item.tipovehiculo === 'Nissan' && item.usuario.idusuario === userAuth.idusuario).length}
                         </span>
-                        <img src="src/assets/iconos_transporte/nissan-estaquita-redilas.png" alt="Descripción de la imagen" className='' viewBox="0 0 20 20" fill="currentColor"/>
+                        <img src={nissan} alt="Descripción de la imagen" className='' viewBox="0 0 20 20" fill="currentColor"/>
                       </div>
                       <span className='text-xl font-semibold'>Nissan</span>
                     </div>
@@ -281,7 +288,7 @@ useEffect(() => {
                         <span className="bg-red-500 text-white absolute top-0 right-0 rounded-full h-5 w-5 flex items-center justify-center shadow-sm border-2 border-white">
                         {vehiculos.filter(item => item.tipovehiculo === 'Camioneta 3 1/2' && item.usuario.idusuario === userAuth.idusuario).length}
                         </span>
-                        <img src="src/assets/iconos_transporte/dodge-ram.png" alt="Descripción de la imagen" className='' viewBox="0 0 20 20" fill="currentColor"/>
+                        <img src={dodge} alt="Descripción de la imagen" className='' viewBox="0 0 20 20" fill="currentColor"/>
                       </div>
                       <span className='text-xl font-semibold'>Camioneta 3 1/2</span>
                     </div>
@@ -290,7 +297,7 @@ useEffect(() => {
                         <span className="bg-red-500 text-white absolute top-0 right-0 rounded-full h-5 w-5 flex items-center justify-center shadow-sm border-2 border-white">
                           {vehiculos.filter(item => item.tipovehiculo === 'Torton' && item.usuario.idusuario === userAuth.idusuario).length}
                         </span>
-                        <img src="src/assets/iconos_transporte/torton.png" alt="Descripción de la imagen" className='' viewBox="0 0 20 20" fill="currentColor"/>
+                        <img src={torton} alt="Descripción de la imagen" className='' viewBox="0 0 20 20" fill="currentColor"/>
                       </div>
                       <span className='text-xl font-semibold'>Torton</span>
                     </div>
@@ -299,7 +306,7 @@ useEffect(() => {
                         <span className="bg-red-500 text-white absolute top-0 right-0 rounded-full h-5 w-5 flex items-center justify-center shadow-sm border-2 border-white">
                         {vehiculos.filter(item => item.tipovehiculo === 'Rabon' && item.usuario.idusuario === userAuth.idusuario).length}
                         </span>
-                        <img src="src/assets/iconos_transporte/rabon.png" alt="Descripción de la imagen" className='' viewBox="0 0 20 20" fill="currentColor"/>
+                        <img src={rabon} alt="Descripción de la imagen" className='' viewBox="0 0 20 20" fill="currentColor"/>
                       </div>
                       <span className='text-xl font-semibold'>Rabon</span>
                     </div>
@@ -308,7 +315,7 @@ useEffect(() => {
                         <span className="bg-red-500 text-white absolute top-0 right-0 rounded-full h-5 w-5 flex items-center justify-center shadow-sm border-2 border-white">
                         {vehiculos.filter(item => item.tipovehiculo === 'Trailer' && item.usuario.idusuario === userAuth.idusuario).length}
                         </span>
-                        <img src="src/assets/iconos_transporte/trailer.png" alt="Descripción de la imagen" className='' viewBox="0 0 20 20" fill="currentColor"/>
+                        <img src={trailer} alt="Descripción de la imagen" className='' viewBox="0 0 20 20" fill="currentColor"/>
                       </div>
                       <span className='text-xl font-semibold'>Trailer</span>
                     </div>

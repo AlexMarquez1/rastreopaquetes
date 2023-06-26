@@ -1,6 +1,12 @@
 import React from 'react'
 import { FormularioLogin } from '../components/FormularioLogin'
 
+import destino from '../../assets/destino.png';
+import telefono from '../../assets/telefono-inteligente.png';
+import conductor from '../../assets/conductor2.png';
+import camiones from '../../assets/camiones.png';
+import empresa from '../../assets/empresa.png';
+
 import { Player } from '@lottiefiles/react-lottie-player';
 
 export const LoginScreen = () => {
@@ -33,32 +39,32 @@ export const LoginScreen = () => {
                   <div className='col-sm-6 col-md-3 col-xl-2 m-3 grid justify-items-center'>
                     <div className="bg-white rounded-full h-40 w-40 flex items-center justify-center shadow-lg relative drop-shadow-md transition duration-500 ease-in-out transform hover:-translate-y-5 hover:shadow-2xl">
                       
-                      <img src="src/assets/destino.png" alt="Descripción de la imagen" className='' viewBox="0 0 20 20" fill="currentColor"/>
+                      <img src={destino} alt="Descripción de la imagen" className='' viewBox="0 0 20 20" fill="currentColor"/>
                     </div>
                     <span className='text-xl font-semibold text-white p-2'>Viajes</span>
                   </div>
                   <div className='col-sm-6 col-md-3 col-xl-2 m-3 grid justify-items-center'>
                     <div className="bg-white rounded-full h-40 w-40 flex items-center justify-center shadow-lg relative drop-shadow-md transition duration-500 ease-in-out transform hover:-translate-y-5 hover:shadow-2xl">
                       
-                      <img src="src/assets/telefono-inteligente.png" alt="Descripción de la imagen" className='' viewBox="0 0 20 20" fill="currentColor"/>
+                      <img src={telefono} alt="Descripción de la imagen" className='' viewBox="0 0 20 20" fill="currentColor"/>
                     </div>
                     <span className='text-xl font-semibold text-white p-2'>Seguimiento en tiempo real</span>
                   </div>
                   <div className='col-sm-6 col-md-3 col-xl-2 m-3 grid justify-items-center'>
                     <div className="bg-white rounded-full h-40 w-40 flex items-center justify-center shadow-lg relative drop-shadow-md transition duration-500 ease-in-out transform hover:-translate-y-5 hover:shadow-2xl">
-                      <img src="src/assets/conductor2.png" alt="Descripción de la imagen" className='' viewBox="0 0 20 20" fill="currentColor"/>
+                      <img src={conductor} alt="Descripción de la imagen" className='' viewBox="0 0 20 20" fill="currentColor"/>
                     </div>
                     <span className='text-xl font-semibold text-white p-2'>Conductores</span>
                   </div>
                   <div className='col-sm-6 col-md-3 col-xl-2 m-3 grid justify-items-center'>
                     <div className="bg-white rounded-full h-40 w-40 flex items-center justify-center shadow-lg relative drop-shadow-md transition duration-500 ease-in-out transform hover:-translate-y-5 hover:shadow-2xl">
-                      <img src="src/assets/camiones.png" alt="Descripción de la imagen" className='' viewBox="0 0 20 20" fill="currentColor"/>
+                      <img src={camiones} alt="Descripción de la imagen" className='' viewBox="0 0 20 20" fill="currentColor"/>
                     </div>
                     <span className='text-xl font-semibold text-white p-2'>Vehículos</span>
                   </div>
                   <div className='col-sm-6 col-md-3 col-xl-2 m-3 grid justify-items-center'>
                     <div className="bg-white rounded-full h-40 w-40 flex items-center justify-center shadow-lg relative drop-shadow-md transition duration-500 ease-in-out transform hover:-translate-y-5 hover:shadow-2xl">
-                      <img src="src/assets/empresa.png" alt="Descripción de la imagen" className='' viewBox="0 0 20 20" fill="currentColor"/>
+                      <img src={empresa} alt="Descripción de la imagen" className='' viewBox="0 0 20 20" fill="currentColor"/>
                     </div>
                     <span className='text-xl font-semibold text-white p-2'>Empresas</span>
                   </div>

@@ -1,5 +1,11 @@
 import React, { useEffect, useState } from 'react'
 import { VehiculoSeleccionado } from './VehiculoSeleccionado';
+import moto from '../../assets/iconos_transporte/motorcycle.png';
+import mp from '../../assets/iconos_transporte/np300.png';
+import dodge from '../../assets/iconos_transporte/dodge-ram.png';
+import torton from '../../assets/iconos_transporte/torton.png';
+import rabon from '../../assets/iconos_transporte/rabon.png';
+import trailer from '../../assets/iconos_transporte/trailer.png';
 import useAuth from '../../hooks/useAuth';
 
 export const DisponibilidadVehiculo = ({data, vehiculoactual}) => {
@@ -36,7 +42,7 @@ export const DisponibilidadVehiculo = ({data, vehiculoactual}) => {
                         <span className="bg-red-500 text-white absolute top-0 right-0 rounded-full h-5 w-5 flex items-center justify-center shadow-sm border-2 border-white">
                           {vehiculosFiltrados.filter(vehiculo => vehiculo.tipovehiculo === 'Motocicleta').length}
                         </span>
-                        <img src="src/assets/iconos_transporte/motorcycle.png" alt="Descripción de la imagen" className='' viewBox="0 0 20 20" fill="currentColor"/>
+                        <img src={moto} alt="Descripción de la imagen" className='' viewBox="0 0 20 20" fill="currentColor"/>
                       </div>
                       <span className='text-xl font-semibold'>Motocicleta</span>
                     </div>
@@ -45,7 +51,7 @@ export const DisponibilidadVehiculo = ({data, vehiculoactual}) => {
                         <span className="bg-red-500 text-white absolute top-0 right-0 rounded-full h-5 w-5 flex items-center justify-center shadow-sm border-2 border-white">
                         {vehiculosFiltrados.filter(vehiculo => vehiculo.tipovehiculo === 'Nissan').length}
                         </span>
-                        <img src="src/assets/iconos_transporte/np300.png" alt="Descripción de la imagen" className='' viewBox="0 0 20 20" fill="currentColor"/>
+                        <img src={mp} alt="Descripción de la imagen" className='' viewBox="0 0 20 20" fill="currentColor"/>
                       </div>
                       <span className='text-xl font-semibold'>Nissan</span>
                     </div>
@@ -54,7 +60,7 @@ export const DisponibilidadVehiculo = ({data, vehiculoactual}) => {
                         <span className="bg-red-500 text-white absolute top-0 right-0 rounded-full h-5 w-5 flex items-center justify-center shadow-sm border-2 border-white">
                         {vehiculosFiltrados.filter(vehiculo => vehiculo.tipovehiculo === 'Camioneta 3 1/2').length}
                         </span>
-                        <img src="src/assets/iconos_transporte/dodge-ram.png" alt="Descripción de la imagen" className='' viewBox="0 0 20 20" fill="currentColor"/>
+                        <img src={dodge} alt="Descripción de la imagen" className='' viewBox="0 0 20 20" fill="currentColor"/>
                       </div>
                       <span className='text-xl font-semibold'>Camioneta 3 1/2</span>
                     </div>
@@ -63,7 +69,7 @@ export const DisponibilidadVehiculo = ({data, vehiculoactual}) => {
                         <span className="bg-red-500 text-white absolute top-0 right-0 rounded-full h-5 w-5 flex items-center justify-center shadow-sm border-2 border-white">
                           {vehiculosFiltrados.filter(vehiculo => vehiculo.tipovehiculo === 'Torton').length}
                         </span>
-                        <img src="src/assets/iconos_transporte/torton.png" alt="Descripción de la imagen" className='' viewBox="0 0 20 20" fill="currentColor"/>
+                        <img src={torton} alt="Descripción de la imagen" className='' viewBox="0 0 20 20" fill="currentColor"/>
                       </div>
                       <span className='text-xl font-semibold'>Torton</span>
                     </div>
@@ -72,7 +78,7 @@ export const DisponibilidadVehiculo = ({data, vehiculoactual}) => {
                         <span className="bg-red-500 text-white absolute top-0 right-0 rounded-full h-5 w-5 flex items-center justify-center shadow-sm border-2 border-white">
                           {vehiculosFiltrados.filter(vehiculo => vehiculo.tipovehiculo === 'Rabon').length}
                         </span>
-                        <img src="src/assets/iconos_transporte/rabon.png" alt="Descripción de la imagen" className='' viewBox="0 0 20 20" fill="currentColor"/>
+                        <img src={rabon} alt="Descripción de la imagen" className='' viewBox="0 0 20 20" fill="currentColor"/>
                       </div>
                       <span className='text-xl font-semibold'>Rabon</span>
                     </div>
@@ -81,7 +87,7 @@ export const DisponibilidadVehiculo = ({data, vehiculoactual}) => {
                         <span className="bg-red-500 text-white absolute top-0 right-0 rounded-full h-5 w-5 flex items-center justify-center shadow-sm border-2 border-white">
                           {vehiculosFiltrados.filter(vehiculo => vehiculo.tipovehiculo === 'Trailer').length} 
                         </span>
-                        <img src="src/assets/iconos_transporte/trailer.png" alt="Descripción de la imagen" className='' viewBox="0 0 20 20" fill="currentColor"/>
+                        <img src={trailer} alt="Descripción de la imagen" className='' viewBox="0 0 20 20" fill="currentColor"/>
                       </div>
                       <span className='text-xl font-semibold'>Trailer</span>
                     </div>
