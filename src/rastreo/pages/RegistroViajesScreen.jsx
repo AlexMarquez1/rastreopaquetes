@@ -182,7 +182,7 @@ const { userAuth, setUserAuth} = useAuth();
       usuario: userAuth
     }
 
-    fetch('http://192.168.0.191:8080/nuevo/viaje', {
+    fetch('http://192.168.1.72:8080/nuevo/viaje', {
           method: 'POST', // O 'PUT' según el tipo de solicitud que desees realizar
           headers: {
             'Content-Type': 'application/json' // Asegúrate de establecer el tipo de contenido adecuado
@@ -239,7 +239,7 @@ const { userAuth, setUserAuth} = useAuth();
                             options={empresasFiltradas}
                             optionLabel="razonsocial"
                             filter
-                            filterPlaceholder='Buscar por nombre'
+                            filterPlaceholder='Nombre del proyecto'
                             emptyFilterMessage='Empresa no registrada'
                             placeholder="Selecciona una empresa"
                             className="w-full md:w-14rem"
@@ -335,7 +335,6 @@ const { userAuth, setUserAuth} = useAuth();
                         <Button
                           className='bg-[#BE0F34]'
                           icon="pi pi-car" type='button' onClick={() => setMostrarVehiculo(true)} disabled={values.vehiculos.tipovehiculo === '' ? true : false} />
-
                       </div>
                     </div>
                   </div>

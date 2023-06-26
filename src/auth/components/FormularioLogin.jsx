@@ -12,15 +12,9 @@ import useAuth from '../../hooks/useAuth';
 import { Player } from '@lottiefiles/react-lottie-player';
 
 export const FormularioLogin = () => {
+
     const navigate = useNavigate();
-    // const [nuevoUsuario, setNuevoUsuario] = useState({
-    //     idUsuario: 0,
-    //     usuario: '',
-    //     password: '',
-    //     nombre: '',
-    //     telefonoContacto: '',
-    //     perfil: { idPerfil: 0, perfil: '', }
-    // });
+    
     const [inputUsuario, setInputUsuario] = useState('');
     const [inputPass, setInputPass] = useState('');
     const [loading, setLoading] = useState(false);
@@ -87,8 +81,6 @@ export const FormularioLogin = () => {
                             <label htmlFor="password">Contraseña</label>
                         </span>
                     </div>
-
-      
                     <Button type='submit' label='INGRESAR' loading={loading} onClick={ingresar} className='text-[#BE0F34] m-4' />
                 </div>
             </div>
